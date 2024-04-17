@@ -7,21 +7,24 @@ import java.io.Serializable;
 @Entity
 public class JornadaEmpleado implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Empleado empleado;
-    private Jornada jornada;
+    private Dia dia;
+
+    private boolean validada;
 
     protected JornadaEmpleado() {
     }
 
-    public JornadaEmpleado(Empleado empleado, Jornada jornada) {
+    public JornadaEmpleado(Empleado empleado, Dia dia) {
         this.empleado = empleado;
-        this.jornada = jornada;
+        this.dia = dia;
+        this.validada = false;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -41,12 +44,20 @@ public class JornadaEmpleado implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idJornada")
-    public Jornada getJornada() {
-        return jornada;
+    @JoinColumn(name = "idDia")
+    public Dia getDia() {
+        return dia;
     }
 
-    public void setJornada(Jornada jornada) {
-        this.jornada = jornada;
+    public void setDia(Dia dia) {
+        this.dia = dia;
+    }
+
+    public boolean isValidada() {
+        return validada;
+    }
+
+    public void setValidada(boolean validada) {
+        this.validada = validada;
     }
 }

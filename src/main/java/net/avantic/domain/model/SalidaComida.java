@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "idFichaje")
-public class EntradaJornada extends Fichaje implements Serializable {
+public class SalidaComida extends Fichaje implements Serializable {
 
-    protected EntradaJornada() {
+    protected SalidaComida() {
     }
 
     @Override
@@ -18,7 +18,7 @@ public class EntradaJornada extends Fichaje implements Serializable {
         visitor.visit(this);
     }
 
-    public EntradaJornada(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
+    public SalidaComida(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
         super(empleado, jornadaEmpleado);
     }
 }

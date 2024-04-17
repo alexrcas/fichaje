@@ -4,17 +4,18 @@ import jakarta.persistence.*;
 import net.avantic.utils.FichajeVisitor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Fichaje implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
     private Empleado empleado;
     private JornadaEmpleado jornadaEmpleado;
+    private LocalDateTime created;
 
     @Transient
     public abstract void accept(FichajeVisitor visitor);
@@ -25,8 +26,11 @@ public abstract class Fichaje implements Serializable {
     public Fichaje(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
         this.empleado = empleado;
         this.jornadaEmpleado = jornadaEmpleado;
+        this.created = LocalDateTime.now();
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -53,5 +57,13 @@ public abstract class Fichaje implements Serializable {
 
     public void setJornadaEmpleado(JornadaEmpleado jornadaEmpleado) {
         this.jornadaEmpleado = jornadaEmpleado;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

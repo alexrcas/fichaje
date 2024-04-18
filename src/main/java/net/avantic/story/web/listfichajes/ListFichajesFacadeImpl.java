@@ -37,7 +37,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Override
     public List<DiaDto> listDias() {
         return diaRepository.findAllByOrderByIdAsc().stream()
-                .map(d -> new DiaDto(d.getId(), d.getFecha()))
+                .map(d -> new DiaDto(d.getId(), d.getFecha(), d.getDiaSemana()))
                 .collect(Collectors.toList());
     }
 

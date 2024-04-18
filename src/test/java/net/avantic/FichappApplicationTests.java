@@ -35,6 +35,7 @@ class FichappApplicationTests {
 			System.out.println("Se esperaba: " + stateMachine.getEstadoActual().transicionesEsperadas() + " - Se encontró: " + stateMachine.getErrorCause());
 		}
 */
+
 	}
 
 

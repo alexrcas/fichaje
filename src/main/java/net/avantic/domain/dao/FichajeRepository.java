@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface FichajeRepository extends JpaRepository<Fichaje, Long> {
 
-    List<Fichaje> findAllByJornadaEmpleadoOrderByCreatedAsc(JornadaEmpleado jornadaEmpleado);
+    List<Fichaje> findAllByJornadaEmpleado(JornadaEmpleado jornadaEmpleado);
 }

@@ -1,8 +1,9 @@
 package net.avantic.domain.model.dto.factory;
 
-import net.avantic.domain.dao.FichajeRepository;
 import net.avantic.domain.model.*;
+import net.avantic.domain.model.dto.FichajeOrdenJornadaSpecification;
 import net.avantic.domain.model.dto.JornadaDto;
+import net.avantic.domain.service.FichajeService;
 import net.avantic.domain.service.ValidarJornadaService;
 import net.avantic.utils.FichajeVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ import java.time.LocalDateTime;
 @Component
 public class JornadaEmpleadoDtoFactory {
 
-    private final FichajeRepository fichajeRepository;
+    private final FichajeService fichajeService;
     private final ValidarJornadaService validarJornadaService;
 
     @Autowired
-    public JornadaEmpleadoDtoFactory(FichajeRepository fichajeRepository,
+    public JornadaEmpleadoDtoFactory(FichajeService fichajeService,
                                      ValidarJornadaService validarJornadaService) {
-        this.fichajeRepository = fichajeRepository;
+        this.fichajeService = fichajeService;
         this.validarJornadaService = validarJornadaService;
     }
 
@@ -34,8 +35,8 @@ public class JornadaEmpleadoDtoFactory {
 
         CalcularJornadaVisitor visitor = new CalcularJornadaVisitor();
 
-        fichajeRepository.findAllByJornadaEmpleadoOrderByCreatedAsc(jornadaEmpleado).stream()
-                .forEach(visitor::popular);
+        fichajeService.listFichajesOrdenJornada(jornadaEmpleado).stream()
+                        .forEach(visitor::popular);
 
         return new JornadaDto(jornadaEmpleado.getId(), String.valueOf(visitor.getDuracionJornada()));
     }
@@ -60,8 +61,11 @@ public class JornadaEmpleadoDtoFactory {
         private LocalDateTime entradaComida;
         private LocalDateTime salidaComida;
 
-        void popular(Fichaje fichaje) {
-            fichaje.accept(this);
+        private LocalDateTime hora;
+
+        void popular(FichajeOrdenJornadaSpecification fichajeOrdenJornadaSpecification) {
+            this.hora = fichajeOrdenJornadaSpecification.getHoraFichaje();
+            fichajeOrdenJornadaSpecification.getFichaje().accept(this);
         }
 
         double getDuracionJornada() {
@@ -76,32 +80,52 @@ public class JornadaEmpleadoDtoFactory {
 
         @Override
         public void visit(EntradaJornada entradaJornada) {
-            this.entradaJornada = entradaJornada.getCreated();
+            this.entradaJornada = hora;
         }
 
         @Override
         public void visit(SalidaJornada salidaJornada) {
-            this.salidaJornada = salidaJornada.getCreated();
+            this.salidaJornada = hora;
         }
 
         @Override
         public void visit(EntradaDesayuno entradaDesayuno) {
-            this.entradaDesayuno = entradaDesayuno.getCreated();
+            this.entradaDesayuno = hora;
         }
 
         @Override
         public void visit(SalidaDesayuno salidaDesayuno) {
-            this.salidaDesayuno = salidaDesayuno.getCreated();
+            this.salidaDesayuno = hora;
         }
 
         @Override
         public void visit(EntradaComida entradaComida) {
-            this.entradaComida = entradaComida.getCreated();
+            this.entradaComida = hora;
         }
 
         @Override
         public void visit(SalidaComida salidaComida) {
-            this.salidaComida = salidaComida.getCreated();
+            this.salidaComida = hora;
+        }
+    }
+
+
+    class InformacionFichaje {
+
+        private final Fichaje fichaje;
+        private final LocalDateTime hora;
+
+        public InformacionFichaje(Fichaje fichaje, LocalDateTime hora) {
+            this.fichaje = fichaje;
+            this.hora = hora;
+        }
+
+        public Fichaje getFichaje() {
+            return fichaje;
+        }
+
+        public LocalDateTime getHora() {
+            return hora;
         }
     }
 }

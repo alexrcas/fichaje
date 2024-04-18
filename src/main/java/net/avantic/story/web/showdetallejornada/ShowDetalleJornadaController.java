@@ -21,8 +21,9 @@ public class ShowDetalleJornadaController {
     @GetMapping("/{id}")
     public String list(@PathVariable("id") Long idJornada, Model model) {
         model.addAttribute("fichajes", facade.listFichajesJornada(idJornada));
-        model.addAttribute("validaciones", facade.listValidacionesJornada(idJornada));
-        return "showDetalleFichaje";
+        model.addAttribute("validacion", facade.listValidacionesJornada(idJornada));
+        model.addAttribute("dia", facade.getFechaJornada(idJornada));
+        return "showDetalleFichajeModal";
     }
 
 }

@@ -1,7 +1,8 @@
 package net.avantic.utils;
 
+import io.micrometer.common.util.StringUtils;
 import net.avantic.domain.model.*;
-import net.avantic.utils.FichajeVisitor;
+import net.avantic.domain.model.dto.ResultadoValidacionJornadaDto;
 
 
 import java.util.List;
@@ -29,41 +30,42 @@ public class ValidadorStateMachine {
             return isAceptacion;
         }
 
-        public List<String> transicionesEsperadas() {
+        public String transicionesEsperadas() {
             if (this.equals(ESPERANDO_ENTRADA_JORNADA)) {
-                return List.of("Entrada de jornada");
+                return "Entrada de jornada";
             }
 
             if (this.equals(ESPERANDO_SALIDA_JORNADA)) {
-                return List.of("Salida de jornada");
+                return "Salida de jornada";
             }
 
             if (this.equals(ESPERANDO_ENTRADA_DESAYUNO)) {
-                return List.of("Entrada de desayuno");
+                return "Entrada de desayuno";
             }
 
             if (this.equals(ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA)) {
-                return List.of("Salida de jornada", "Salida a comida");
+                return "Salida de jornada o Salida a comida";
             }
 
             if (this.equals(ESPERANDO_ENTRADA_COMIDA)) {
-                return List.of("Entrada de comida");
+                return "Entrada de comida";
             }
 
             if (this.equals(ESPERANDO_SALIDA)) {
-                return List.of("Salida a desayuno", "Salida a comida", "Salida de jornada");
+                return "Salida a desayuno o Salida a comida o Salida de jornada";
             }
 
             if (this.equals(ERROR)) {
-                return List.of("Nada");
+                return "Nada";
             }
 
-            return List.of();
+            return "";
         }
     }
 
     private Estado estadoActual;
     private String errorCause;
+    private Long idFichajeError;
 
     public ValidadorStateMachine() {
         this.estadoActual = Estado.ESPERANDO_ENTRADA_JORNADA;
@@ -75,6 +77,20 @@ public class ValidadorStateMachine {
 
     public String getErrorCause() {
         return errorCause;
+    }
+
+    public ResultadoValidacionJornadaDto getResultadoValidacion() {
+        if (estadoActual.isAceptacion) {
+            return new ResultadoValidacionJornadaDto(true, "", -1L);
+        }
+
+        if (StringUtils.isBlank(errorCause)) {
+            String mensaje = "Se esperaba encontrar: " + estadoActual.transicionesEsperadas();
+            return new ResultadoValidacionJornadaDto(false, mensaje, idFichajeError == null ? -1L : idFichajeError);
+        }
+
+        String mensaje = "Se esperaba: " + estadoActual.transicionesEsperadas() + " - Se encontró: " + errorCause;
+        return new ResultadoValidacionJornadaDto(false, mensaje, idFichajeError == null ? -1L : idFichajeError);
     }
 
     public boolean transitar(Fichaje fichaje) {
@@ -108,6 +124,7 @@ public class ValidadorStateMachine {
 
             success = false;
             errorCause = "Entrada de Jornada";
+            idFichajeError = entradaJornada.getId();
         }
 
         @Override
@@ -122,6 +139,7 @@ public class ValidadorStateMachine {
             }
             success = false;
             errorCause = "Salida de Jornada";
+            idFichajeError = salidaJornada.getId();
         }
 
         @Override
@@ -136,6 +154,7 @@ public class ValidadorStateMachine {
             }
             success = false;
             errorCause = "Entrada de Desayuno";
+            idFichajeError = entradaDesayuno.getId();
         }
 
         @Override
@@ -150,6 +169,7 @@ public class ValidadorStateMachine {
             }
             success = false;
             errorCause = "Salida de Desayuno";
+            idFichajeError = salidaDesayuno.getId();
         }
 
         @Override
@@ -164,6 +184,7 @@ public class ValidadorStateMachine {
             }
             success = false;
             errorCause = "Entrada de comida";
+            idFichajeError = entradaComida.getId();
         }
 
         @Override
@@ -178,6 +199,7 @@ public class ValidadorStateMachine {
             }
             success = false;
             errorCause = "Salida de comida";
+            idFichajeError = salidaComida.getId();
         }
     }
 }

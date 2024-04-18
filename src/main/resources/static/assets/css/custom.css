@@ -11,5 +11,13 @@
   position: sticky;
   left: 0;
   z-index: 1;
-  background-color: #f5f7fa
+  background: #f5f7fa;
+}
+
+.dark .table-sticky th:first-child,
+.table-sticky td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #0f111a;
 }

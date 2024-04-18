@@ -1,27 +1,29 @@
 package net.avantic.domain.model.dto.factory;
 
+import net.avantic.domain.dao.ExtemporaneoRepository;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.FichajeDto;
+import net.avantic.domain.model.dto.FichajeOrdenJornadaSpecification;
 import net.avantic.utils.FichajeVisitor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FichajeDtoFactory {
 
-    public FichajeDto newDto(Fichaje fichaje) {
-        TipoFichajeVisitor visitor = new TipoFichajeVisitor(fichaje);
-        return new FichajeDto(fichaje.getCreated(), visitor.getTipoFichaje());
+    public FichajeDto newDto(FichajeOrdenJornadaSpecification specification) {
+        TipoFichajeVisitor visitor = new TipoFichajeVisitor();
+        return new FichajeDto(specification.getFichaje().getId(), specification.getFichaje().getCreated(), specification.isExtemporaneo(),
+                specification.getHoraFichaje(), visitor.getTipoFichaje(specification.getFichaje()));
     }
+}
 
     class TipoFichajeVisitor implements FichajeVisitor {
 
         private EnumTipoFichaje tipoFichaje;
 
-        public TipoFichajeVisitor(Fichaje fichaje) {
+        public EnumTipoFichaje getTipoFichaje(Fichaje fichaje) {
             fichaje.accept(this);
-        }
-
-        public EnumTipoFichaje getTipoFichaje() {
             return tipoFichaje;
         }
 
@@ -54,5 +56,5 @@ public class FichajeDtoFactory {
         public void visit(SalidaComida salidaComida) {
             this.tipoFichaje = EnumTipoFichaje.SALIDA_COMIDA;
         }
-    }
+
 }

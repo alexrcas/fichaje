@@ -1,3 +1,5 @@
+<#include "localdatetimemacro.ftl">
+
 <div class="container mb-4">
 
     <h3>${dia.getFechaFormateada()}</h3>
@@ -69,25 +71,25 @@
     <tbody>
     <tr>
         <th scope="row">Jornada</th>
-        <td class="text-center">15:30</td>
-        <td class="text-center">15:30</td>
-        <td class="text-center">8</td>
+        <td class="text-center"><@localdatetimemacro computo.inicioJornada /></td>
+        <td class="text-center"><@localdatetimemacro computo.finJornada /></td>
+        <td class="text-center">${computo.tiempoJornada}</td>
     </tr>
     <tr>
         <th scope="row">Desayuno</th>
-        <td class="text-center">15:30</td>
-        <td class="text-center">15:30</td>
-        <td class="text-center">8</td>
+        <td class="text-center"><@localdatetimemacro computo.inicioDesayuno /></td>
+        <td class="text-center"><@localdatetimemacro computo.finDesayuno /></td>
+        <td class="text-center">${computo.tiempoDesayuno}</td>
     </tr>
     <tr>
         <th scope="row">Almuerzo</th>
-        <td class="text-center">15:30</td>
-        <td class="text-center">15:30</td>
-        <td class="text-center">8</td>
+        <td class="text-center"><@localdatetimemacro computo.inicioComida /></td>
+        <td class="text-center"><@localdatetimemacro computo.finComida /></td>
+        <td class="text-center">${computo.tiempoComida}</td>
     </tr>
     <tr>
         <td colspan="3" class="text-end"><b>Total Jornada</b></td>
-        <td class="text-center"><b>5</b></td>
+        <td class="text-center"><b>${computo.tiempoTotalJornada}</b></td>
     </tr>
     </tbody>
 </table>

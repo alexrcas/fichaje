@@ -1,20 +1,18 @@
 package net.avantic.story.web.showdetallejornada;
 
-import net.avantic.domain.dao.ExtemporaneoRepository;
-import net.avantic.domain.dao.FichajeRepository;
 import net.avantic.domain.dao.JornadaEmpleadoRepository;
 import net.avantic.domain.model.*;
+import net.avantic.domain.model.dto.ComputoDto;
 import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.FichajeDto;
 import net.avantic.domain.model.dto.ResultadoValidacionJornadaDto;
+import net.avantic.domain.model.dto.factory.ComputoDtoFactory;
 import net.avantic.domain.model.dto.factory.FichajeDtoFactory;
 import net.avantic.domain.service.FichajeService;
 import net.avantic.domain.service.ValidarJornadaService;
-import net.avantic.utils.FichajeVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +23,19 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
     private final ValidarJornadaService validarJornadaService;
     private final FichajeService fichajeService;
     private final FichajeDtoFactory fichajeDtoFactory;
+    private final ComputoDtoFactory computoDtoFactory;
 
     @Autowired
     public ShowDetalleJornadaFacadeImpl(JornadaEmpleadoRepository jornadaEmpleadoRepository,
                                         ValidarJornadaService validarJornadaService,
                                         FichajeService fichajeService,
-                                        FichajeDtoFactory fichajeDtoFactory) {
+                                        FichajeDtoFactory fichajeDtoFactory,
+                                        ComputoDtoFactory computoDtoFactory) {
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.validarJornadaService = validarJornadaService;
         this.fichajeService = fichajeService;
         this.fichajeDtoFactory = fichajeDtoFactory;
+        this.computoDtoFactory = computoDtoFactory;
     }
 
     @Override
@@ -56,6 +57,12 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
     public DiaDto getFechaJornada(Long idJornada) {
         JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
         return new DiaDto(jornadaEmpleado.getDia().getId(), jornadaEmpleado.getDia().getFecha(), jornadaEmpleado.getDia().getDiaSemana());
+    }
+
+    @Override
+    public ComputoDto getComputo(Long idJornada) {
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
+        return computoDtoFactory.newDto(jornadaEmpleado);
     }
 
 }

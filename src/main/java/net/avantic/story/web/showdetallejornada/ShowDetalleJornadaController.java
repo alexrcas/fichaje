@@ -23,6 +23,7 @@ public class ShowDetalleJornadaController {
         model.addAttribute("fichajes", facade.listFichajesJornada(idJornada));
         model.addAttribute("validacion", facade.listValidacionesJornada(idJornada));
         model.addAttribute("dia", facade.getFechaJornada(idJornada));
+        model.addAttribute("computo", facade.getComputo(idJornada));
         return "showDetalleFichajeModal";
     }
 

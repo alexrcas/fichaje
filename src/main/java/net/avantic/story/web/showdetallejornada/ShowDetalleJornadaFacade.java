@@ -1,5 +1,6 @@
 package net.avantic.story.web.showdetallejornada;
 
+import net.avantic.domain.model.dto.ComputoDto;
 import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.FichajeDto;
 import net.avantic.domain.model.dto.ResultadoValidacionJornadaDto;
@@ -13,4 +14,6 @@ public interface ShowDetalleJornadaFacade {
     ResultadoValidacionJornadaDto listValidacionesJornada(Long idJornada);
 
     DiaDto getFechaJornada(Long idJornada);
+
+    ComputoDto getComputo(Long idJornada);
 }

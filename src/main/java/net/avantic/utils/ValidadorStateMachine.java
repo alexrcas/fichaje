@@ -37,7 +37,14 @@ public class ValidadorStateMachine {
                     new ClassTransition(Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA, SalidaComida.class, Estado.ESPERANDO_ENTRADA_COMIDA),
                     new ClassTransition(Estado.ESPERANDO_SALIDA, SalidaComida.class, Estado.ESPERANDO_ENTRADA_COMIDA),
                     new ClassTransition(Estado.ESPERANDO_ENTRADA_COMIDA, EntradaComida.class, Estado.ESPERANDO_SALIDA_JORNADA),
-                    new ClassTransition(Estado.ESPERANDO_SALIDA_JORNADA, SalidaJornada.class, Estado.FIN_JORNADA)
+                    new ClassTransition(Estado.ESPERANDO_SALIDA_JORNADA, SalidaJornada.class, Estado.FIN_JORNADA),
+
+                    new ClassTransition(Estado.FIN_JORNADA, EntradaJornada.class, Estado.ERROR),
+                    new ClassTransition(Estado.FIN_JORNADA, SalidaJornada.class, Estado.ERROR),
+                    new ClassTransition(Estado.FIN_JORNADA, EntradaDesayuno.class, Estado.ERROR),
+                    new ClassTransition(Estado.FIN_JORNADA, SalidaDesayuno.class, Estado.ERROR),
+                    new ClassTransition(Estado.FIN_JORNADA, EntradaComida.class, Estado.ERROR),
+                    new ClassTransition(Estado.FIN_JORNADA, SalidaComida.class, Estado.ERROR)
             )
             .setInitialState(Estado.ESPERANDO_ENTRADA_JORNADA)
             .build();

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Random;
 
 @Component
 public class CalendarInitializerService {
@@ -48,17 +50,32 @@ public class CalendarInitializerService {
 
         Empleado empleado = new Empleado("arodriguez");
         empleadoRepository.save(empleado);
-        /*
+
         diaRepository.findAll().stream()
                 .map(dia -> new JornadaEmpleado(empleado, dia))
                 .map(jornadaEmpleadoRepository::save)
-                .map(je -> new EntradaJornada(empleado, je))
-                .map(fichajeRepository::save)
-                .map(f -> new Extemporaneo(f, LocalDateTime.now()))
-                .forEach(extemporaneoRepository::save);
+                .forEach(this::crearFichajes);
 
+    }
 
- */
+    //todo arodriguez: no es necesario que el fichaje apunte al empleado puesto que ya la jornada lo hace
+    private void crearFichajes(JornadaEmpleado jornadaEmpleado) {
+        Random random = new Random();
+
+        LocalDate fechaBase = jornadaEmpleado.getDia().getFecha();
+
+        LocalDateTime horaEntradaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 7, 0, 0));
+        EntradaJornada entradaJornada = new EntradaJornada(jornadaEmpleado.getEmpleado(), jornadaEmpleado);
+        Extemporaneo ex1 = new Extemporaneo(entradaJornada, horaEntradaJornada);
+
+        LocalDateTime horaSalidaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 15, 0, 0));
+        SalidaJornada salidaJornada = new SalidaJornada(jornadaEmpleado.getEmpleado(), jornadaEmpleado);
+        Extemporaneo ex2 = new Extemporaneo(salidaJornada, horaSalidaJornada);
+
+        fichajeRepository.save(entradaJornada);
+        fichajeRepository.save(salidaJornada);
+        extemporaneoRepository.save(ex1);
+        extemporaneoRepository.save(ex2);
     }
 
     private boolean esFestivo(LocalDate date) {

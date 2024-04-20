@@ -38,6 +38,7 @@ public class ValidarJornadaServiceImpl implements ValidarJornadaService {
                 .map(FichajeOrdenJornadaSpecification::getFichaje)
                 .toList();
 
+
         ValidadorStateMachine validadorStateMachine = new ValidadorStateMachine();
 
         for (Fichaje fichaje : fichajes) {
@@ -48,7 +49,7 @@ public class ValidarJornadaServiceImpl implements ValidarJornadaService {
         }
 
 
-        if (!validadorStateMachine.getEstadoActual().isAceptacion()) {
+        if (!validadorStateMachine.isInEstadoAceptacion()) {
             return validadorStateMachine.getResultadoValidacion();
         }
 

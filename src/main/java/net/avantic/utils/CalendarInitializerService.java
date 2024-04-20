@@ -48,6 +48,7 @@ public class CalendarInitializerService {
 
         Empleado empleado = new Empleado("arodriguez");
         empleadoRepository.save(empleado);
+        /*
         diaRepository.findAll().stream()
                 .map(dia -> new JornadaEmpleado(empleado, dia))
                 .map(jornadaEmpleadoRepository::save)
@@ -56,6 +57,8 @@ public class CalendarInitializerService {
                 .map(f -> new Extemporaneo(f, LocalDateTime.now()))
                 .forEach(extemporaneoRepository::save);
 
+
+ */
     }
 
     private boolean esFestivo(LocalDate date) {

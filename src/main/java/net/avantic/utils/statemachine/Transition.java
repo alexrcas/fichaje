@@ -5,7 +5,7 @@ public class Transition {
     private final Class<?> entrada;
     private final State fin;
 
-    Transition(State inicio, Class<?> entrada, State fin) {
+    public Transition(State inicio, Class<?> entrada, State fin) {
         this.inicio = inicio;
         this.entrada = entrada;
         this.fin = fin;

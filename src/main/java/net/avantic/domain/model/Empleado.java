@@ -13,6 +13,13 @@ public class Empleado implements Serializable {
     private Long id;
     private String email;
 
+    public Empleado() {
+    }
+
+    public Empleado(String email) {
+        this.email = email;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

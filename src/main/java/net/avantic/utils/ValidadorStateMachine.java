@@ -2,10 +2,7 @@ package net.avantic.utils;
 
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.ResultadoValidacionJornadaDto;
-import net.avantic.utils.statemachine.State;
-import net.avantic.utils.statemachine.StateMachine;
-import net.avantic.utils.statemachine.StateMachineBuilder;
-import net.avantic.utils.statemachine.Transition;
+import net.avantic.utils.statemachine.*;
 
 
 public class ValidadorStateMachine {
@@ -30,18 +27,21 @@ public class ValidadorStateMachine {
         }
     }
 
-    StateMachine stateMachine = new StateMachineBuilder()
-            .setInitialState(Estado.ESPERANDO_ENTRADA_JORNADA)
+    StateMachine stateMachine = new StateMachineByReferenceBuilder()
             .addTransitions(
-                    new Transition(Estado.ESPERANDO_ENTRADA_JORNADA, EntradaJornada.class, Estado.ESPERANDO_SALIDA),
-                    new Transition(Estado.ESPERANDO_SALIDA, SalidaDesayuno.class, Estado.ESPERANDO_ENTRADA_DESAYUNO),
-                    new Transition(Estado.ESPERANDO_ENTRADA_DESAYUNO, EntradaDesayuno.class, Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA),
-                    new Transition(Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA, SalidaJornada.class, Estado.FIN_JORNADA),
-                    new Transition(Estado.ESPERANDO_SALIDA, SalidaComida.class, Estado.ESPERANDO_ENTRADA_COMIDA),
-                    new Transition(Estado.ESPERANDO_ENTRADA_COMIDA, EntradaComida.class, Estado.ESPERANDO_SALIDA_JORNADA),
-                    new Transition(Estado.ESPERANDO_SALIDA_JORNADA, SalidaJornada.class, Estado.FIN_JORNADA)
+                    new ReferenceTransition(Estado.ESPERANDO_ENTRADA_JORNADA, EntradaJornada.class, Estado.ESPERANDO_SALIDA),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA, SalidaDesayuno.class, Estado.ESPERANDO_ENTRADA_DESAYUNO),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA, SalidaJornada.class, Estado.FIN_JORNADA),
+                    new ReferenceTransition(Estado.ESPERANDO_ENTRADA_DESAYUNO, EntradaDesayuno.class, Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA, SalidaJornada.class, Estado.FIN_JORNADA),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA_JORNADA_O_SALIDA_COMIDA, SalidaComida.class, Estado.ESPERANDO_ENTRADA_COMIDA),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA, SalidaComida.class, Estado.ESPERANDO_ENTRADA_COMIDA),
+                    new ReferenceTransition(Estado.ESPERANDO_ENTRADA_COMIDA, EntradaComida.class, Estado.ESPERANDO_SALIDA_JORNADA),
+                    new ReferenceTransition(Estado.ESPERANDO_SALIDA_JORNADA, SalidaJornada.class, Estado.FIN_JORNADA)
             )
+            .setInitialState(Estado.ESPERANDO_ENTRADA_JORNADA)
             .build();
+
 
     public boolean transitar(Fichaje fichaje) {
         this.mensaje = "Se estaba en: " + stateMachine.getEstadoActual() + " - Se encontró: " + fichaje.getClass().getName();

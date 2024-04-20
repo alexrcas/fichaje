@@ -40,7 +40,7 @@ public class FichajeServiceImpl implements FichajeService {
         JornadaEmpleado jornadaEmpleado = jornadaService.findByDiaAndEmpleado(dia, empleado)
                 .orElseGet(() -> jornadaService.createJornadaEmpleado(dia, empleado));
 
-        Fichaje fichaje = createFichaje(empleado, jornadaEmpleado, tipoFichaje);
+        Fichaje fichaje = createFichaje(jornadaEmpleado, tipoFichaje);
 
         jornadaEmpleado.setValidada(false);
         jornadaEmpleadoRepository.save(jornadaEmpleado);
@@ -52,7 +52,7 @@ public class FichajeServiceImpl implements FichajeService {
         JornadaEmpleado jornadaEmpleado = jornadaService.findByDiaAndEmpleado(dia, empleado)
                 .orElseGet(() -> jornadaService.createJornadaEmpleado(dia, empleado));
 
-        Fichaje fichaje = createFichaje(empleado, jornadaEmpleado, tipoFichaje);
+        Fichaje fichaje = createFichaje(jornadaEmpleado, tipoFichaje);
         Extemporaneo extemporaneo = new Extemporaneo(fichaje, hora);
         extemporaneoRepository.save(extemporaneo);
 
@@ -74,30 +74,30 @@ public class FichajeServiceImpl implements FichajeService {
     }
 
 
-    private Fichaje createFichaje(Empleado empleado, JornadaEmpleado jornadaEmpleado, EnumTipoFichaje tipoFichaje) {
+    private Fichaje createFichaje(JornadaEmpleado jornadaEmpleado, EnumTipoFichaje tipoFichaje) {
 
         if (tipoFichaje.equals(EnumTipoFichaje.ENTRADA_JORNADA)) {
-            return new EntradaJornada(empleado, jornadaEmpleado);
+            return new EntradaJornada(jornadaEmpleado);
         }
 
         if (tipoFichaje.equals(EnumTipoFichaje.SALIDA_JORNADA)) {
-            return new SalidaJornada(empleado, jornadaEmpleado);
+            return new SalidaJornada(jornadaEmpleado);
         }
 
         if (tipoFichaje.equals(EnumTipoFichaje.ENTRADA_DESAYUNO)) {
-            return new EntradaDesayuno(empleado, jornadaEmpleado);
+            return new EntradaDesayuno(jornadaEmpleado);
         }
 
         if (tipoFichaje.equals(EnumTipoFichaje.SALIDA_DESAYUNO)) {
-            return new SalidaDesayuno(empleado, jornadaEmpleado);
+            return new SalidaDesayuno(jornadaEmpleado);
         }
 
         if (tipoFichaje.equals(EnumTipoFichaje.ENTRADA_COMIDA)) {
-            return new EntradaComida(empleado, jornadaEmpleado);
+            return new EntradaComida(jornadaEmpleado);
         }
 
         if (tipoFichaje.equals(EnumTipoFichaje.SALIDA_COMIDA)) {
-            return new SalidaComida(empleado, jornadaEmpleado);
+            return new SalidaComida(jornadaEmpleado);
         }
 
         throw new RuntimeException("No está soportado el EnumTipoFichaje [" + tipoFichaje + "]");

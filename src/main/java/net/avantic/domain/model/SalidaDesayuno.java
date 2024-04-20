@@ -18,7 +18,7 @@ public class SalidaDesayuno extends Fichaje implements Serializable {
         visitor.visit(this);
     }
 
-    public SalidaDesayuno(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
-        super(empleado, jornadaEmpleado);
+    public SalidaDesayuno(JornadaEmpleado jornadaEmpleado) {
+        super(jornadaEmpleado);
     }
 }

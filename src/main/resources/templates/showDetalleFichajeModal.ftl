@@ -1,9 +1,9 @@
 <#include "localdatetimemacro.ftl">
 
-<div class="container mb-4">
+<div class="container">
 
     <h3>${dia.getFechaFormateada()}</h3>
-    <h5>arodriguez</h5>
+    <h5 class="mt-2">arodriguez</h5>
 
     <#if !validacion.valid>
     <div class="alert alert-outline-warning d-flex align-items-center p-3 mt-3" role="alert">
@@ -12,7 +12,7 @@
     </div>
     </#if>
 
-    <div class="timeline-basic mb-9 py-4">
+    <div class="timeline-basic mb-2 py-2">
 
         <#list fichajes as fichaje>
         <div class="timeline-item">

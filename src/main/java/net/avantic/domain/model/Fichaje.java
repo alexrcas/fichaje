@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Fichaje implements Serializable {
 
-
     private Long id;
 
-    private Empleado empleado;
     private JornadaEmpleado jornadaEmpleado;
     private LocalDateTime created;
 
@@ -23,8 +21,7 @@ public abstract class Fichaje implements Serializable {
     protected Fichaje() {
     }
 
-    public Fichaje(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
-        this.empleado = empleado;
+    public Fichaje(JornadaEmpleado jornadaEmpleado) {
         this.jornadaEmpleado = jornadaEmpleado;
         this.created = LocalDateTime.now();
     }
@@ -37,16 +34,6 @@ public abstract class Fichaje implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idEmpleado")
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -18,7 +18,7 @@ public class EntradaJornada extends Fichaje implements Serializable {
         visitor.visit(this);
     }
 
-    public EntradaJornada(Empleado empleado, JornadaEmpleado jornadaEmpleado) {
-        super(empleado, jornadaEmpleado);
+    public EntradaJornada(JornadaEmpleado jornadaEmpleado) {
+        super(jornadaEmpleado);
     }
 }

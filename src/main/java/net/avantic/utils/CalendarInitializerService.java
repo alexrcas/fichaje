@@ -57,19 +57,18 @@ public class CalendarInitializerService {
                 .forEach(this::crearFichajes);
 
     }
-
-    //todo arodriguez: no es necesario que el fichaje apunte al empleado puesto que ya la jornada lo hace
+    
     private void crearFichajes(JornadaEmpleado jornadaEmpleado) {
         Random random = new Random();
 
         LocalDate fechaBase = jornadaEmpleado.getDia().getFecha();
 
         LocalDateTime horaEntradaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 7, 0, 0));
-        EntradaJornada entradaJornada = new EntradaJornada(jornadaEmpleado.getEmpleado(), jornadaEmpleado);
+        EntradaJornada entradaJornada = new EntradaJornada(jornadaEmpleado);
         Extemporaneo ex1 = new Extemporaneo(entradaJornada, horaEntradaJornada);
 
         LocalDateTime horaSalidaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 15, 0, 0));
-        SalidaJornada salidaJornada = new SalidaJornada(jornadaEmpleado.getEmpleado(), jornadaEmpleado);
+        SalidaJornada salidaJornada = new SalidaJornada(jornadaEmpleado);
         Extemporaneo ex2 = new Extemporaneo(salidaJornada, horaSalidaJornada);
 
         fichajeRepository.save(entradaJornada);

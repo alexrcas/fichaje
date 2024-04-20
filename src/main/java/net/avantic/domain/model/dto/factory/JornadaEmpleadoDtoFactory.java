@@ -13,15 +13,12 @@ import java.time.LocalDateTime;
 @Component
 public class JornadaEmpleadoDtoFactory {
 
-    private final FichajeService fichajeService;
     private final ValidarJornadaService validarJornadaService;
     private final ComputoDtoFactory computoDtoFactory;
 
     @Autowired
-    public JornadaEmpleadoDtoFactory(FichajeService fichajeService,
-                                     ValidarJornadaService validarJornadaService,
+    public JornadaEmpleadoDtoFactory(ValidarJornadaService validarJornadaService,
                                      ComputoDtoFactory computoDtoFactory) {
-        this.fichajeService = fichajeService;
         this.validarJornadaService = validarJornadaService;
         this.computoDtoFactory = computoDtoFactory;
     }

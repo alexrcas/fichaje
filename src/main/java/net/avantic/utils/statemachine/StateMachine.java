@@ -24,8 +24,8 @@ public class StateMachine {
 
     private boolean transitarByReference(Object entrada) {
 
-        Optional<ReferenceTransition> transicion = transiciones.stream()
-                .map(t -> (ReferenceTransition) t)
+        Optional<ClassTransition> transicion = transiciones.stream()
+                .map(t -> (ClassTransition) t)
                 .filter(t -> t.getInicio().equals(this.estadoActual))
                 .filter(t -> t.getEntrada().equals(entrada.getClass()))
                 .findAny();

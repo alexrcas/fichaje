@@ -1,6 +1,6 @@
 package net.avantic.utils.statemachine;
 
-public class ValueTransition<T> extends Transition {
+public class ValueTransition extends Transition {
 
     private final Object entrada;
 

@@ -5,6 +5,8 @@ import net.avantic.utils.statemachine.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 class FichappApplicationTests {
 
@@ -24,6 +26,13 @@ class FichappApplicationTests {
 		stateMachine.transitar(1);
 		stateMachine.transitar(1);
 		stateMachine.transitar(1);
+
+		List<String> entradas = List.of("A", "B", "C", "A");
+		for (String entrada : entradas) {
+			boolean result = stateMachine.transitar(entrada);
+		}
+
+		boolean esFinal = stateMachine.getEstadoActual().isFinalState();
 
 
 /*

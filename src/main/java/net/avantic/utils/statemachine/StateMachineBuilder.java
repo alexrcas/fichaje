@@ -8,7 +8,7 @@ public class StateMachineBuilder {
     State initialState;
     boolean referenceTransitions = false;
 
-    public StateMachineBuilder(StateMachineByReferenceBuilder builder) {
+    public StateMachineBuilder(StateMachineByClassBuilder builder) {
         this.transitions = builder.getTransitions();
         this.initialState = builder.getInitialState();
         this.referenceTransitions = true;

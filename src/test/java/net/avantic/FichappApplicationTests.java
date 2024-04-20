@@ -12,7 +12,7 @@ class FichappApplicationTests {
 	@Test
 	void contextLoads() {
 
-		net.avantic.utils.statemachine.StateMachine stateMachine = new StateMachineByValueBuilder<Long>()
+		net.avantic.utils.statemachine.StateMachine stateMachine = new StateMachineByValueBuilder()
 				.addTransitions(
 						new ValueTransition(ValidadorStateMachine.Estado.ESPERANDO_ENTRADA_JORNADA, 1, ValidadorStateMachine.Estado.ESPERANDO_SALIDA),
 						new ValueTransition(ValidadorStateMachine.Estado.ESPERANDO_SALIDA, 1, ValidadorStateMachine.Estado.FIN_JORNADA),

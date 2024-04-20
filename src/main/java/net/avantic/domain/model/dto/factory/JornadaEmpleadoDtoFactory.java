@@ -37,24 +37,4 @@ public class JornadaEmpleadoDtoFactory {
         ComputoDto computoDto = computoDtoFactory.newDto(jornadaEmpleado);
         return new JornadaDto(jornadaEmpleado.getId(), String.valueOf(computoDto.getTiempoTotalJornada()));
     }
-
-
-    class InformacionFichaje {
-
-        private final Fichaje fichaje;
-        private final LocalDateTime hora;
-
-        public InformacionFichaje(Fichaje fichaje, LocalDateTime hora) {
-            this.fichaje = fichaje;
-            this.hora = hora;
-        }
-
-        public Fichaje getFichaje() {
-            return fichaje;
-        }
-
-        public LocalDateTime getHora() {
-            return hora;
-        }
-    }
 }

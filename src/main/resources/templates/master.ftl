@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
     <link href="/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+    <link href="vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link href="/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
     <link href="/assets/css/custom.css" type="text/css" rel="stylesheet">
@@ -63,6 +64,7 @@
     <script src="/vendors/feather-icons/feather.min.js"></script>
     <script src="/vendors/dayjs/dayjs.min.js"></script>
     <script src="/assets/js/phoenix.js"></script>
+    <script src="vendors/flatpickr/flatpickr.min.js"></script>
     <script src="/vendors/echarts/echarts.min.js"></script>
     <script src="/vendors/leaflet/leaflet.js"></script>
     <script src="/vendors/leaflet.markercluster/leaflet.markercluster.js"></script>

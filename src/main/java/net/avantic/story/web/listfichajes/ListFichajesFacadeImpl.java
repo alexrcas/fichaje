@@ -54,7 +54,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Transactional
     public List<SemanaJornadaDto> listJornadas() {
         //todo: parametrizar empleado
-        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 5, 1)), false).stream()
+        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 4, 1)), false).stream()
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleadoRepository.findAll().get(0))
                             .map(jornadaEmpleadoDtoFactory::newDto)
                             .orElse(JornadaDto.emptyDto())
@@ -64,6 +64,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         return agruparLista(jornadas, 5);
     }
 
+    //todo arodriguez: trasladar a factory
     public static List<SemanaJornadaDto> agruparLista(List<JornadaDto> lista, int tamanoSublista) {
         List<SemanaJornadaDto> semanaJornadaDtoList = new ArrayList<>();
         for (int i = 0; i < lista.size(); i += tamanoSublista) {

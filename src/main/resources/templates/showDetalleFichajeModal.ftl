@@ -73,23 +73,23 @@
         <th scope="row">Jornada</th>
         <td class="text-center"><@localdatetimemacro computo.inicioJornada /></td>
         <td class="text-center"><@localdatetimemacro computo.finJornada /></td>
-        <td class="text-center">${computo.tiempoJornada?string["0.0"]}</td>
+        <td class="text-center">${computo.tiempoJornada?string["0.00"]}</td>
     </tr>
     <tr>
         <th scope="row">Desayuno</th>
         <td class="text-center"><@localdatetimemacro computo.inicioDesayuno /></td>
         <td class="text-center"><@localdatetimemacro computo.finDesayuno /></td>
-        <td class="text-center">${computo.tiempoDesayuno?string["0.0"]}</td>
+        <td class="text-center">${computo.tiempoDesayuno?string["0.00"]}</td>
     </tr>
     <tr>
         <th scope="row">Almuerzo</th>
         <td class="text-center"><@localdatetimemacro computo.inicioComida /></td>
         <td class="text-center"><@localdatetimemacro computo.finComida /></td>
-        <td class="text-center">${computo.tiempoComida?string["0.0"]}</td>
+        <td class="text-center">${computo.tiempoComida?string["0.00"]}</td>
     </tr>
     <tr>
         <td colspan="3" class="text-end"><b>Total Jornada</b></td>
-        <td class="text-center"><b>${computo.tiempoTotalJornada?string["0.0"]}</b></td>
+        <td class="text-center"><b>${computo.tiempoTotalJornada?string["0.00"]}</b></td>
     </tr>
     </tbody>
 </table>

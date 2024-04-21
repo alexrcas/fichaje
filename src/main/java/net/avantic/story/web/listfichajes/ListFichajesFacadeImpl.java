@@ -5,13 +5,13 @@ import net.avantic.domain.dao.DiaRepository;
 import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.dao.JornadaEmpleadoRepository;
 import net.avantic.domain.model.Empleado;
-import net.avantic.domain.model.dto.DiaDto;
-import net.avantic.domain.model.dto.EmpleadoDto;
-import net.avantic.domain.model.dto.JornadaDto;
-import net.avantic.domain.model.dto.JornadasEmpleadoDto;
+import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.JornadaEmpleadoDtoFactory;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,31 +36,44 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
     @Override
     public List<DiaDto> listDias() {
-        return diaRepository.findAllByFestivoOrderByIdAsc(false).stream()
+
+        List<DiaDto> dias = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 4, 3)), false).stream()
                 .map(d -> new DiaDto(d.getId(), d.getFecha(), d.getDiaSemana()))
                 .collect(Collectors.toList());
+
+        return dias;
+    }
+
+    private static LocalDate findPrimerLunes(LocalDate fecha) {
+        DayOfWeek diaSemana = fecha.getDayOfWeek();
+        int diasRetroceder = diaSemana.getValue() - DayOfWeek.MONDAY.getValue();
+        return fecha.minusDays(diasRetroceder);
     }
 
     @Override
     @Transactional
-    public List<JornadasEmpleadoDto> listJornadas() {
+    public List<SemanaJornadaDto> listJornadas() {
+        //todo: parametrizar empleado
+        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 5, 1)), false).stream()
+                .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleadoRepository.findAll().get(0))
+                            .map(jornadaEmpleadoDtoFactory::newDto)
+                            .orElse(JornadaDto.emptyDto())
+                )
+                .collect(Collectors.toList());
 
-        List<JornadasEmpleadoDto> jornadasEmpleados = new ArrayList<>();
-
-        for (Empleado empleado : empleadoRepository.findAll()) {
-
-            List<JornadaDto> jornadas = diaRepository.findAllByFestivoOrderByIdAsc(false).stream()
-                    .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado)
-                                .map(jornadaEmpleadoDtoFactory::newDto)
-                                .orElse(JornadaDto.emptyDto())
-                    )
-                    .collect(Collectors.toList());
-
-            EmpleadoDto empleadoDto = new EmpleadoDto(empleado.getId(), empleado.getEmail());
-            JornadasEmpleadoDto jornadasEmpleadoDto = new JornadasEmpleadoDto(empleadoDto, jornadas);
-            jornadasEmpleados.add(jornadasEmpleadoDto);
-        }
-
-        return jornadasEmpleados;
+        return agruparLista(jornadas, 5);
     }
+
+    public static List<SemanaJornadaDto> agruparLista(List<JornadaDto> lista, int tamanoSublista) {
+        List<SemanaJornadaDto> semanaJornadaDtoList = new ArrayList<>();
+        for (int i = 0; i < lista.size(); i += tamanoSublista) {
+            semanaJornadaDtoList.add(
+                    new SemanaJornadaDto(
+                            lista.subList(i, Math.min(i + tamanoSublista, lista.size()))
+                    )
+            );
+        }
+        return semanaJornadaDtoList;
+    }
+
 }

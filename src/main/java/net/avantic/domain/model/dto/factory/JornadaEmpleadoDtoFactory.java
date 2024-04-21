@@ -28,10 +28,10 @@ public class JornadaEmpleadoDtoFactory {
         validarJornadaService.validar(jornadaEmpleado);
 
         if (!jornadaEmpleado.isValidada()) {
-            return new JornadaDto(jornadaEmpleado.getId(), "E");
+            return new JornadaDto(jornadaEmpleado.getId(), "E", jornadaEmpleado.getDia().getFecha());
         }
 
         ComputoDto computoDto = computoDtoFactory.newDto(jornadaEmpleado);
-        return new JornadaDto(jornadaEmpleado.getId(), String.valueOf(computoDto.getTiempoTotalJornada()));
+        return new JornadaDto(jornadaEmpleado.getId(), String.valueOf(computoDto.getTiempoTotalJornada()), jornadaEmpleado.getDia().getFecha());
     }
 }

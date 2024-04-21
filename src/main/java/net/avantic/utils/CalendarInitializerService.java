@@ -52,6 +52,7 @@ public class CalendarInitializerService {
         empleadoRepository.save(empleado);
 
         diaRepository.findAll().stream()
+                //.filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .map(dia -> new JornadaEmpleado(empleado, dia))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);

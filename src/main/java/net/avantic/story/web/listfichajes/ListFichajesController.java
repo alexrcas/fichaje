@@ -19,8 +19,8 @@ public class ListFichajesController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("dias", facade.listDias());
-        model.addAttribute("jornadas", facade.listJornadas());
+        //model.addAttribute("dias", facade.listDias());
+        model.addAttribute("semanasJornadas", facade.listJornadas());
         return "listFichajes";
     }
 

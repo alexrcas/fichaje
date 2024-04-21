@@ -2,19 +2,22 @@ package net.avantic.domain.model.dto;
 
 import net.avantic.domain.model.JornadaEmpleado;
 
+import java.time.LocalDate;
+
 public class JornadaDto {
 
     private final Long id;
     private final String horas;
+    private final LocalDate fecha;
 
-    public JornadaDto(Long id, String horas) {
+    public JornadaDto(Long id, String horas, LocalDate fecha) {
         this.id = id;
         this.horas = horas;
+        this.fecha = fecha;
     }
 
-    protected JornadaDto() {
-        this.id = -1L;
-        this.horas = "N/A";
+    public static JornadaDto emptyDto() {
+        return new JornadaDto(-1L, "", null);
     }
 
     public Long getId() {
@@ -25,7 +28,7 @@ public class JornadaDto {
         return horas;
     }
 
-    public static JornadaDto emptyDto() {
-        return new JornadaDto();
+    public LocalDate getFecha() {
+        return fecha;
     }
 }

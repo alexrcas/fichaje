@@ -70,7 +70,13 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
                     .map(JornadaDto::getFecha)
                     .anyMatch(today::isEqual);
 
-            semanaJornadaDtoList.add(new SemanaJornadaDto(jornadasSemana, isSemanaActual));
+            double tiempoSemana = jornadasSemana.stream()
+                    .map(JornadaDto::getHoras)
+                    .filter(s -> !s.isBlank())
+                    .map(Double::parseDouble)
+                            .reduce((double) 0, Double::sum);
+
+            semanaJornadaDtoList.add(new SemanaJornadaDto(jornadasSemana, isSemanaActual, tiempoSemana));
         }
         return semanaJornadaDtoList;
     }

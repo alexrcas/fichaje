@@ -6,10 +6,12 @@ public class SemanaJornadaDto {
 
     private final List<JornadaDto> jornadas;
     private final boolean isSemanaActual;
+    private final double tiempoSemana;
 
-    public SemanaJornadaDto(List<JornadaDto> jornadas, boolean isSemanaActual) {
+    public SemanaJornadaDto(List<JornadaDto> jornadas, boolean isSemanaActual, double tiempoSemana) {
         this.jornadas = jornadas;
         this.isSemanaActual = isSemanaActual;
+        this.tiempoSemana = tiempoSemana;
     }
 
     public List<JornadaDto> getJornadas() {
@@ -18,5 +20,9 @@ public class SemanaJornadaDto {
 
     public boolean isSemanaActual() {
         return isSemanaActual;
+    }
+
+    public double getTiempoSemana() {
+        return tiempoSemana;
     }
 }

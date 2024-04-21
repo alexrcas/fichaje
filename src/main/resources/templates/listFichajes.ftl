@@ -34,7 +34,7 @@
                     </td>
                     </#list>
                 <td class="p-2">
-                    <div class="text-center fw-bold mt-3">8.0</div>
+                    <div class="text-center fw-bold mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                 </td>
                 </tr>
                 </#list>

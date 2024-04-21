@@ -24,7 +24,7 @@ public class ValidadorDiaEmpleadoServiceImpl implements ValidadorDiaEmpleadoServ
     @Override
     public void validar(Empleado empleado) {
 
-        diaRepository.findAllByFestivoOrderByIdDesc(false).stream()
+        diaRepository.findAllByFestivoOrderByIdAsc(false).stream()
                 .forEach(dia -> {
                     //todo arodriguez: contemplar vacaciones
                     jornadaEmpleadoRepository.findByDiaAndEmpleado(dia, empleado)

@@ -32,7 +32,12 @@
         <tr>
             <th scope="col"></th>
             <#list dias as dia>
-            <th class="text-center" scope="col">${dia.fechaDDMM()}</th>
+            <th class="text-center" scope="col">
+                <div class="d-flex flex-column">
+                    <span class="pb-2">${dia.diaSemana.getCodigo()}</span>
+                    <span>${dia.fechaDDMM()}</span>
+                </div>
+            </th>
             </#list>
         </tr>
         </thead>
@@ -42,7 +47,11 @@
             <th scope="row">${jornada.empleado.email}</th>
             <#list jornada.jornadas as jornadaEmpleado>
                 <td class="text-center table-cell-hover cursor-pointer" onclick="showDetalleJornada(${jornadaEmpleado.id})">
-                        ${jornadaEmpleado.horas}
+                    <#if jornadaEmpleado.horas != 'E'>
+                    ${jornadaEmpleado.horas?number?string["0.0"]}
+                    <#else>
+                        E
+                    </#if>
                 </td>
             </#list>
         </tr>

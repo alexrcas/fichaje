@@ -11,7 +11,7 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
 
     Optional<Dia> findByFecha(LocalDate fecha);
 
-    List<Dia> findAllByFestivoOrderByIdDesc(boolean festivo);
+    List<Dia> findAllByFestivoOrderByIdAsc(boolean festivo);
 
     List<Dia> findAllByOrderByIdAsc();
 }

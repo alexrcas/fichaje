@@ -36,7 +36,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
     @Override
     public List<DiaDto> listDias() {
-        return diaRepository.findAllByOrderByIdAsc().stream()
+        return diaRepository.findAllByFestivoOrderByIdAsc(false).stream()
                 .map(d -> new DiaDto(d.getId(), d.getFecha(), d.getDiaSemana()))
                 .collect(Collectors.toList());
     }
@@ -49,7 +49,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
         for (Empleado empleado : empleadoRepository.findAll()) {
 
-            List<JornadaDto> jornadas = diaRepository.findAllByOrderByIdAsc().stream()
+            List<JornadaDto> jornadas = diaRepository.findAllByFestivoOrderByIdAsc(false).stream()
                     .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado)
                                 .map(jornadaEmpleadoDtoFactory::newDto)
                                 .orElse(JornadaDto.emptyDto())

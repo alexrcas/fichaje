@@ -57,7 +57,7 @@ public class CalendarInitializerService {
                 .forEach(this::crearFichajes);
 
     }
-    
+
     private void crearFichajes(JornadaEmpleado jornadaEmpleado) {
         Random random = new Random();
 
@@ -71,10 +71,34 @@ public class CalendarInitializerService {
         SalidaJornada salidaJornada = new SalidaJornada(jornadaEmpleado);
         Extemporaneo ex2 = new Extemporaneo(salidaJornada, horaSalidaJornada);
 
+        LocalDateTime horaSalidaDesayuno = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(1) + 10, 0, 0));
+        SalidaDesayuno salidaDesayuno = new SalidaDesayuno(jornadaEmpleado);
+        Extemporaneo ex3 = new Extemporaneo(salidaDesayuno, horaSalidaDesayuno);
+
+        LocalDateTime horaEntradaDesayuno = horaSalidaDesayuno.plusMinutes(random.nextLong(16) + 15);
+        EntradaDesayuno entradaDesayuno = new EntradaDesayuno(jornadaEmpleado);
+        Extemporaneo ex4 = new Extemporaneo(entradaDesayuno, horaEntradaDesayuno);
+
+        LocalDateTime horaSalidaComida = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(1) + 13, 0, 0));
+        SalidaComida salidaComida = new SalidaComida(jornadaEmpleado);
+        Extemporaneo ex5 = new Extemporaneo(salidaComida, horaSalidaComida);
+
+        LocalDateTime horaEntradaComida = horaSalidaComida.plusMinutes(random.nextLong(16) + 15);
+        EntradaComida entradaComida = new EntradaComida(jornadaEmpleado);
+        Extemporaneo ex6 = new Extemporaneo(entradaComida, horaEntradaComida);
+
         fichajeRepository.save(entradaJornada);
         fichajeRepository.save(salidaJornada);
+        fichajeRepository.save(salidaDesayuno);
+        fichajeRepository.save(entradaDesayuno);
+        fichajeRepository.save(salidaComida);
+        fichajeRepository.save(entradaComida);
         extemporaneoRepository.save(ex1);
         extemporaneoRepository.save(ex2);
+        extemporaneoRepository.save(ex3);
+        extemporaneoRepository.save(ex4);
+        extemporaneoRepository.save(ex5);
+        extemporaneoRepository.save(ex6);
     }
 
     private boolean esFestivo(LocalDate date) {

@@ -4,10 +4,10 @@
 
 <div class="row">
 
-    <div class="col-6">
+    <div style="max-height:80vh" class="col-6 h-100 overflow-auto">
 
             <table class="table table-bordered">
-                <thead>
+                <thead class="sticky-top tabla-fichaje bg-body dark__bg-dark">
                 <tr>
                     <th class="text-center">L</th>
                     <th class="text-center">M</th>
@@ -24,9 +24,12 @@
                     <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>" onclick="showDetalleJornada(${jornada.id})">
                         <div class="d-flex flex-column ">
                             <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
-                            <#if jornada.horas != ''>
+                            <#if jornada.horas != '' && jornada.horas != 'E'>
                             <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
                             </#if>
+                        <#if jornada.horas == 'E'>
+                        <div class="text-center fw-bold mt-1 bg-danger">E</div>
+                    </#if>
                         </div>
                     </td>
                     </#list>
@@ -47,7 +50,7 @@
             <div class="mb-3">
                 <div class="form-floating">
                     <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                        <option value="1">One</option>
+                        <option value="1">Entrada jornada</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
                     </select>

@@ -40,8 +40,8 @@ public class CalendarInitializerService {
 
         LocalDate today = LocalDate.now();
         int year = today.getYear();
-        LocalDate startDate = LocalDate.of(year, 4, 1);
-        LocalDate endDate = LocalDate.of(year, 6, 30);
+        LocalDate startDate = LocalDate.of(year -1, 12, 25);
+        LocalDate endDate = LocalDate.of(year, 12, 31);
 
         for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
             Dia dia = new Dia(date, getDiaSemana(date), esFestivo(date));
@@ -52,7 +52,7 @@ public class CalendarInitializerService {
         empleadoRepository.save(empleado);
 
         diaRepository.findAll().stream()
-                .filter(d -> d.getFecha().isBefore(LocalDate.now())) //todo: arodriguez: contemplar este caso
+                .filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .map(dia -> new JornadaEmpleado(empleado, dia))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);

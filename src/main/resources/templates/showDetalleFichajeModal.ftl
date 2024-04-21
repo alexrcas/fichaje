@@ -12,7 +12,7 @@
     </div>
     </#if>
 
-    <div class="timeline-basic mb-2 py-2">
+    <div style="margin-top: 2em !important" class="timeline-basic mb-2 py-2">
 
         <#list fichajes as fichaje>
         <div class="timeline-item">
@@ -35,8 +35,8 @@
                 <div class="col">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex mb-2">
-                            <h6 class="lh-sm mb-0 me-2 text-body-secondary timeline-item-title">
-                                ${fichaje.tipoFichaje}
+                            <h5 class="lh-sm mb-0 me-2 text-body-secondary timeline-item-title">
+                                ${fichaje.tipoFichaje.getName()}
                                 <#if fichaje.id == validacion.idEstado>
                                 <span class="fas fa-warning text-warning text-opacity-75 fs-2 ps-4"></span>
                                 </#if>

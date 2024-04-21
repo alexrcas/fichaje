@@ -36,15 +36,6 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         this.jornadaEmpleadoDtoFactory = jornadaEmpleadoDtoFactory;
     }
 
-    @Override
-    public List<DiaDto> listDias() {
-
-        List<DiaDto> dias = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 4, 3)), false).stream()
-                .map(d -> new DiaDto(d.getId(), d.getFecha(), d.getDiaSemana()))
-                .collect(Collectors.toList());
-
-        return dias;
-    }
 
     private static LocalDate findPrimerLunes(LocalDate fecha) {
         DayOfWeek diaSemana = fecha.getDayOfWeek();
@@ -56,7 +47,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Transactional
     public List<SemanaJornadaDto> listJornadas() {
         //todo: parametrizar empleado
-        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 4, 1)), false).stream()
+        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 1, 1)), false).stream()
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleadoRepository.findAll().get(0))
                             .map(jornadaEmpleadoDtoFactory::newDto)
                             .orElse(JornadaDto.emptyDto(d))

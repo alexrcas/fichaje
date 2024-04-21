@@ -21,8 +21,9 @@
                 <#list semanasJornadas as semanaJornada>
                 <tr>
                     <#list semanaJornada.jornadas as jornada>
-                    <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>" onclick="showDetalleJornada(${jornada.id})">
-                        <div class="d-flex flex-column ">
+                    <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>"
+                        <#if jornada.horas != ''>onclick="showDetalleJornada(${jornada.id})"</#if> >
+                        <div class="d-flex flex-column">
                             <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
                             <#if jornada.horas != '' && jornada.horas != 'E'>
                             <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
@@ -33,9 +34,17 @@
                         </div>
                     </td>
                     </#list>
-                <td class="p-2">
+
+                <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >
+                <td class="p-2 bg-danger">
                     <div class="text-center fw-bold mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                 </td>
+                <#else>
+                <td class="p-2 bg-success">
+                    <div class="text-center fw-bold mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                </td>
+                </#if>
+
                 </tr>
                 </#list>
 

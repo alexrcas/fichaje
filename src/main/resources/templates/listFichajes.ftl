@@ -1,5 +1,6 @@
 <#import "themelayout.ftl" as base>
 <@base.themelayout active="fichajes">
+<#include "localdatemacro.ftl">
 
 <div class="row">
 
@@ -20,10 +21,12 @@
                 <#list semanasJornadas as semanaJornada>
                 <tr>
                     <#list semanaJornada.jornadas as jornada>
-                    <td class="cursor-pointer p-2 table-cell-hover" onclick="showDetalleJornada(${jornada.id})">
+                    <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>" onclick="showDetalleJornada(${jornada.id})">
                         <div class="d-flex flex-column ">
-                            <div class="small d-flex justify-content-end">${jornada.fecha?date?string('dd/MM')}</div>
+                            <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
+                            <#if jornada.horas != ''>
                             <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
+                            </#if>
                         </div>
                     </td>
                     </#list>

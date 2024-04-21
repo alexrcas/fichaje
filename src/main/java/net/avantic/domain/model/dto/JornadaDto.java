@@ -1,5 +1,6 @@
 package net.avantic.domain.model.dto;
 
+import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.JornadaEmpleado;
 
 import java.time.LocalDate;
@@ -16,8 +17,8 @@ public class JornadaDto {
         this.fecha = fecha;
     }
 
-    public static JornadaDto emptyDto() {
-        return new JornadaDto(-1L, "", null);
+    public static JornadaDto emptyDto(Dia dia) {
+        return new JornadaDto(-1L, "", dia.getFecha());
     }
 
     public Long getId() {

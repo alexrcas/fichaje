@@ -55,27 +55,32 @@
 
     <div class="col-6 d-flex align-items-center flex-column">
 
-        <div class="w-50 ps-2 d-flex text-center flex-column">
-            <div class="mb-3">
-                <div class="form-floating">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                        <option value="1">Entrada jornada</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <label for="floatingSelect">Tipo de fichaje</label>
+        <form action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
+            <div class="w-50 ps-2 d-flex text-center flex-column">
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <select name="fichaje" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option value="ENTRADA_JORNADA">Entrada jornada</option>
+                            <option value="SALIDA_DESAYUNO">Salida desayuno</option>
+                            <option value="ENTRADA_DESAYUNO">Entrada desayuno</option>
+                            <option value="SALIDA_COMIDA">Salida comida</option>
+                            <option value="ENTRADA_COMIDA">Entrada comida</option>
+                            <option value="SALIDA_JORNADA">Salida jornada</option>
+                        </select>
+                        <label for="floatingSelect">Tipo de fichaje</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="text-center mb-3 form-floating">
-                <input class="form-control datetimepicker flatpickr-input" id="datetimepicker" type="text" placeholder="DD/MM/YYYY HH:mm" data-options="{&quot;enableTime&quot;:true,&quot;dateFormat&quot;:&quot;d/m/y H:i&quot;,&quot;disableMobile&quot;:true}" readonly="readonly">
-                <label for="datetimepicker">Fecha (solo en caso de extemporáneo)</label>
-            </div>
-            <div class="text-center mb-0">
-                <button class="btn btn-primary">Fichar</button>
-            </div>
+                <div class="text-center mb-3 form-floating">
+                    <input name="fecha" class="form-control datetimepicker flatpickr-input" id="datetimepicker" type="text" placeholder="DD/MM/YYYY HH:mm" data-options="{&quot;enableTime&quot;:true,&quot;dateFormat&quot;:&quot;d/m/y H:i&quot;,&quot;disableMobile&quot;:true}" readonly="readonly">
+                    <label for="datetimepicker">Fecha (solo en caso de extemporáneo)</label>
+                </div>
+                <div class="text-center mb-0">
+                    <button type="submit" class="btn btn-primary">Fichar</button>
+                </div>
 
-        </div>
+            </div>
+        </form>
     </div>
 
 
@@ -100,6 +105,7 @@
         const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvas'));
         offcanvas.show();
     }
+
 </script>
 
 </@base.themelayout>

@@ -72,7 +72,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
             double tiempoSemana = jornadasSemana.stream()
                     .map(JornadaDto::getHoras)
-                    .filter(s -> !s.isBlank())
+                    .filter(s -> !s.isBlank() && !s.equals("E"))
                     .map(Double::parseDouble)
                             .reduce((double) 0, Double::sum);
 

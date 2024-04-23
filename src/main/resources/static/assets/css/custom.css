@@ -22,3 +22,19 @@
   background: #0f111a;
 }
 
+#calendar > div.fc-view-harness.fc-view-harness-active > div {
+  border: 0 !important;
+}
+
+.fc .fc-daygrid-more-link {
+    border-radius: 3px;
+    cursor: pointer;
+    line-height: 1;
+    margin-top: -1.2em;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 4;
+}

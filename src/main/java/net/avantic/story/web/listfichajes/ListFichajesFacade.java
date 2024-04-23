@@ -1,14 +1,16 @@
 package net.avantic.story.web.listfichajes;
 
-import net.avantic.domain.model.dto.DiaDto;
-import net.avantic.domain.model.dto.JornadaDto;
-import net.avantic.domain.model.dto.JornadasEmpleadoDto;
-import net.avantic.domain.model.dto.SemanaJornadaDto;
+import net.avantic.domain.model.EnumTipoFichaje;
+import net.avantic.domain.model.dto.*;
 
 import java.util.List;
 
 public interface ListFichajesFacade {
 
     List<SemanaJornadaDto> listJornadas();
+
+    List<EnumTipoFichaje> listOpciones();
+
+    EnumTipoFichaje getOpcionSugerida();
 
 }

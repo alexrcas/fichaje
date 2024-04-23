@@ -7,12 +7,16 @@ import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.FichajeOrdenJornadaSpecification;
 import net.avantic.domain.service.FichajeService;
 import net.avantic.domain.service.JornadaService;
+import net.avantic.story.web.listfichajes.ListFichajesFacadeImpl;
+import net.avantic.utils.FichajeVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,6 +77,14 @@ public class FichajeServiceImpl implements FichajeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public EnumTipoFichaje getFichajeSugerido(JornadaEmpleado jornadaEmpleado) {
+        List<FichajeOrdenJornadaSpecification> fichajes = listFichajesOrdenJornada(jornadaEmpleado);
+        Fichaje ultimoFichaje = fichajes.get(fichajes.size() -1).getFichaje();
+        SugerirFichajeVisitor visitor = new SugerirFichajeVisitor(ultimoFichaje);
+        return visitor.getTipoFichaje();
+    }
+
 
     private Fichaje createFichaje(JornadaEmpleado jornadaEmpleado, EnumTipoFichaje tipoFichaje) {
 
@@ -101,6 +113,49 @@ public class FichajeServiceImpl implements FichajeService {
         }
 
         throw new RuntimeException("No está soportado el EnumTipoFichaje [" + tipoFichaje + "]");
+    }
+
+    class SugerirFichajeVisitor implements FichajeVisitor {
+
+        private EnumTipoFichaje tipoFichaje;
+
+        public SugerirFichajeVisitor(Fichaje fichaje) {
+            fichaje.accept(this);
+        }
+
+        public EnumTipoFichaje getTipoFichaje() {
+            return this.tipoFichaje;
+        }
+
+        @Override
+        public void visit(EntradaJornada entradaJornada) {
+            this.tipoFichaje = EnumTipoFichaje.SALIDA_DESAYUNO;
+        }
+
+        @Override
+        public void visit(SalidaJornada salidaJornada) {
+            this.tipoFichaje = EnumTipoFichaje.ENTRADA_JORNADA;
+        }
+
+        @Override
+        public void visit(EntradaDesayuno entradaDesayuno) {
+            this.tipoFichaje = EnumTipoFichaje.SALIDA_COMIDA;
+        }
+
+        @Override
+        public void visit(SalidaDesayuno salidaDesayuno) {
+            this.tipoFichaje = EnumTipoFichaje.ENTRADA_DESAYUNO;
+        }
+
+        @Override
+        public void visit(EntradaComida entradaComida) {
+            this.tipoFichaje = EnumTipoFichaje.SALIDA_JORNADA;
+        }
+
+        @Override
+        public void visit(SalidaComida salidaComida) {
+            this.tipoFichaje = EnumTipoFichaje.ENTRADA_COMIDA;
+        }
     }
 
 }

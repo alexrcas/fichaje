@@ -3,19 +3,23 @@ package net.avantic.story.web.listfichajes;
 import jakarta.transaction.Transactional;
 import net.avantic.domain.dao.DiaRepository;
 import net.avantic.domain.dao.EmpleadoRepository;
+import net.avantic.domain.dao.FichajeRepository;
 import net.avantic.domain.dao.JornadaEmpleadoRepository;
-import net.avantic.domain.model.Empleado;
+import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.JornadaEmpleadoDtoFactory;
-import org.springframework.cglib.core.Local;
+import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
+import net.avantic.domain.service.DiaService;
+import net.avantic.domain.service.FichajeService;
+import net.avantic.utils.FichajeVisitor;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,60 +29,56 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     private final DiaRepository diaRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final JornadaEmpleadoDtoFactory jornadaEmpleadoDtoFactory;
+    private final FichajeService fichajeService;
+    private final DiaService diaService;
 
     public ListFichajesFacadeImpl(EmpleadoRepository empleadoRepository,
                                   DiaRepository diaRepository,
                                   JornadaEmpleadoRepository jornadaEmpleadoRepository,
-                                  JornadaEmpleadoDtoFactory jornadaEmpleadoDtoFactory) {
+                                  JornadaEmpleadoDtoFactory jornadaEmpleadoDtoFactory,
+                                  FichajeService fichajeService,
+                                  DiaService diaService) {
         this.empleadoRepository = empleadoRepository;
         this.diaRepository = diaRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.jornadaEmpleadoDtoFactory = jornadaEmpleadoDtoFactory;
+        this.fichajeService = fichajeService;
+        this.diaService = diaService;
     }
 
 
-    private static LocalDate findPrimerLunes(LocalDate fecha) {
-        DayOfWeek diaSemana = fecha.getDayOfWeek();
-        int diasRetroceder = diaSemana.getValue() - DayOfWeek.MONDAY.getValue();
-        return fecha.minusDays(diasRetroceder);
-    }
+
 
     @Override
     @Transactional
     public List<SemanaJornadaDto> listJornadas() {
         //todo: parametrizar empleado
-        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(findPrimerLunes(LocalDate.of(2024, 1, 1)), false).stream()
+        LocalDate today = LocalDate.now();
+        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(SemanaJornadaDtoFactory.findPrimerLunes(LocalDate.of(today.getYear(), 1, 1)), false).stream()
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleadoRepository.findAll().get(0))
                             .map(jornadaEmpleadoDtoFactory::newDto)
                             .orElse(JornadaDto.emptyDto(d))
                 )
                 .collect(Collectors.toList());
 
-        return agruparLista(jornadas, 5);
+        return SemanaJornadaDtoFactory.agruparLista(jornadas);
     }
 
-    //todo arodriguez: trasladar a factory
-    public static List<SemanaJornadaDto> agruparLista(List<JornadaDto> lista, int tamanoSublista) {
-        LocalDate today = findPrimerLunes(LocalDate.now());
+    @Override
+    public List<EnumTipoFichaje> listOpciones() {
+        return Arrays.asList(EnumTipoFichaje.values());
+    }
 
-        List<SemanaJornadaDto> semanaJornadaDtoList = new ArrayList<>();
-        for (int i = 0; i < lista.size(); i += tamanoSublista) {
-
-            List<JornadaDto> jornadasSemana = lista.subList(i, Math.min(i + tamanoSublista, lista.size()));
-
-            boolean isSemanaActual = jornadasSemana.stream()
-                    .map(JornadaDto::getFecha)
-                    .anyMatch(today::isEqual);
-
-            double tiempoSemana = jornadasSemana.stream()
-                    .map(JornadaDto::getHoras)
-                    .filter(s -> !s.isBlank() && !s.equals("E"))
-                    .map(Double::parseDouble)
-                            .reduce((double) 0, Double::sum);
-
-            semanaJornadaDtoList.add(new SemanaJornadaDto(jornadasSemana, isSemanaActual, tiempoSemana));
+    public EnumTipoFichaje getOpcionSugerida() {
+        Dia dia = diaService.getByFecha(LocalDate.now());
+        Empleado empleado = empleadoRepository.getReferenceById(1L);
+        Optional<JornadaEmpleado> jornadaEmpleado = jornadaEmpleadoRepository.findByDiaAndEmpleado(dia, empleado);
+        if (jornadaEmpleado.isEmpty()) {
+            return EnumTipoFichaje.ENTRADA_JORNADA;
         }
-        return semanaJornadaDtoList;
+
+        return fichajeService.getFichajeSugerido(jornadaEmpleado.get());
     }
+
 
 }

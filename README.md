@@ -20,31 +20,31 @@ El stack tecnológico original que se ha utilizado es el siguiente:
 
 ![](/doc/stack-java.jpg)
 
-Sin embargo, otro objetivo de este proyecto es el aprendizaje, la experimentación y la comparativa con otras tecnologías. Por ello, se ha propuesto también un segundo stack tecnológico. Una vez finalizado el proyecto original, se rehará de nuevo desde cero utilizando este segundo stack y este repositorio será actualizado incluyendo ambas versiones del proyecto.
+Sin embargo, otro objetivo del proyecto es el aprendizaje, la experimentación y la comparativa con otras tecnologías. Por ello, se ha propuesto también un segundo stack tecnológico. Una vez finalizado el proyecto original, se rehará de nuevo desde cero utilizando este segundo stack y este repositorio será actualizado incluyendo ambas versiones del proyecto.
 
 ![](/doc/stack-node.jpg)
 
 ## 2. Descripción y requisitos funcionales
 
-Se requiere la creación de una aplicación que permita gestionar y registrar los fichajes de los empleados. La aplicación no restringirá la acción del usuario, es decir, el empleado podrá fichar lo que quiera, cuando quiera y cuantas veces quiera. Será posteriormente un motor de validación el que evaluará la coherencia o no del fichaje de una jornada.
+Se requiere una aplicación que permita registrar y gestionar el fichaje de los empleados. La aplicación no restringirá la acción del usuario, es decir, el empleado podrá fichar lo que quiera, cuando quiera y cuantas veces quiera. Será posteriormente un motor de validación el que evaluará la coherencia o no del fichaje de una jornada. No obstante, la aplicación precargará por defecto el fichaje sugerido ya que la mayoría de las veces coincidirá con la intención del usuario. Por ejemplo, cabe esperar que el primer fichaje del día sea la entrada de jornada o que tras haber fichado salida a desayuno lo siguiente que se fiche sea la entrada de este.
 
-Por defecto el fichaje se produce a la hora en que se realiza la acción de fichar, pero también podrá realizarse un fichaje extemporáneo, es decir, un fichaje que no es en tiempo real sino que se refiere a un momento del pasado. Un ejemplo sería olvidar fichar la salida del viernes y ficharla el lunes siguiente. No obstante, pese a que el usuario tiene el control, la aplicación sí cargará por defecto el fichaje sugerido ya que la mayoría de las veces coincidirá con la intención del usuario. Por ejemplo, cabe esperar que el primer fichaje del día sea la entrada de jornada o que tras haber fichado salida a desayuno lo siguiente que se fiche sea la entrada de este.
+Por defecto, el fichaje se produce a la hora en que se realiza la acción de fichar, pero también podrá realizarse un fichaje extemporáneo, es decir, un fichaje que se refiere a un momento del pasado. Un ejemplo sería olvidar fichar la salida del viernes y realizar su fichaje el lunes siguiente. 
 
-La aplicación conservará el registro de todo sin efectuar nunca un borrado definitivo. Por ello, para eliminar fichajes erróneos existirá el concepto de *anulación*. Un fichaje anulado sigue existiendo como registro pero es ignorado para el cómputo. 
+La aplicación conservará el registro de todo sin efectuar nunca un borrado definitivo. Por ello, para eliminar fichajes erróneos existirá el concepto de *anulación*. Un fichaje anulado sigue existiendo como registro pero es ignorado para el cómputo. Solo el administrador podrá anular fichajes, pero los usuarios podrán solicitar la anulación de un fichaje desde la propia aplicación. El administrador recibirá una notificación informando de esta solicitud y realizará la anulación si procede.
 
-Será necesario que la aplicación cuente también con un calendario para poder marcar los días que proceda como festivos y que no sean tenidos en cuenta para el cómputo. De igual forma, debe existir el concepto de vacaciones, que a diferencia de los festivos se aplican sobre un empleado y no de forma general. La administración del calendario es, obviamente, tarea exclusiva del administrador.
+Se contará también con un calendario para marcar los días que proceda como festivos y que no sean tenidos en cuenta para el cómputo. Igualmente existirá también el concepto de **vacaciones**, que a diferencia de los festivos se aplican sobre un solo empleado. La administración del calendario es, obviamente, tarea exclusiva del administrador.
 
-Solo el administrador podrá anular fichajes, pero los usuarios podrán solicitar la anulación de un fichaje desde la propia aplicación. El administrador recibirá una notificación informando de esta solicitud y realizará la anulación si procede.
+Ausencias justificadas
 
 La aplicación mostrará de manera rápida y sencilla una cuadrícula semanal con el cómputo de horas de cada jornada. Cada empleado solo verá su fichaje pero el administrador podrá ver el de todos los empleados. Al pinchar sobre una cuadrícula se mostrará el detalle del cómputo y los fichajes realizados. Si el fichaje de una jornada es incorrecto se reflejará en la cuadrícula para identificarlo rápidamente y también en la vista de detalle. 
 
-Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista puede tener valor sobre todo para el administrador, que no tendrá que navegar revisando la cuadrícula de cada empleado. No obstante, la idea es que la aplicación resalte a cada empleado rápidamente el estado de su fichaje, librando al administrador de esta tarea de supervisión. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
+Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista podría tener valor sobre todo para el administrador, evitándole revisar la cuadrícula de cada empleado. No obstante, el objetivo de la aplicación es que el fichaje no necesite supervisión, mostrando de forma muy concisa y directa el estado del fichaje a cada empleado. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
 
 Hashes y blockchain, copias de seguridad
 
 ## 3. Modelado del problema
 
-A continuación se muestra el modelo propuesto para respaldar la solución. Se trata de un modelo pequeño y simple que se vale del polimorfismo para representar los diferentes fichajes y que persigue eliminar la necesidad de contar con valores nulos en las entidades.
+A continuación se muestra el modelo propuesto para respaldar la solución. Es un diseño pequeño y simple que se vale del polimorfismo para representar los diferentes fichajes y que persigue la ausencia de valores nulos en las entidades. La entidad *Vacaciones* si bien no es estrictamente necesaria, permite agrupar los días libres identificando un periodo vacacional. Esto podría ser interesante de cara a posibles evoluciones futuras.
 
 ![](/doc/diagrama-robustez.jpg)
 
@@ -58,6 +58,14 @@ Notificaciones server sent event?
 
 ## 4. Seguridad
 
+Seguridad a nivel de usuario y contraseña (oAuth)
+Seguridad a nivel de rol, acceso y ejecución (anotaciones en fachada)
+Seguridad a nivel de entidad (entidad securizada)
+Comprobación de comando en el back-end (y en el front pero solo como azúcar de usabilidad)
+Seguridad de API Rest
+
+Trazabilidad del fichaje (blockchain?)
+
 ## 5. Otros aspectos
 
 ### Máquina de estados
@@ -68,7 +76,7 @@ Se necesitaba una solución que eliminase la mayor cantidad de ruido, reflejando
 
 #### Ejemplo
 
-Supóngase la siguiente máquina de estados, la cual acepta cadenas sobre el alfabeto (A,B,C) tales que contienen la subcadena *ABC*. Nótese que no se trata de un DFA ya que no existen transiciones para todos los símbolos en todos los estados, quedando la máquina simplemente en dicho estado si no hay una transición definida para el símbolo entrante.
+Supóngase la siguiente máquina de estados:
 
 ![](/doc/maquina-simple.jpg)
 
@@ -89,7 +97,7 @@ En primer lugar, la utilidad nos exige crear un enumerado que implemente State. 
     }
 ```
 
-Hecho esto, se puede proceder a la creación de la máquina simplemente añadiendo transiciones como tuplas con forma (Q1, *s*, Q2), donde para un estado Q1, una entrada *s* produce una transición al estado *Q2*. El método `addTransitions()` no devuelve el builder que crea la máquina sino que esto lo hace el método `setInitialState()`, siendo así imposible crear una máquina sin un estado inicial. Honestamente, nunca he sido fan del patrón *Builder* y en este caso ni siquiera es necesario, pero he decidido utilizarlo a modo de aprendizaje y práctica con el lenguaje:
+Hecho esto, se puede proceder a la creación de la máquina añadiendo N transiciones como tuplas con forma (Q1, *s*, Q2), donde para un estado Q1, una entrada *s* produce una transición al estado *Q2*. El método `addTransitions()` no devuelve el builder que crea la máquina sino que esto lo hace el método `setInitialState()`, siendo así imposible crear una máquina sin un estado inicial. Honestamente, nunca he sido fan del patrón *Builder* y en este caso ni siquiera es necesario, pero he decidido utilizarlo a modo de aprendizaje y práctica con el lenguaje:
 
 ```
 StateMachine stateMachine = new StateMachineByValueBuilder()
@@ -112,7 +120,6 @@ Ahora, tan solo hay que utilizar la máquina creada:
 		}
 		
 		boolean esFinal = stateMachine.getEstadoActual().isFinalState(); // true
-
 ```
 
 #### Ejemplo real
@@ -121,7 +128,7 @@ Recordemos el diagrama real de la máquina de estados de la aplicación:
 
 ![maquina-real](/doc/maquina-real.jpg)
 
-La diferencia fundamental en este caso es que las entradas son clases, es decir, en lugar de comparar valores necesitamos discernir de qué tipo de clase es la entrada. A nivel técnico esto no es un problema y puede salvarse de múltiples formas como por ejemplo introduciendo un enumerado *TipoFichaje* en cada clase y usándolo a la hora de crear las transiciones y transitar. Sin embargo, se ha creado una forma de contemplar este caso. Personalmente encuentro más coherente y segura la primera forma de utilización, pero se ha implementado esta segunda forma simplemente a modo de experimentación y práctica con el lenguaje.
+La diferencia fundamental en este caso es que lo que necesitamos discernir al recibir una entrada no es un valor sino un tipo de clase. A nivel técnico esto no es un problema y puede salvarse de múltiples formas, pero se ha creado una forma de contemplar este caso. Personalmente encuentro más coherente y segura la primera forma de utilización, pero se ha implementado esta segunda forma simplemente a modo de experimentación y práctica con el lenguaje.
 
 Nótese el uso ahora de `StateMachineByClassBuilder` el cual obliga a utilizar una `ClassTransition` que a su vez ya no acepta un valor como parámetro sino un tipo de clase:
 
@@ -154,4 +161,5 @@ Creada la máquina, puede utilizarse con normalidad como en el primer ejemplo.
 ## 6. Funcionamiento de la aplicación
 
 ## 7. Líneas futuras
-vacaciones
+
+Dado que la aplicación tiene consciencia de las vacaciones de los empleados y puede llevar la cuenta de las mismas, debería ser sencillo crear una pequeña funcionalidad para generar la hoja de solicitud de vacaciones. Actualmente, para solicitar las vacaciones el empleado debe editar una plantilla en la que especifica de cuántos días de vacaciones dispone, cuántos desea utilizar y la fecha de inicio y fin de las misma para posteriormente exportarla como PDF. Sugerir que este proceso es tedioso sería exagerar, pero es cierto que a veces el empleado debe recordar mediante la administración o buscando su última hoja de vacaciones cuántos días le quedan pendientes de disfrutar, o es habitual que cometa un error al no coincidir el número de días empleados con el rango de fechas que ha especificado (sobre todo cuando hay un festivo de por medio). Al tener consciencia de las vacaciones del empleado, la aplicación podría generar fácilmente la hoja de vacaciones solicitando únicamente un rango de fechas.

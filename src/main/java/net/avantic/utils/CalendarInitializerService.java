@@ -51,6 +51,10 @@ public class CalendarInitializerService {
         Empleado empleado = new Empleado("arodriguez");
         empleadoRepository.save(empleado);
 
+        Empleado empleado2 = new Empleado("tutu");
+        empleadoRepository.save(empleado2);
+
+
         diaRepository.findAll().stream()
                 .filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .map(dia -> new JornadaEmpleado(empleado, dia))

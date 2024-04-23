@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                 <#list semanasJornadas as semanaJornada>
-                <tr>
+                <tr <#if semanaJornada.semanaActual>id="currentWeek"</#if>>
                     <#list semanaJornada.jornadas as jornada>
                     <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>"
                         <#if jornada.horas != ''>onclick="showDetalleJornada(${jornada.id})"</#if> >
@@ -29,7 +29,7 @@
                             <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
                             </#if>
                         <#if jornada.horas == 'E'>
-                        <div class="text-center fw-bold mt-1 bg-danger">E</div>
+                        <div class="text-center fw-bold mt-1 bg-danger text-secondary">E</div>
                     </#if>
                         </div>
                     </td>
@@ -37,11 +37,11 @@
 
                 <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >
                 <td class="p-2 bg-danger">
-                    <div class="text-center fw-bold mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                    <div class="text-center fw-bold mt-3 text-secondary">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                 </td>
                 <#else>
                 <td class="p-2 bg-success">
-                    <div class="text-center fw-bold mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                    <div class="text-center fw-bold text-secondary mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                 </td>
                 </#if>
 
@@ -55,17 +55,14 @@
 
     <div class="col-6 d-flex align-items-center flex-column">
 
-        <form action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
+        <form id="fichar-form" action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
             <div class="w-50 ps-2 d-flex text-center flex-column">
                 <div class="mb-3">
                     <div class="form-floating">
                         <select name="fichaje" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option value="ENTRADA_JORNADA">Entrada jornada</option>
-                            <option value="SALIDA_DESAYUNO">Salida desayuno</option>
-                            <option value="ENTRADA_DESAYUNO">Entrada desayuno</option>
-                            <option value="SALIDA_COMIDA">Salida comida</option>
-                            <option value="ENTRADA_COMIDA">Entrada comida</option>
-                            <option value="SALIDA_JORNADA">Salida jornada</option>
+                            <#list opciones as opcion>
+                            <option value="${opcion}" <#if opcion == opcionSugerida>selected</#if>>${opcion.getName()}</option>
+                            </#list>
                         </select>
                         <label for="floatingSelect">Tipo de fichaje</label>
                     </div>
@@ -76,7 +73,7 @@
                     <label for="datetimepicker">Fecha (solo en caso de extemporáneo)</label>
                 </div>
                 <div class="text-center mb-0">
-                    <button type="submit" class="btn btn-primary">Fichar</button>
+                    <button id="fichar-btn" type="submit" class="btn btn-primary">Fichar</button>
                 </div>
 
             </div>
@@ -95,8 +92,8 @@
 </div>
 
 
-<script>
 
+<script>
     const showDetalleJornada = async (id) => {
         const response = await fetch('/showDetalleJornada/' + id);
         const html = await response.text();
@@ -105,6 +102,14 @@
         const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvas'));
         offcanvas.show();
     }
+
+    const ficharBtn = document.getElementById('fichar-btn');
+    ficharBtn.addEventListener('click', () => {
+        ficharBtn.disabled = true;
+        document.getElementById('fichar-form').submit();
+    })
+
+    document.getElementById('currentWeek').scrollIntoView(true);
 
 </script>
 

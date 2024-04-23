@@ -19,8 +19,9 @@ public class ListFichajesController {
 
     @GetMapping
     public String list(Model model) {
-        //model.addAttribute("dias", facade.listDias());
         model.addAttribute("semanasJornadas", facade.listJornadas());
+        model.addAttribute("opciones", facade.listOpciones());
+        model.addAttribute("opcionSugerida", facade.getOpcionSugerida());
         return "listFichajes";
     }
 

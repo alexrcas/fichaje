@@ -18,5 +18,5 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
 
     List<Dia> findAllByOrderByIdAsc();
 
-    List<Dia> findAllBySemanaOrderById(Semana semana);
+    List<Dia> findAllBySemanaAndFestivoOrderById(Semana semana, boolean festivo);
 }

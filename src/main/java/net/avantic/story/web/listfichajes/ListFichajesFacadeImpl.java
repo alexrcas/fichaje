@@ -57,8 +57,9 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         Empleado empleado = empleadoRepository.findAll().get(0);
 
         //trasladar a factoría
-        return semanaRepository.findAllByFechaGreaterThanEqualOrderByIdAsc(fechaService.getStartOfYear()).stream()
-                .map(diaRepository::findAllBySemanaOrderById)
+        //ojo, crear un nuevo concepto "fin de semana" en lugar de festivo o no se listarán los festivos entre semana
+        List<SemanaJornadaDto> semanaJornadaDtoList = semanaRepository.findAllByFechaDiaGreaterThanEqual(fechaService.getStartOfYear()).stream()
+                .map(semana -> diaRepository.findAllBySemanaAndFestivoOrderById(semana, false))
                 .map(days -> days.stream()
                         .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado)
                         .map(jornadaEmpleadoDtoFactory::newDto)
@@ -68,6 +69,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
                 .collect(Collectors.toList()))
                 .map(jornadaDtos -> new SemanaJornadaDto(jornadaDtos, SemanaJornadaDtoFactory.isSemanaActual(jornadaDtos), SemanaJornadaDtoFactory.calcularTiempoSemana(jornadaDtos)))
                 .collect(Collectors.toList());
+        return semanaJornadaDtoList;
     }
 
     @Override

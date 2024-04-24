@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SemanaRepository extends JpaRepository<Semana, Long> {
 
-    @Query("From Semana s WHERE s in (select d.semana from Dia d WHERE d.fecha >= :fecha)")
-    List<Semana> findAllByFechaGreaterThanEqualOrderByIdAsc(LocalDate fecha);
+    @Query("From Semana s WHERE s in (select d.semana from Dia d WHERE d.fecha >= :fecha) order by s.id asc")
+    List<Semana> findAllByFechaDiaGreaterThanEqual(LocalDate fecha);
 }

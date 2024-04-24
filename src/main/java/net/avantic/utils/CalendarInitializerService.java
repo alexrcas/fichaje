@@ -48,7 +48,7 @@ public class CalendarInitializerService {
         LocalDate startDate = LocalDate.of(year -1, 12, 29);
         LocalDate endDate = LocalDate.of(year, 12, 31);
 
-        Semana semana = new Semana();
+        Semana semana = new Semana(startDate);
         semanaRepository.save(semana);
 
         for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
@@ -56,7 +56,7 @@ public class CalendarInitializerService {
             diaRepository.save(dia);
 
             if (dia.getDiaSemana().equals(EnumDiaSemana.DOMINGO)) {
-                semana = new Semana();
+                semana = new Semana(date);
                 semanaRepository.save(semana);
             }
         }

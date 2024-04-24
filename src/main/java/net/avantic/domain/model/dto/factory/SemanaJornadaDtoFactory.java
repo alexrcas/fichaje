@@ -36,5 +36,20 @@ public class SemanaJornadaDtoFactory {
         return semanaJornadaDtoList;
     }
 
+    public static boolean isSemanaActual(List<JornadaDto> jornadasSemana) {
+        LocalDate today = FechaService.findPrimerLunes(LocalDate.now());
+        return jornadasSemana.stream()
+                .map(JornadaDto::getFecha)
+                .anyMatch(today::isEqual);
+    }
+
+    public static double calcularTiempoSemana(List<JornadaDto> jornadasSemana) {
+        return jornadasSemana.stream()
+                .map(JornadaDto::getHoras)
+                .filter(s -> !s.isBlank() && !s.equals("E"))
+                .map(Double::parseDouble)
+                .reduce((double) 0, Double::sum);
+    }
+
 
 }

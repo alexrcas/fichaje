@@ -1,6 +1,7 @@
 package net.avantic.domain.dao;
 
 import net.avantic.domain.model.Dia;
+import net.avantic.domain.model.Semana;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -16,4 +17,6 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
     List<Dia> findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(LocalDate fecha, boolean festivo);
 
     List<Dia> findAllByOrderByIdAsc();
+
+    List<Dia> findAllBySemanaOrderById(Semana semana);
 }

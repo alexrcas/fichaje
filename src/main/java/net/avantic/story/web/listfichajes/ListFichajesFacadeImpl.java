@@ -10,6 +10,7 @@ import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.JornadaEmpleadoDtoFactory;
 import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
+import net.avantic.domain.service.FechaService;
 import net.avantic.domain.service.FichajeService;
 import net.avantic.utils.FichajeVisitor;
 import org.springframework.stereotype.Component;
@@ -54,7 +55,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     public List<SemanaJornadaDto> listJornadas() {
         //todo: parametrizar empleado
         LocalDate today = LocalDate.now();
-        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(SemanaJornadaDtoFactory.findPrimerLunes(LocalDate.of(today.getYear(), 1, 1)), false).stream()
+        List<JornadaDto> jornadas = diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(FechaService.findPrimerLunes(LocalDate.of(today.getYear(), 1, 1)), false).stream()
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleadoRepository.findAll().get(0))
                             .map(jornadaEmpleadoDtoFactory::newDto)
                             .orElse(JornadaDto.emptyDto(d))

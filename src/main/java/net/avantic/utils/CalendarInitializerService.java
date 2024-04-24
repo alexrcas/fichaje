@@ -20,32 +20,45 @@ public class CalendarInitializerService {
     private final EmpleadoRepository empleadoRepository;
     private final ExtemporaneoRepository extemporaneoRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
+    private final SemanaRepository semanaRepository;
 
     @Autowired
     public CalendarInitializerService(DiaRepository diaRepository,
                                       FichajeRepository fichajeRepository,
                                       EmpleadoRepository empleadoRepository,
                                       ExtemporaneoRepository extemporaneoRepository,
-                                      JornadaEmpleadoRepository jornadaEmpleadoRepository) {
+                                      JornadaEmpleadoRepository jornadaEmpleadoRepository,
+                                      SemanaRepository semanaRepository) {
         this.diaRepository = diaRepository;
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
         this.extemporaneoRepository = extemporaneoRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
+        this.semanaRepository = semanaRepository;
     }
 
 
     @PostConstruct
     public void init() {
 
+        //todo arodriguez: comprobar si la base de datos tiene valores y si no popularla
+
         LocalDate today = LocalDate.now();
         int year = today.getYear();
-        LocalDate startDate = LocalDate.of(year -1, 12, 25);
+        LocalDate startDate = LocalDate.of(year -1, 12, 29);
         LocalDate endDate = LocalDate.of(year, 12, 31);
 
+        Semana semana = new Semana();
+        semanaRepository.save(semana);
+
         for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
-            Dia dia = new Dia(date, getDiaSemana(date), esFestivo(date));
+            Dia dia = new Dia(date, getDiaSemana(date), esFestivo(date), semana);
             diaRepository.save(dia);
+
+            if (dia.getDiaSemana().equals(EnumDiaSemana.DOMINGO)) {
+                semana = new Semana();
+                semanaRepository.save(semana);
+            }
         }
 
         Empleado empleado = new Empleado("arodriguez");

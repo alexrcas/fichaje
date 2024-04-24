@@ -2,6 +2,7 @@ package net.avantic.domain.model.dto.factory;
 
 import net.avantic.domain.model.dto.JornadaDto;
 import net.avantic.domain.model.dto.SemanaJornadaDto;
+import net.avantic.domain.service.FechaService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class SemanaJornadaDtoFactory {
     public static final int WEEK_SIZE = 5;
 
     public static List<SemanaJornadaDto> agruparLista(List<JornadaDto> lista) {
-        LocalDate today = findPrimerLunes(LocalDate.now());
+        LocalDate today = FechaService.findPrimerLunes(LocalDate.now());
 
         List<SemanaJornadaDto> semanaJornadaDtoList = new ArrayList<>();
         for (int i = 0; i < lista.size(); i += WEEK_SIZE) {
@@ -35,9 +36,5 @@ public class SemanaJornadaDtoFactory {
         return semanaJornadaDtoList;
     }
 
-    public static LocalDate findPrimerLunes(LocalDate fecha) {
-        DayOfWeek diaSemana = fecha.getDayOfWeek();
-        int diasRetroceder = diaSemana.getValue() - DayOfWeek.MONDAY.getValue();
-        return fecha.minusDays(diasRetroceder);
-    }
+
 }

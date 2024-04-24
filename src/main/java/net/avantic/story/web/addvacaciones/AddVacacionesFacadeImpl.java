@@ -42,7 +42,7 @@ public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
         LocalDate fechaInicio = command.getFechaInicio();
         LocalDate fechaRegreso = command.getFechaFin();
 
-        Vacaciones vacaciones = new Vacaciones();
+        Vacaciones vacaciones = new Vacaciones(LocalDate.now());
         vacacionesRepository.save(vacaciones);
 
         for (LocalDate fecha = fechaInicio; fecha.isBefore(fechaRegreso); fecha = fecha.plusDays(1)) {

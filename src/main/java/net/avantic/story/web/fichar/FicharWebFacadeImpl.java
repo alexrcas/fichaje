@@ -41,7 +41,7 @@ public class FicharWebFacadeImpl implements FicharWebFacade {
 
     private void ficharTiempoReal(EnumTipoFichaje tipoFichaje) {
         Empleado empleado = empleadoRepository.getReferenceById(1L);
-        Dia dia = diaService.getByFecha(LocalDate.of(2024, 4, 22));
+        Dia dia = diaService.getByFecha(LocalDate.now());
         fichajeService.fichar(empleado, dia, tipoFichaje);
     }
 

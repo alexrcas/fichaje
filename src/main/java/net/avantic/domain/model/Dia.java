@@ -15,13 +15,16 @@ public class Dia implements Serializable {
     private EnumDiaSemana diaSemana;
     private boolean festivo;
 
+    private Semana semana;
+
     protected Dia() {
     }
 
-    public Dia(LocalDate fecha, EnumDiaSemana diaSemana, boolean festivo) {
+    public Dia(LocalDate fecha, EnumDiaSemana diaSemana, boolean festivo, Semana semana) {
         this.fecha = fecha;
         this.diaSemana = diaSemana;
         this.festivo = festivo;
+        this.semana = semana;
     }
 
     @Id
@@ -57,5 +60,15 @@ public class Dia implements Serializable {
 
     public void setFestivo(boolean festivo) {
         this.festivo = festivo;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSemana")
+    public Semana getSemana() {
+        return semana;
+    }
+
+    public void setSemana(Semana semana) {
+        this.semana = semana;
     }
 }

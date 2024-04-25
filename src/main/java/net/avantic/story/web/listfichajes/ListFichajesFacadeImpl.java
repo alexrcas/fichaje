@@ -63,7 +63,6 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
                         .map(jornadaEmpleadoDtoFactory::newDto)
                         .orElse(JornadaDto.emptyDto(d))
                     )
-                .map(jornada -> new JornadaDto(jornada.getId(), jornada.getHoras(), jornada.getFecha()))
                 .collect(Collectors.toList()))
                 .map(jornadaDtos -> new SemanaJornadaDto(
                         jornadaDtos, SemanaJornadaDtoFactory.isSemanaActual(jornadaDtos), SemanaJornadaDtoFactory.calcularTiempoSemana(jornadaDtos))

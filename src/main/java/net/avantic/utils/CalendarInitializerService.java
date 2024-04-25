@@ -26,6 +26,7 @@ public class CalendarInitializerService {
     private final DiaService diaService;
     private final VacacionesRepository vacacionesRepository;
     private final DiaLibreRepository diaLibreRepository;
+    private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
 
     @Autowired
     public CalendarInitializerService(DiaRepository diaRepository,
@@ -36,7 +37,8 @@ public class CalendarInitializerService {
                                       SemanaRepository semanaRepository,
                                       DiaService diaService,
                                       VacacionesRepository vacacionesRepository,
-                                      DiaLibreRepository diaLibreRepository) {
+                                      DiaLibreRepository diaLibreRepository,
+                                      AusenciaJustificadaRepository ausenciaJustificadaRepository) {
         this.diaRepository = diaRepository;
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
@@ -46,6 +48,7 @@ public class CalendarInitializerService {
         this.diaService = diaService;
         this.vacacionesRepository = vacacionesRepository;
         this.diaLibreRepository = diaLibreRepository;
+        this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
     }
 
 
@@ -102,6 +105,11 @@ public class CalendarInitializerService {
                 .forEach(diaLibreRepository::save);
 
 
+        //Crear una ausencia justificada
+        Dia diaAusencia = diaService.getByFecha(LocalDate.of(2024, 4, 24));
+        JornadaEmpleado jornadaAusencia = jornadaEmpleadoRepository.findByDiaAndEmpleado(diaAusencia, empleado).get();
+        AusenciaJustificada ausencia = new AusenciaJustificada(jornadaAusencia, 3);
+        ausenciaJustificadaRepository.save(ausencia);
     }
 
     private void crearFichajes(JornadaEmpleado jornadaEmpleado) {

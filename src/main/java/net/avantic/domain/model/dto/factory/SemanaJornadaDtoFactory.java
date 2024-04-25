@@ -1,8 +1,7 @@
 package net.avantic.domain.model.dto.factory;
 
-import net.avantic.domain.dao.DiaLibreRepository;
-import net.avantic.domain.dao.DiaRepository;
-import net.avantic.domain.dao.EmpleadoRepository;
+import net.avantic.domain.dao.*;
+import net.avantic.domain.model.AusenciaJustificada;
 import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.Semana;
 import net.avantic.domain.model.dto.DiaCalendarioDto;
@@ -22,14 +21,20 @@ public class SemanaJornadaDtoFactory {
     private final DiaRepository diaRepository;
     private final DiaLibreRepository diaLibreRepository;
     private final EmpleadoRepository empleadoRepository;
+    private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
+    private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
 
     @Autowired
     public SemanaJornadaDtoFactory(DiaRepository diaRepository,
                                    DiaLibreRepository diaLibreRepository,
-                                   EmpleadoRepository empleadoRepository) {
+                                   EmpleadoRepository empleadoRepository,
+                                   JornadaEmpleadoRepository jornadaEmpleadoRepository,
+                                   AusenciaJustificadaRepository ausenciaJustificadaRepository) {
         this.diaRepository = diaRepository;
         this.diaLibreRepository = diaLibreRepository;
         this.empleadoRepository = empleadoRepository;
+        this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
+        this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
     }
 
     public static boolean isSemanaActual(List<DiaCalendarioDto> diasCalendario) {
@@ -71,6 +76,17 @@ public class SemanaJornadaDtoFactory {
                 .toList()
                 .size();
 
-        return (diasNoFestivos - diasLibres) * 8;
+        double horasJustificadas = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(ausenciaJustificadaRepository::findByJornadaEmpleado)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(AusenciaJustificada::getHoras)
+                .reduce((double) 0, Double::sum);
+
+
+        return ((diasNoFestivos - diasLibres) * 8) - horasJustificadas;
     }
 }

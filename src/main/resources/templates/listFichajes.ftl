@@ -26,7 +26,7 @@
                 <#if dia.festivo>
                     <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                         <div class="d-flex flex-column">
-                        <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
+                        <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
                             <div class="text-center fw-bold mt-1">
                                 <span class="badge badge-phoenix badge-phoenix-info">Fest.</span>
                             </div>
@@ -35,7 +35,7 @@
                 <#elseif dia.vacaciones>
                 <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                     <div class="d-flex flex-column">
-                        <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
+                        <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
                         <div class="text-center fw-bold mt-1">
                             <span class="badge badge-phoenix badge-phoenix-success">Vac.</span>
                         </div>
@@ -46,7 +46,7 @@
                             <#if dia.jornada??>
                                 <#if dia.jornada.horas != ''>onclick="showDetalleJornada(${dia.jornada.id})"</#if> >
                                 <div class="d-flex flex-column">
-                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
+                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
                                     <div class="text-center fw-bold mt-1">
                                         <#if dia.jornada.horas == 'E'>
                                             <span class="badge badge-phoenix badge-phoenix-danger">ERR</span>
@@ -54,7 +54,9 @@
                                             ${dia.jornada.horas?number?string["0.00"]}
                                         </#if>
                                     </div>
+                                    <#if dia.jornada.ausenciaJustificada>
                                     <span class="badge badge-phoenix badge-phoenix-secondary">Just.</span>
+                                    </#if>
                                 </div>
                             <#else>
                             <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">

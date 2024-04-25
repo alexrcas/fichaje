@@ -6,11 +6,8 @@ import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.dto.DiaCalendarioDto;
 import net.avantic.domain.model.dto.JornadaDto;
-import net.avantic.domain.model.dto.JornadasEmpleadoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class DiaCalendarioDtoFactory {

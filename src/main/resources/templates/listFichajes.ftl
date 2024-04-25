@@ -14,8 +14,8 @@
                     <th class="text-center">X</th>
                     <th class="text-center">J</th>
                     <th class="text-center">V</th>
-                    <th class="text-center">Total</th>
-                    <th class="text-center">Horas</th>
+                    <th class="text-center">Suma</th>
+                    <th class="text-center">Jornada</th>
                 </tr>
                 </thead>
                 <tbody>

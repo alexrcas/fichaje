@@ -14,16 +14,18 @@ public class Dia implements Serializable {
     private LocalDate fecha;
     private EnumDiaSemana diaSemana;
     private boolean finSemana;
+    private boolean festivo;
 
     private Semana semana;
 
     protected Dia() {
     }
 
-    public Dia(LocalDate fecha, EnumDiaSemana diaSemana, boolean finSemana, Semana semana) {
+    public Dia(LocalDate fecha, EnumDiaSemana diaSemana, boolean finSemana, boolean festivo, Semana semana) {
         this.fecha = fecha;
         this.diaSemana = diaSemana;
         this.finSemana = finSemana;
+        this.festivo = festivo;
         this.semana = semana;
     }
 
@@ -60,6 +62,14 @@ public class Dia implements Serializable {
 
     public void setFinSemana(boolean finSemana) {
         this.finSemana = finSemana;
+    }
+
+    public boolean isFestivo() {
+        return festivo;
+    }
+
+    public void setFestivo(boolean festivo) {
+        this.festivo = festivo;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

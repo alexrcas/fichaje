@@ -22,18 +22,35 @@
                 <#list semanasJornadas as semanaJornada>
                 <tr <#if semanaJornada.semanaActual>id="currentWeek"</#if>>
                     <#list semanaJornada.jornadas as jornada>
-                    <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>"
-                        <#if jornada.horas != ''>onclick="showDetalleJornada(${jornada.id})"</#if> >
-                        <div class="d-flex flex-column">
-                            <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
-                            <#if jornada.horas != '' && jornada.horas != 'E'>
-                            <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
-                            </#if>
-                        <#if jornada.horas == 'E'>
-                        <div class="text-center fw-bold mt-1 bg-danger text-secondary">E</div>
-                    </#if>
+
+                    <#if jornada.festivo>
+                <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
+                    <div class="d-flex flex-column">
+                    <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
+                        <div class="text-center fw-bold mt-1">
+                            <span class="badge badge-phoenix badge-phoenix-info">Fest.</span>
                         </div>
-                    </td>
+
+                    </div>
+                </td>
+                    <#else>
+                        <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>"
+                            <#if jornada.horas != ''>onclick="showDetalleJornada(${jornada.id})"</#if> >
+                            <div class="d-flex flex-column">
+                                <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
+                                <#if jornada.horas != '' && jornada.horas != 'E'>
+                                <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
+                                </#if>
+                                <#if jornada.horas == 'E'>
+                                <div class="text-center fw-bold mt-1 bg-danger text-secondary">E</div>
+                                </#if>
+                            </div>
+                        </td>
+                    </#if>
+
+
+
+
                     </#list>
 
                     <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >

@@ -39,7 +39,10 @@ public class SemanaJornadaDtoFactory {
     public double calcularHorasSemana(Semana semana) {
         //todo arodriguez: completar cuando se implementen los casos restantes
         // Formula: (días NO festivos * 8) - (días vacaciones * 8) - horas justificadas
-        int diasNoFestivos = diaRepository.findAllBySemanaAndFinSemanaOrderById(semana, false).size();
-        return diasNoFestivos;
+        int diasNoFestivos = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                .filter(d -> !d.isFestivo())
+                .toList()
+                .size();
+        return diasNoFestivos * 8;
     }
 }

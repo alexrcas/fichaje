@@ -52,7 +52,7 @@ public class CalendarInitializerService {
         semanaRepository.save(semana);
 
         for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
-            Dia dia = new Dia(date, getDiaSemana(date), esFestivo(date), semana);
+            Dia dia = new Dia(date, getDiaSemana(date), esFinSemana(date), false, semana);
             diaRepository.save(dia);
 
             if (dia.getDiaSemana().equals(EnumDiaSemana.DOMINGO)) {
@@ -120,7 +120,7 @@ public class CalendarInitializerService {
         extemporaneoRepository.save(ex6);
     }
 
-    private boolean esFestivo(LocalDate date) {
+    private boolean esFinSemana(LocalDate date) {
         return date.getDayOfWeek().getValue() >= 6;
     }
 

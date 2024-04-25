@@ -3,6 +3,7 @@ package net.avantic.domain.dao;
 import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.Semana;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,11 +13,13 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
 
     Optional<Dia> findByFecha(LocalDate fecha);
 
-    List<Dia> findAllByFinSemanaOrderByIdAsc(boolean finSemana);
 
-    List<Dia> findAllByFechaGreaterThanEqualAndFinSemanaOrderByIdAsc(LocalDate fecha, boolean finSemana);
+    @Query("From Dia d WHERE d.finSemana = false")
+    List<Dia> findAllByNotFinSemanaOrderByIdAsc();
 
-    List<Dia> findAllByOrderByIdAsc();
+    @Query("From Dia d WHERE d.finSemana = false and d.fecha >= :fecha order by id asc")
+    List<Dia> findAllByFechaGreaterThanEqualAndFinSemanaOrderByIdAsc(LocalDate fecha);
 
-    List<Dia> findAllBySemanaAndFinSemanaOrderById(Semana semana, boolean finSemana);
+    @Query("From Dia d WHERE d.semana = :semana AND d.finSemana = false order by id asc")
+    List<Dia> findAllBySemanaAndNotFinSemanaOrderById(Semana semana);
 }

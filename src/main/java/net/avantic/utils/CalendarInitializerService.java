@@ -108,7 +108,7 @@ public class CalendarInitializerService {
         //Crear una ausencia justificada
         Dia diaAusencia = diaService.getByFecha(LocalDate.of(2024, 4, 24));
         JornadaEmpleado jornadaAusencia = jornadaEmpleadoRepository.findByDiaAndEmpleado(diaAusencia, empleado).get();
-        AusenciaJustificada ausencia = new AusenciaJustificada(jornadaAusencia, 3);
+        AusenciaJustificada ausencia = new AusenciaJustificada(jornadaAusencia, 3, "Revisión médica");
         ausenciaJustificadaRepository.save(ausencia);
     }
 

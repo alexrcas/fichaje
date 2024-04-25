@@ -8,13 +8,15 @@ public class AusenciaJustificada {
     private Long id;
     private JornadaEmpleado jornadaEmpleado;
     private double horas;
+    private String motivo;
 
     protected AusenciaJustificada() {
     }
 
-    public AusenciaJustificada(JornadaEmpleado jornadaEmpleado, double horas) {
+    public AusenciaJustificada(JornadaEmpleado jornadaEmpleado, double horas, String motivo) {
         this.jornadaEmpleado = jornadaEmpleado;
         this.horas = horas;
+        this.motivo = motivo;
     }
 
     @Id
@@ -43,5 +45,13 @@ public class AusenciaJustificada {
 
     public void setHoras(double horas) {
         this.horas = horas;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 }

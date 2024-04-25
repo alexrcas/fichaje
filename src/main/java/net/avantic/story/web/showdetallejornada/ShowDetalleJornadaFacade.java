@@ -1,9 +1,6 @@
 package net.avantic.story.web.showdetallejornada;
 
-import net.avantic.domain.model.dto.ComputoDto;
-import net.avantic.domain.model.dto.DiaDto;
-import net.avantic.domain.model.dto.FichajeDto;
-import net.avantic.domain.model.dto.ResultadoValidacionJornadaDto;
+import net.avantic.domain.model.dto.*;
 
 import java.util.List;
 
@@ -16,4 +13,6 @@ public interface ShowDetalleJornadaFacade {
     DiaDto getFechaJornada(Long idJornada);
 
     ComputoDto getComputo(Long idJornada);
+
+    List<AusenciaJustificadaDto> listAusenciasJustificadas(Long idJornada);
 }

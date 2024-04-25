@@ -27,7 +27,7 @@ public class JornadaEmpleadoDtoFactory {
     public JornadaDto newDto(JornadaEmpleado jornadaEmpleado) {
 
         validarJornadaService.validar(jornadaEmpleado);
-        boolean ausenciaJustificada = ausenciaJustificadaRepository.findByJornadaEmpleado(jornadaEmpleado).isPresent();
+        boolean ausenciaJustificada = ausenciaJustificadaRepository.findAllByJornadaEmpleado(jornadaEmpleado).size() > 0;
 
         if (!jornadaEmpleado.isValidada()) {
             return new JornadaDto(jornadaEmpleado.getId(), "E", jornadaEmpleado.getDia().getFecha(), ausenciaJustificada);

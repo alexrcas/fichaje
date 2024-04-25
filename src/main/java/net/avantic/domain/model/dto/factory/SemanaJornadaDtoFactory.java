@@ -80,9 +80,8 @@ public class SemanaJornadaDtoFactory {
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(ausenciaJustificadaRepository::findByJornadaEmpleado)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .map(ausenciaJustificadaRepository::findAllByJornadaEmpleado)
+                .flatMap(List::stream)
                 .map(AusenciaJustificada::getHoras)
                 .reduce((double) 0, Double::sum);
 

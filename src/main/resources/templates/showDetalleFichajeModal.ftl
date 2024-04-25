@@ -58,6 +58,11 @@
 
     </div>
 
+    <#list ausenciasJustificadas as ausencia>
+        <div class="alert alert-soft-primary" role="alert">
+            <b>${ausencia.horas} horas</b> de ausencia justificada con motivo: ${ausencia.motivo}
+        </div>
+    </#list>
 
 <table class="table table-sm">
     <thead>

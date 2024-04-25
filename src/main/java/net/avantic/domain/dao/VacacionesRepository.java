@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface VacacionesRepository extends JpaRepository<Vacaciones, Long> {
 
-    List<Vacaciones> findAllByFechaGreaterThanEqualOrderByFechaAsc(LocalDate fecha);
 }

@@ -4,12 +4,14 @@ import jakarta.annotation.PostConstruct;
 import net.avantic.domain.dao.*;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.EnumDiaSemana;
+import net.avantic.domain.service.DiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -21,6 +23,9 @@ public class CalendarInitializerService {
     private final ExtemporaneoRepository extemporaneoRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final SemanaRepository semanaRepository;
+    private final DiaService diaService;
+    private final VacacionesRepository vacacionesRepository;
+    private final DiaLibreRepository diaLibreRepository;
 
     @Autowired
     public CalendarInitializerService(DiaRepository diaRepository,
@@ -28,13 +33,19 @@ public class CalendarInitializerService {
                                       EmpleadoRepository empleadoRepository,
                                       ExtemporaneoRepository extemporaneoRepository,
                                       JornadaEmpleadoRepository jornadaEmpleadoRepository,
-                                      SemanaRepository semanaRepository) {
+                                      SemanaRepository semanaRepository,
+                                      DiaService diaService,
+                                      VacacionesRepository vacacionesRepository,
+                                      DiaLibreRepository diaLibreRepository) {
         this.diaRepository = diaRepository;
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
         this.extemporaneoRepository = extemporaneoRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.semanaRepository = semanaRepository;
+        this.diaService = diaService;
+        this.vacacionesRepository = vacacionesRepository;
+        this.diaLibreRepository = diaLibreRepository;
     }
 
 
@@ -74,6 +85,22 @@ public class CalendarInitializerService {
                 .map(dia -> new JornadaEmpleado(empleado, dia))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);
+
+
+        //crear vacaciones
+        Vacaciones vacaciones = new Vacaciones();
+        vacacionesRepository.save(vacaciones);
+
+        List<Dia> dias = List.of(
+                diaService.getByFecha(LocalDate.of(2024, 4, 17)),
+                diaService.getByFecha(LocalDate.of(2024, 4, 18)),
+                diaService.getByFecha(LocalDate.of(2024, 4, 19))
+        );
+
+        dias.stream()
+                .map(d -> new DiaLibre(empleado, d, vacaciones))
+                .forEach(diaLibreRepository::save);
+
 
     }
 

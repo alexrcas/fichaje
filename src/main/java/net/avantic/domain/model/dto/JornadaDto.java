@@ -34,8 +34,4 @@ public class JornadaDto {
     public LocalDate getFecha() {
         return fecha;
     }
-
-    public boolean isFestivo() {
-        return festivo;
-    }
 }

@@ -39,10 +39,7 @@ public class ShowCalendarioFacadeImpl implements ShowCalendarioFacade {
     @Override
     public List<VacacionesDto> listVacaciones() {
         LocalDate primerDiaAnyo = fechaService.getStartOfYear();
-        return vacacionesRepository.findAllByFechaGreaterThanEqualOrderByFechaAsc(primerDiaAnyo).stream()
-                .map(diaLibreRepository::findAllByVacacionesOrderByDia_fechaDesc)
-                .map(vacacionesDtoFactory::newDto)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override

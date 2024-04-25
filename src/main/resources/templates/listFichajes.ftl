@@ -21,39 +21,55 @@
                 <tbody>
                 <#list semanasJornadas as semanaJornada>
                 <tr <#if semanaJornada.semanaActual>id="currentWeek"</#if>>
-                    <#list semanaJornada.jornadas as jornada>
+                    <#list semanaJornada.dias as dia>
 
-                    <#if jornada.festivo>
+                <#if dia.festivo>
+                    <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
+                        <div class="d-flex flex-column">
+                        <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
+                            <div class="text-center fw-bold mt-1">
+                                <span class="badge badge-phoenix badge-phoenix-info">Fest.</span>
+                            </div>
+                        </div>
+                    </td>
+                <#elseif dia.vacaciones>
                 <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                     <div class="d-flex flex-column">
-                    <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
+                        <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
                         <div class="text-center fw-bold mt-1">
-                            <span class="badge badge-phoenix badge-phoenix-info">Fest.</span>
+                            <span class="badge badge-phoenix badge-phoenix-success">Vac.</span>
                         </div>
-
                     </div>
                 </td>
-                    <#else>
+                <#else>
                         <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>"
-                            <#if jornada.horas != ''>onclick="showDetalleJornada(${jornada.id})"</#if> >
-                            <div class="d-flex flex-column">
-                                <div class="small d-flex justify-content-end"><@localdatemacro jornada.fecha /></div>
-                                <#if jornada.horas != '' && jornada.horas != 'E'>
-                                <div class="text-center fw-bold mt-1">${jornada.horas?number?string["0.00"]}</div>
-                                </#if>
-                                <#if jornada.horas == 'E'>
-                                <div class="text-center fw-bold mt-1 bg-danger text-secondary">E</div>
-                                </#if>
-                            </div>
+                            <#if dia.jornada??>
+                                <#if dia.jornada.horas != ''>onclick="showDetalleJornada(${dia.jornada.id})"</#if> >
+                                <div class="d-flex flex-column">
+                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.jornada.fecha /></div>
+                                    <div class="text-center fw-bold mt-1">
+                                        <#if dia.jornada.horas == 'E'>
+                                            <span class="badge badge-phoenix badge-phoenix-danger">ERR</span>
+                                        <#else>
+                                            ${dia.jornada.horas?number?string["0.00"]}
+                                        </#if>
+                                    </div>
+                                    <span class="badge badge-phoenix badge-phoenix-secondary">Just.</span>
+                                </div>
+                            <#else>
+                            <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
+                                <div class="d-flex flex-column">
+                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
+                                </div>
+                            </td>
+                            </#if>
                         </td>
                     </#if>
 
 
-
-
                     </#list>
 
-                    <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >
+                    <#if (semanaJornada.tiempoSemana < (semanaJornada.horas - 1.5)) || (semanaJornada.tiempoSemana > semanaJornada.horas) >
                     <td class="p-2 bg-danger">
                         <div class="text-center fw-bold mt-3 text-secondary">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                     </td>

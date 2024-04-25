@@ -57,7 +57,7 @@ public class CalendarInitializerService {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
         LocalDate startDate = LocalDate.of(year -1, 12, 29);
-        LocalDate endDate = LocalDate.of(year, 12, 31);
+        LocalDate endDate = LocalDate.of(year + 1 , 1, 1);
 
         Semana semana = new Semana(startDate);
         semanaRepository.save(semana);

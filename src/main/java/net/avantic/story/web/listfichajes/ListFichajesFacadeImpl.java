@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import net.avantic.domain.dao.*;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.*;
+import net.avantic.domain.model.dto.factory.DiaCalendarioDtoFactory;
 import net.avantic.domain.model.dto.factory.JornadaEmpleadoDtoFactory;
 import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
@@ -23,31 +24,31 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     private final EmpleadoRepository empleadoRepository;
     private final DiaRepository diaRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
-    private final JornadaEmpleadoDtoFactory jornadaEmpleadoDtoFactory;
     private final FichajeService fichajeService;
     private final DiaService diaService;
     private final SemanaRepository semanaRepository;
     private final FechaService fechaService;
     private final SemanaJornadaDtoFactory semanaJornadaDtoFactory;
+    private final DiaCalendarioDtoFactory diaCalendarioDtoFactory;
 
     public ListFichajesFacadeImpl(EmpleadoRepository empleadoRepository,
                                   DiaRepository diaRepository,
                                   JornadaEmpleadoRepository jornadaEmpleadoRepository,
-                                  JornadaEmpleadoDtoFactory jornadaEmpleadoDtoFactory,
                                   FichajeService fichajeService,
                                   DiaService diaService,
                                   SemanaRepository semanaRepository,
                                   FechaService fechaService,
-                                  SemanaJornadaDtoFactory semanaJornadaDtoFactory) {
+                                  SemanaJornadaDtoFactory semanaJornadaDtoFactory,
+                                  DiaCalendarioDtoFactory diaCalendarioDtoFactory) {
         this.empleadoRepository = empleadoRepository;
         this.diaRepository = diaRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
-        this.jornadaEmpleadoDtoFactory = jornadaEmpleadoDtoFactory;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
         this.semanaRepository = semanaRepository;
         this.fechaService = fechaService;
         this.semanaJornadaDtoFactory = semanaJornadaDtoFactory;
+        this.diaCalendarioDtoFactory = diaCalendarioDtoFactory;
     }
 
 
@@ -58,21 +59,17 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     public List<SemanaJornadaDto> listJornadas() {
         Empleado empleado = empleadoRepository.findAll().get(0);
         //todo arodriguez: trasladar a factoría
-        //ojo, crear un nuevo concepto "fin de semana" en lugar de festivo o no se listarán los festivos entre semana
         List<SemanaJornadaDto> semanasJornadasDtoList = new ArrayList<>();
         List<Semana> semanas = semanaRepository.findAllByFechaDiaGreaterThanEqual(fechaService.getStartOfYear());
         for (Semana semana : semanas) {
 
-            List<JornadaDto> jornadaDtos = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
-                    .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado)
-                            .map(jornadaEmpleadoDtoFactory::newDto)
-                            .orElse(JornadaDto.emptyDto(d))
-                    )
+            List<DiaCalendarioDto> diasCalendario = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                    .map(d -> diaCalendarioDtoFactory.newDto(d, empleado))
                     .toList();
 
             semanasJornadasDtoList.add(
-                    new SemanaJornadaDto(jornadaDtos, SemanaJornadaDtoFactory.isSemanaActual(jornadaDtos),
-                    SemanaJornadaDtoFactory.calcularTiempoSemana(jornadaDtos), semanaJornadaDtoFactory.calcularHorasSemana(semana))
+                    new SemanaJornadaDto(diasCalendario, SemanaJornadaDtoFactory.isSemanaActual(diasCalendario),
+                    SemanaJornadaDtoFactory.calcularTiempoSemana(diasCalendario), semanaJornadaDtoFactory.calcularHorasSemana(semana))
             );
         }
 

@@ -5,6 +5,7 @@ import net.avantic.domain.dao.DiaRepository;
 import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.Semana;
+import net.avantic.domain.model.dto.DiaCalendarioDto;
 import net.avantic.domain.model.dto.JornadaDto;
 import net.avantic.domain.service.FechaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class SemanaJornadaDtoFactory {
@@ -31,15 +32,21 @@ public class SemanaJornadaDtoFactory {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public static boolean isSemanaActual(List<JornadaDto> jornadasSemana) {
+    public static boolean isSemanaActual(List<DiaCalendarioDto> diasCalendario) {
         LocalDate today = FechaService.findPrimerLunes(LocalDate.now());
-        return jornadasSemana.stream()
+        return diasCalendario.stream()
+                .map(DiaCalendarioDto::getJornada)
+                .filter(Objects::nonNull)
                 .map(JornadaDto::getFecha)
                 .anyMatch(today::isEqual);
     }
 
-    public static double calcularTiempoSemana(List<JornadaDto> jornadasSemana) {
-        return jornadasSemana.stream()
+    public static double calcularTiempoSemana(List<DiaCalendarioDto> diasCalendario) {
+        return diasCalendario.stream()
+                .filter(d -> !d.isFestivo())
+                .filter(d -> !d.isVacaciones())
+                .map(DiaCalendarioDto::getJornada)
+                .filter(Objects::nonNull)
                 .map(JornadaDto::getHoras)
                 .filter(s -> !s.isBlank() && !s.equals("E"))
                 .map(Double::parseDouble)

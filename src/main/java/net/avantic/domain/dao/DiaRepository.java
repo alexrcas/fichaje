@@ -12,11 +12,11 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
 
     Optional<Dia> findByFecha(LocalDate fecha);
 
-    List<Dia> findAllByFestivoOrderByIdAsc(boolean festivo);
+    List<Dia> findAllByFinSemanaOrderByIdAsc(boolean finSemana);
 
-    List<Dia> findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(LocalDate fecha, boolean festivo);
+    List<Dia> findAllByFechaGreaterThanEqualAndFinSemanaOrderByIdAsc(LocalDate fecha, boolean finSemana);
 
     List<Dia> findAllByOrderByIdAsc();
 
-    List<Dia> findAllBySemanaAndFestivoOrderById(Semana semana, boolean festivo);
+    List<Dia> findAllBySemanaAndFinSemanaOrderById(Semana semana, boolean finSemana);
 }

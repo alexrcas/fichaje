@@ -48,7 +48,7 @@ public class ShowCalendarioFacadeImpl implements ShowCalendarioFacade {
     @Override
     public List<DiaDto> listFestivos() {
         LocalDate primerDiaAnyo = fechaService.getStartOfYear();
-        return diaRepository.findAllByFechaGreaterThanEqualAndFestivoOrderByIdAsc(primerDiaAnyo, true).stream()
+        return diaRepository.findAllByFechaGreaterThanEqualAndFinSemanaOrderByIdAsc(primerDiaAnyo, true).stream()
                 .map(d -> new DiaDto(d.getId(), d.getFecha(), d.getDiaSemana()))
                 .collect(Collectors.toList());
     }

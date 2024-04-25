@@ -1,39 +1,23 @@
 package net.avantic.domain.model.dto.factory;
 
+import net.avantic.domain.dao.DiaRepository;
+import net.avantic.domain.model.Semana;
 import net.avantic.domain.model.dto.JornadaDto;
-import net.avantic.domain.model.dto.SemanaJornadaDto;
 import net.avantic.domain.service.FechaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SemanaJornadaDtoFactory {
 
-    public static final int WEEK_SIZE = 5;
+    private final DiaRepository diaRepository;
 
-    public static List<SemanaJornadaDto> agruparLista(List<JornadaDto> lista) {
-        LocalDate today = FechaService.findPrimerLunes(LocalDate.now());
-
-        List<SemanaJornadaDto> semanaJornadaDtoList = new ArrayList<>();
-        for (int i = 0; i < lista.size(); i += WEEK_SIZE) {
-
-            List<JornadaDto> jornadasSemana = lista.subList(i, Math.min(i + WEEK_SIZE, lista.size()));
-
-            boolean isSemanaActual = jornadasSemana.stream()
-                    .map(JornadaDto::getFecha)
-                    .anyMatch(today::isEqual);
-
-            double tiempoSemana = jornadasSemana.stream()
-                    .map(JornadaDto::getHoras)
-                    .filter(s -> !s.isBlank() && !s.equals("E"))
-                    .map(Double::parseDouble)
-                    .reduce((double) 0, Double::sum);
-
-            semanaJornadaDtoList.add(new SemanaJornadaDto(jornadasSemana, isSemanaActual, tiempoSemana));
-        }
-        return semanaJornadaDtoList;
+    @Autowired
+    public SemanaJornadaDtoFactory(DiaRepository diaRepository) {
+        this.diaRepository = diaRepository;
     }
 
     public static boolean isSemanaActual(List<JornadaDto> jornadasSemana) {
@@ -52,4 +36,10 @@ public class SemanaJornadaDtoFactory {
     }
 
 
+    public double calcularHorasSemana(Semana semana) {
+        //todo arodriguez: completar cuando se implementen los casos restantes
+        // Formula: (días NO festivos * 8) - (días vacaciones * 8) - horas justificadas
+        int diasNoFestivos = diaRepository.findAllBySemanaAndFinSemanaOrderById(semana, false).size();
+        return diasNoFestivos;
+    }
 }

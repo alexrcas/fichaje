@@ -15,6 +15,7 @@
                     <th class="text-center">J</th>
                     <th class="text-center">V</th>
                     <th class="text-center">Total</th>
+                    <th class="text-center">Horas</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,17 +36,21 @@
                     </td>
                     </#list>
 
-                <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >
-                <td class="p-2 bg-danger">
-                    <div class="text-center fw-bold mt-3 text-secondary">${semanaJornada.tiempoSemana?string["0.0"]}</div>
-                </td>
-                <#else>
-                <td class="p-2 bg-success">
-                    <div class="text-center fw-bold text-secondary mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
-                </td>
-                </#if>
+                    <#if (semanaJornada.tiempoSemana < 38.5) || (semanaJornada.tiempoSemana > 40) >
+                    <td class="p-2 bg-danger">
+                        <div class="text-center fw-bold mt-3 text-secondary">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                    </td>
+                    <#else>
+                    <td class="p-2 bg-success">
+                        <div class="text-center fw-bold text-secondary mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                    </td>
+                    </#if>
 
+                    <td class="p-2">
+                        <div class="text-center fw-bold mt-3">${semanaJornada.horas?string["0.0"]}</div>
+                    </td>
                 </tr>
+
                 </#list>
 
                 </tbody>

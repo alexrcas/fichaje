@@ -4,9 +4,9 @@
 
 <div class="row">
 
-    <div style="max-height:80vh" class="col-6 h-100 overflow-auto">
+    <div style="max-height:80vh" class="col-7 h-100 overflow-auto">
 
-            <table class="table table-bordered">
+            <table class="table table-bordered tabla-fichajes">
                 <thead class="sticky-top tabla-fichaje bg-body dark__bg-dark">
                 <tr>
                     <th class="text-center">L</th>
@@ -26,7 +26,7 @@
                 <#if dia.festivo>
                     <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                         <div class="d-flex flex-column">
-                        <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
+                        <div class="small d-flex justify-content-end <#if dia.today>text-primary fw-bold</#if>"><@localdatemacro dia.fecha /></div>
                             <div class="text-center fw-bold mt-1">
                                 <span class="badge badge-phoenix badge-phoenix-info">Fest.</span>
                             </div>
@@ -35,7 +35,7 @@
                 <#elseif dia.vacaciones>
                 <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                     <div class="d-flex flex-column">
-                        <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
+                        <div class="small d-flex justify-content-end <#if dia.today>text-primary fw-bold</#if>"><@localdatemacro dia.fecha /></div>
                         <div class="text-center fw-bold mt-1">
                             <span class="badge badge-phoenix badge-phoenix-success">Vac.</span>
                         </div>
@@ -46,7 +46,9 @@
                             <#if dia.jornada??>
                                 <#if dia.jornada.horas != ''>onclick="showDetalleJornada(${dia.jornada.id})"</#if> >
                                 <div class="d-flex flex-column">
-                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
+                                    <div class="small d-flex justify-content-end <#if dia.today>text-primary fw-bold</#if>">
+                                        <@localdatemacro dia.fecha />
+                                    </div>
                                     <div class="text-center fw-bold mt-1">
                                         <#if dia.jornada.horas == 'E'>
                                             <span class="badge badge-phoenix badge-phoenix-danger">ERR</span>
@@ -61,7 +63,9 @@
                             <#else>
                             <td class="cursor-pointer p-2 table-cell-hover <#if semanaJornada.semanaActual> bg-300 dark__bg-1000</#if>">
                                 <div class="d-flex flex-column">
-                                    <div class="small d-flex justify-content-end"><@localdatemacro dia.fecha /></div>
+                                    <div class="small d-flex justify-content-end <#if dia.today>text-primary fw-bold</#if>">
+                                        <@localdatemacro dia.fecha />
+                                    </div>
                                 </div>
                             </td>
                             </#if>
@@ -72,11 +76,13 @@
                     </#list>
 
                     <#if (semanaJornada.tiempoSemana < (semanaJornada.horas - 1.5)) || (semanaJornada.tiempoSemana > semanaJornada.horas) >
-                    <td class="p-2 bg-danger">
-                        <div class="text-center fw-bold mt-3 text-secondary">${semanaJornada.tiempoSemana?string["0.0"]}</div>
+                    <td class="p-2 bg-danger-soft">
+                        <div class="text-center fw-bold mt-3 text-secondary">
+                            ${semanaJornada.tiempoSemana?string["0.0"]}
+                        </div>
                     </td>
                     <#else>
-                    <td class="p-2 bg-success">
+                    <td class="p-2 bg-success-soft">
                         <div class="text-center fw-bold text-secondary mt-3">${semanaJornada.tiempoSemana?string["0.0"]}</div>
                     </td>
                     </#if>
@@ -93,7 +99,7 @@
 
     </div>
 
-    <div class="col-6 d-flex align-items-center flex-column">
+    <div class="col-5 d-flex align-items-center flex-column">
 
         <form id="fichar-form" action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
             <div class="w-50 ps-2 d-flex text-center flex-column">

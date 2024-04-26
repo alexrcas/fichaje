@@ -11,8 +11,15 @@ import java.time.LocalDate;
 public class Vacaciones {
 
     private Long id;
+    private LocalDate fechaInicio;
+    private LocalDate fechaRegreso;
 
-    public Vacaciones() {
+    protected Vacaciones() {
+    }
+
+    public Vacaciones(LocalDate fechaInicio, LocalDate fechaRegreso) {
+        this.fechaInicio = fechaInicio;
+        this.fechaRegreso = fechaRegreso;
     }
 
     @Id
@@ -23,5 +30,21 @@ public class Vacaciones {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaRegreso() {
+        return fechaRegreso;
+    }
+
+    public void setFechaRegreso(LocalDate fechaRegreso) {
+        this.fechaRegreso = fechaRegreso;
     }
 }

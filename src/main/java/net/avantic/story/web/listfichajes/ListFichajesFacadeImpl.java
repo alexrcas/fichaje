@@ -5,7 +5,6 @@ import net.avantic.domain.dao.*;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.DiaCalendarioDtoFactory;
-import net.avantic.domain.model.dto.factory.JornadaEmpleadoDtoFactory;
 import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
@@ -60,7 +59,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         Empleado empleado = empleadoRepository.findAll().get(0);
         //todo arodriguez: trasladar a factoría
         List<SemanaJornadaDto> semanasJornadasDtoList = new ArrayList<>();
-        List<Semana> semanas = semanaRepository.findAllByFechaDiaGreaterThanEqual(fechaService.getStartOfYear());
+        List<Semana> semanas = semanaRepository.findAllByFechaBetween(fechaService.getStartOfYear(), fechaService.getEndOfYear());
         for (Semana semana : semanas) {
 
             List<DiaCalendarioDto> diasCalendario = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
@@ -73,7 +72,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
             );
         }
 
-        return semanasJornadasDtoList;
+         return semanasJornadasDtoList;
     }
 
     @Override

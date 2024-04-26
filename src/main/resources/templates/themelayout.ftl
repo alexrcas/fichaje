@@ -18,8 +18,8 @@
                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     <li class="nav-item">
                         <!-- parent pages-->
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'calendario'>active</#if> label-1" href="#" role="button" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Calendario</span></span>
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'vacaciones'>active</#if> label-1" href="/listVacaciones" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Vacaciones</span></span>
                             </div>
                         </a>
                         </div>

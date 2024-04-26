@@ -42,17 +42,20 @@ public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
         LocalDate fechaInicio = command.getFechaInicio();
         LocalDate fechaRegreso = command.getFechaFin();
 
-        Vacaciones vacaciones = new Vacaciones();
+        Vacaciones vacaciones = new Vacaciones(fechaInicio, fechaRegreso);
         vacacionesRepository.save(vacaciones);
 
         for (LocalDate fecha = fechaInicio; fecha.isBefore(fechaRegreso); fecha = fecha.plusDays(1)) {
             Dia dia = diaService.getByFecha(fecha);
-            DiaLibre diaLibre = new DiaLibre(empleado, dia, vacaciones);
-            diaLibreRepository.save(diaLibre);
+            if (!dia.isFestivo() && !dia.isFinSemana()) {
+                DiaLibre diaLibre = new DiaLibre(empleado, dia, vacaciones);
+                diaLibreRepository.save(diaLibre);
+            }
         }
     }
 
     private void assertCommand(AddVacacionesCommand command) {
+        //todo arodriguez: assert que no haya festivos u otras vacaciones de por medio
         if (command.getFechaInicio() == null) {
             throw new RuntimeException("");
         }

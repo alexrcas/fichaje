@@ -4,24 +4,30 @@ package net.avantic.domain.model.dto;
 public class VacacionesDto {
 
     private final DiaDto primerDia;
-    private final DiaDto ultimoDia;
-    private final EmpleadoDto empleadoDto;
+    private final DiaDto diaRegreso;
+    private final int numeroDias;
+    private final EmpleadoDto empleado;
 
-    public VacacionesDto(DiaDto primerDia, DiaDto ultimoDia, EmpleadoDto empleadoDto) {
+    public VacacionesDto(DiaDto primerDia, DiaDto diaRegreso, int numeroDias, EmpleadoDto empleado) {
         this.primerDia = primerDia;
-        this.ultimoDia = ultimoDia;
-        this.empleadoDto = empleadoDto;
+        this.diaRegreso = diaRegreso;
+        this.numeroDias = numeroDias;
+        this.empleado = empleado;
     }
 
     public DiaDto getPrimerDia() {
         return primerDia;
     }
 
-    public DiaDto getUltimoDia() {
-        return ultimoDia;
+    public DiaDto getDiaRegreso() {
+        return diaRegreso;
     }
 
-    public EmpleadoDto getEmpleadoDto() {
-        return empleadoDto;
+    public int getNumeroDias() {
+        return numeroDias;
+    }
+
+    public EmpleadoDto getEmpleado() {
+        return empleado;
     }
 }

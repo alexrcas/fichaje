@@ -51,7 +51,7 @@ public class ValidadorStateMachine {
 
 
     public boolean transitar(Fichaje fichaje) {
-        this.mensaje = "Se estaba en: " + stateMachine.getEstadoActual() + " - Se encontró: " + fichaje.getClass().getName();
+        this.mensaje = "Hay errores en el fichaje";
         this.idError = fichaje.getId();
 
         return stateMachine.transitar(fichaje);
@@ -67,4 +67,5 @@ public class ValidadorStateMachine {
         }
         return new ResultadoValidacionJornadaDto(false, mensaje, idError);
     }
+
 }

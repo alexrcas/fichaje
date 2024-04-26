@@ -60,7 +60,7 @@ public class CalendarInitializerService {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
         LocalDate startDate = LocalDate.of(year -1, 12, 29);
-        LocalDate endDate = LocalDate.of(year + 1 , 1, 1);
+        LocalDate endDate = LocalDate.of(year + 1 , 1, 20);
 
         Semana semana = new Semana(startDate);
         semanaRepository.save(semana);
@@ -91,7 +91,7 @@ public class CalendarInitializerService {
 
 
         //crear vacaciones
-        Vacaciones vacaciones = new Vacaciones();
+        Vacaciones vacaciones = new Vacaciones(LocalDate.of(2024, 4, 17), LocalDate.of(2024, 4, 22));
         vacacionesRepository.save(vacaciones);
 
         List<Dia> dias = List.of(
@@ -102,6 +102,27 @@ public class CalendarInitializerService {
 
         dias.stream()
                 .map(d -> new DiaLibre(empleado, d, vacaciones))
+                .forEach(diaLibreRepository::save);
+
+
+        Vacaciones vacaciones2 = new Vacaciones(LocalDate.of(2024, 4, 8), LocalDate.of(2024, 4, 11));
+        vacacionesRepository.save(vacaciones2);
+
+        List<Dia> dias2 = List.of(
+                diaService.getByFecha(LocalDate.of(2024, 4, 8)),
+                diaService.getByFecha(LocalDate.of(2024, 4, 9)),
+                diaService.getByFecha(LocalDate.of(2024, 4, 10))
+        );
+
+        dias2.stream()
+                .map(d -> new DiaLibre(empleado, d, vacaciones2))
+                .forEach(diaLibreRepository::save);
+
+
+        Vacaciones vacaciones3 = new Vacaciones(LocalDate.of(2024, 4, 8), LocalDate.of(2024, 4, 11));
+        vacacionesRepository.save(vacaciones3);
+        dias2.stream()
+                .map(d -> new DiaLibre(empleado2, d, vacaciones3))
                 .forEach(diaLibreRepository::save);
 
 
@@ -117,11 +138,11 @@ public class CalendarInitializerService {
 
         LocalDate fechaBase = jornadaEmpleado.getDia().getFecha();
 
-        LocalDateTime horaEntradaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 7, 0, 0));
+        LocalDateTime horaEntradaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(1) + 7, 0, 0));
         EntradaJornada entradaJornada = new EntradaJornada(jornadaEmpleado);
         Extemporaneo ex1 = new Extemporaneo(entradaJornada, horaEntradaJornada);
 
-        LocalDateTime horaSalidaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(3) + 15, 0, 0));
+        LocalDateTime horaSalidaJornada = LocalDateTime.of(fechaBase, LocalTime.of(random.nextInt(2) + 15, 0, 0));
         SalidaJornada salidaJornada = new SalidaJornada(jornadaEmpleado);
         Extemporaneo ex2 = new Extemporaneo(salidaJornada, horaSalidaJornada);
 

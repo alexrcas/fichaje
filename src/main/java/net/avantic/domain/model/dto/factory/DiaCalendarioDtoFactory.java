@@ -9,6 +9,8 @@ import net.avantic.domain.model.dto.JornadaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DiaCalendarioDtoFactory {
 
@@ -28,11 +30,12 @@ public class DiaCalendarioDtoFactory {
     public DiaCalendarioDto newDto(Dia dia, Empleado empleado) {
 
         boolean vacaciones = diaLibreRepository.findByDiaAndEmpleado(dia, empleado).isPresent();
+        boolean today = dia.getFecha().equals(LocalDate.now());
 
         JornadaDto jornadaDto = jornadaEmpleadoRepository.findByDiaAndEmpleado(dia, empleado)
                 .map(jornadaEmpleadoDtoFactory::newDto)
                 .orElse(null);
 
-        return new DiaCalendarioDto(jornadaDto, dia.isFestivo(), vacaciones, dia.getFecha());
+        return new DiaCalendarioDto(jornadaDto, dia.isFestivo(), vacaciones, dia.getFecha(), today);
     }
 }

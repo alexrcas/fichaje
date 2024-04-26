@@ -28,16 +28,17 @@ Sin embargo, otro objetivo del proyecto es el aprendizaje, la experimentación y
 
 Se requiere una aplicación que permita registrar y gestionar el fichaje de los empleados. La aplicación no restringirá la acción del usuario, es decir, el empleado podrá fichar lo que quiera, cuando quiera y cuantas veces quiera. Será posteriormente un motor de validación el que evaluará la coherencia o no del fichaje de una jornada. No obstante, la aplicación precargará por defecto el fichaje sugerido ya que la mayoría de las veces coincidirá con la intención del usuario. Por ejemplo, cabe esperar que el primer fichaje del día sea la entrada de jornada o que tras haber fichado salida a desayuno lo siguiente que se fiche sea la entrada de este.
 
-Por defecto, el fichaje se produce a la hora en que se realiza la acción de fichar, pero también podrá realizarse un fichaje extemporáneo, es decir, un fichaje que se refiere a un momento del pasado. Un ejemplo sería olvidar fichar la salida del viernes y realizar su fichaje el lunes siguiente. 
+Por defecto, el fichaje constará a la hora en que se realiza la acción de fichar, pero también podrá realizarse un fichaje extemporáneo, es decir, un fichaje que se refiere a un momento del pasado. Un ejemplo sería olvidar fichar la salida del viernes y realizar su fichaje el lunes siguiente. 
 
 La aplicación conservará el registro de todo sin efectuar nunca un borrado definitivo. Por ello, para eliminar fichajes erróneos existirá el concepto de *anulación*. Un fichaje anulado sigue existiendo como registro pero es ignorado para el cómputo. Solo el administrador podrá anular fichajes, pero los usuarios podrán solicitar la anulación de un fichaje desde la propia aplicación. El administrador recibirá una notificación informando de esta solicitud y realizará la anulación si procede.
 
-Se contará también con un calendario para marcar los días que proceda como festivos y que no sean tenidos en cuenta para el cómputo. Igualmente existirá también el concepto de **vacaciones**, que a diferencia de los festivos se aplican sobre un solo empleado. También existirá el concepto  **ausencia justificada**, que aplicada sobre un empleado y una jornada descuentan un cierto número de horas cuando se efectúa el cómputo de la semana. Si bien la jornada reducida de verano puede solventarse con esta funcionalidad, es posible que se le dote de su propio concepto. La administración del calendario es, obviamente, tarea exclusiva del administrador.
+Se contará también con un calendario para marcar los días que proceda como festivos y que no sean tenidos en cuenta para el cómputo. También existirá el concepto de **vacaciones**, que a diferencia de los festivos se aplican sobre un solo empleado. De igual forma, existirá la **ausencia justificada**, que aplicada sobre un empleado y una jornada descuentan un cierto número de horas cuando se efectúa el cómputo de la semana. Si bien la jornada reducida de verano puede solventarse con esta funcionalidad, es posible que se le dote de su propio concepto. La administración del calendario es, obviamente, tarea exclusiva del administrador.
 
 La aplicación mostrará de manera rápida y sencilla una cuadrícula semanal con el cómputo de horas de cada jornada. Cada empleado solo verá su fichaje pero el administrador podrá ver el de todos los empleados. Al pinchar sobre una cuadrícula se mostrará el detalle del cómputo y los fichajes realizados. Si el fichaje de una jornada es incorrecto se reflejará en la cuadrícula para identificarlo rápidamente y también en la vista de detalle. 
 
-Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista podría tener valor sobre todo para el administrador, evitándole revisar la cuadrícula de cada empleado. No obstante, el objetivo de la aplicación es que el fichaje no necesite supervisión, mostrando de forma muy concisa y directa el estado del fichaje a cada empleado. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
+Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista podría tener valor sobre todo para el administrador, evitándole tener que revisar la cuadrícula de cada empleado. No obstante, el objetivo de la aplicación es que el fichaje no necesite supervisión, mostrando de forma muy concisa y directa el estado del fichaje a cada empleado. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
 
+### Aspectos legales
 Hashes y blockchain, copias de seguridad
 
 ## 3. Modelado del problema
@@ -62,7 +63,6 @@ Seguridad a nivel de entidad (entidad securizada)
 Comprobación de comando en el back-end (y en el front pero solo como azúcar de usabilidad)
 Seguridad de API Rest
 
-Trazabilidad del fichaje (blockchain?)
 
 ## 5. Otros aspectos
 
@@ -157,6 +157,10 @@ Nótese el uso ahora de `StateMachineByClassBuilder` el cual obliga a utilizar u
 Creada la máquina, puede utilizarse con normalidad como en el primer ejemplo.
 
 ## 6. Funcionamiento de la aplicación
+
+*Nota*: las siguientes capturas se han tomado durante un desarrollo en constante evolución y generando diferentes escenarios de prueba. La consistencia entre las mismas así como el realismo de los datos mostrados puede ser inexacto. El aspecto final de la aplicación real podría llegar a diferir ligeramente de las mismas.
+
+
 
 ## 7. Líneas futuras
 

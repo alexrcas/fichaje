@@ -15,4 +15,10 @@ public class FechaServiceImpl implements FechaService {
         return LocalDate.of(today.getYear(), 1, 1);
     }
 
+    @Override
+    public LocalDate getEndOfYear() {
+        LocalDate today = LocalDate.now();
+        return LocalDate.of(today.getYear(), 12, 31);
+    }
+
 }

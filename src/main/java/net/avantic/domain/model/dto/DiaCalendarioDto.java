@@ -8,12 +8,14 @@ public class DiaCalendarioDto {
     private final boolean festivo;
     private final boolean vacaciones;
     private final LocalDate fecha;
+    private boolean today;
 
-    public DiaCalendarioDto(JornadaDto jornada, boolean festivo, boolean vacaciones, LocalDate fecha) {
+    public DiaCalendarioDto(JornadaDto jornada, boolean festivo, boolean vacaciones, LocalDate fecha, boolean today) {
         this.jornada = jornada;
         this.festivo = festivo;
         this.vacaciones = vacaciones;
         this.fecha = fecha;
+        this.today = today;
     }
 
     public JornadaDto getJornada() {
@@ -30,5 +32,9 @@ public class DiaCalendarioDto {
 
     public LocalDate getFecha() {
         return fecha;
+    }
+
+    public boolean isToday() {
+        return today;
     }
 }

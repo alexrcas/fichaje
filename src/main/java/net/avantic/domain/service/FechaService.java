@@ -12,4 +12,6 @@ public interface FechaService {
         int diasRetroceder = diaSemana.getValue() - DayOfWeek.MONDAY.getValue();
         return fecha.minusDays(diasRetroceder);
     }
+
+    LocalDate getEndOfYear();
 }

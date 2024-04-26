@@ -2,9 +2,11 @@ package net.avantic.domain.model.dto.factory;
 
 import net.avantic.domain.dao.*;
 import net.avantic.domain.model.AusenciaJustificada;
+import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.Semana;
 import net.avantic.domain.model.dto.DiaCalendarioDto;
+import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.JornadaDto;
 import net.avantic.domain.service.FechaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,7 @@ public class SemanaJornadaDtoFactory {
         return diasCalendario.stream()
                 .filter(d -> !d.isFestivo())
                 .filter(d -> !d.isVacaciones())
+                .filter(SemanaJornadaDtoFactory::isCurrentYear)
                 .map(DiaCalendarioDto::getJornada)
                 .filter(Objects::nonNull)
                 .map(JornadaDto::getHoras)
@@ -58,25 +61,36 @@ public class SemanaJornadaDtoFactory {
                 .reduce((double) 0, Double::sum);
     }
 
+    private static boolean isCurrentYear(DiaCalendarioDto dia) {
+        int year = LocalDate.now().getYear();
+        return dia.getFecha().getYear() == year;
+    }
+
+
+    private static boolean isCurrentYear(Dia dia) {
+        int year = LocalDate.now().getYear();
+        return dia.getFecha().getYear() == year;
+    }
 
     public double calcularHorasSemana(Semana semana) {
-        //todo arodriguez: completar cuando se implementen los casos restantes
-        // Formula: (días NO festivos * 8) - (días vacaciones * 8) - horas justificadas
         //todo: arodriguez: parametrizar empleado
         Empleado empleado = empleadoRepository.findAll().get(0);
 
         int diasNoFestivos = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
                 .filter(d -> !d.isFestivo())
+                .filter(SemanaJornadaDtoFactory::isCurrentYear)
                 .toList()
                 .size();
 
         int diasLibres = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                .filter(SemanaJornadaDtoFactory::isCurrentYear)
                 .map(d -> diaLibreRepository.findByDiaAndEmpleado(d, empleado))
                 .filter(Optional::isPresent)
                 .toList()
                 .size();
 
         double horasJustificadas = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                .filter(SemanaJornadaDtoFactory::isCurrentYear)
                 .map(d -> jornadaEmpleadoRepository.findByDiaAndEmpleado(d, empleado))
                 .filter(Optional::isPresent)
                 .map(Optional::get)

@@ -20,6 +20,6 @@ public class AddVacacionesController {
     @PostMapping
     public RedirectView handleForm(AddVacacionesCommand command) {
         facade.addVacaciones(command);
-        return new RedirectView("/showCalendar");
+        return new RedirectView("/listVacaciones");
     }
 }

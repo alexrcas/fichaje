@@ -40,9 +40,9 @@
         <div class="mb-3">
             <div class="form-floating">
                 <select name="idEmpleado" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option value="1">test</option>
+                    <option value="1">arodriguez</option>
                 </select>
-            <label for="floatingSelect">Tipo de fichaje</label>
+            <label for="floatingSelect">Empleado</label>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
     </div>
 
     <div class="text-center mb-0">
-        <button id="fichar-btn" type="submit" class="btn btn-primary">Añadir</button>
+        <button id="fichar-btn" type="submit" class="btn btn-primary">Aceptar</button>
     </div>
 
     </div>

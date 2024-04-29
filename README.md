@@ -16,7 +16,7 @@ Aplicación web y móvil para gestionar el fichaje y el cómputo de horas de los
 
 Este proyecto se ha desarrollado como una aplicación cliente-servidor, con una interfaz web servida desde el propio servidor a través de un motor de plantillas y una API que permite realizar integraciones de terceras aplicaciones.
 
-El stack tecnológico original que se ha utilizado es el siguiente:
+El stack tecnológico que se ha utilizado es el siguiente:
 
 ![](/doc/stack-java.jpg)
 
@@ -38,8 +38,8 @@ La aplicación mostrará de manera rápida y sencilla una cuadrícula semanal co
 
 Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista podría tener valor sobre todo para el administrador, evitándole tener que revisar la cuadrícula de cada empleado. No obstante, el objetivo de la aplicación es que el fichaje no necesite supervisión, mostrando de forma muy concisa y directa el estado del fichaje a cada empleado. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
 
-### Aspectos legales
-Hashes y blockchain, copias de seguridad
+### 2.1. Aspectos legales
+Garantizar la no alteración del fichaje. Sello digital? Blockchain?
 
 ## 3. Modelado del problema
 
@@ -51,26 +51,22 @@ La validación de una jornada se realizará con una máquina de estados represen
 
 ![](/doc/maquina-real.jpg)
 
-Para aliviar la carga de la tarea de validación, la jornada contará con un flag que indicará si ha sido correctamente validada o no. Las jornadas validadas no volverán a ser tenidas en cuenta y no pasarán por el validador. Si se realiza un fichaje sobre una jornada validada, esta volverá a considerarse pendiente de validar.
+Para aliviar la carga de la tarea de validación, la jornada contará con un flag que indicará si ha sido correctamente validada o no. Las jornadas validadas no volverán a ser tenidas en cuenta y no pasarán por el validador. Si se realiza un fichaje sobre una jornada validada, esta volverá a considerarse pendiente de validar. Dado que las jornadas cuentan con su propia representación y se obtienen directamente sin iterar sobre los días, a efectos prácticos la validación se producirá prácticamente solo en el día en curso para cada empleado o los pocos con un fichaje erróneo.
 
-Notificaciones server sent event?
 
 ## 4. Seguridad
 
-Seguridad a nivel de usuario y contraseña (oAuth)
-Seguridad a nivel de rol, acceso y ejecución (anotaciones en fachada)
-Seguridad a nivel de entidad (entidad securizada)
-Comprobación de comando en el back-end (y en el front pero solo como azúcar de usabilidad)
-Seguridad de API Rest
+### 4.1. Seguridad a nivel de usuario y contraseña (oAuth)
+### 4.2. Seguridad a nivel de rol, acceso y ejecución (anotaciones en fachada y securización de rutas)
+### 4.3. Seguridad a nivel de entidad (entidad securizada)
+### 4.4. Comprobación de comando en el back-end (y en el front pero solo como azúcar de usabilidad)
 
 
 ## 5. Otros aspectos
 
 ### Máquina de estados
 
-La implementación de la máquina de estados encapsuló y estructuró el código, pero no solucionó el problema más importante, que era de naturaleza humana: el código era largo y verboso. La máquina funcionaba correctamente, pero era yo como humano quien cometía errores y despistes a la hora de trasladar un diagrama de una máquina a código ya que resultaba muy fácil despistarse y no trasladar (o hacerlo mal) un determinado estado o transición.
-
-Se necesitaba una solución que eliminase la mayor cantidad de ruido, reflejando el diagrama en código de la forma más directa posible. Así se creo una pequeña utilidad para crear máquinas de estados de manera genérica y sencilla.
+La creación de una máquina de estados era verbosa. Se necesitaba una solución que eliminase la mayor cantidad de ruido, reflejando el diagrama en código de la forma más directa posible. Así se creo una pequeña utilidad para crear máquinas de estados de manera genérica y sencilla.
 
 #### Ejemplo
 
@@ -160,6 +156,34 @@ Creada la máquina, puede utilizarse con normalidad como en el primer ejemplo.
 
 *Nota*: las siguientes capturas se han tomado durante un desarrollo en constante evolución y generando diferentes escenarios de prueba. La consistencia entre las mismas así como el realismo de los datos mostrados puede ser inexacto. El aspecto final de la aplicación real podría llegar a diferir ligeramente de las mismas.
 
+La pantalla de inicio es el punto de entrada de la aplicación. Muestra los fichajes y la posibilidad de fichar de una manera concisa y directa. Muestra el día actual y la semana en curso. Cuando carga, la tabla hace scroll automáticamente hasta la semana en curso. Cada empleado verá únicamente la suya pero el administrador podrá ver la de cada empleado mediante un selector que aunque no se muestre en la imagen estará situado sobre la tabla.
+
+Las dos últimas columnas de la tabla muestran el total de horas trabajadas y el objetivo de horas semanal. La primera columna aparecerá en rojo o verde en función de si se cumple con las horas objetivo de la jornada, tanto con un límite superior como inferior.
+
+Al visualizar su tabla, el empleado podrá encontrar algunas etiquetas sobre determinados días:
+* **VAC**: indica vacaciones.
+* **FEST**: indica día festivo.
+* **JUST**: indica que se han justificado horas de ausencia ese día. De hecho, se puede observar en la imagen como esa semana el objetivo de horas es de 37 y no de 40.
+* **ERR**: indica un error en el fichaje. Esta etiqueta no es exclusiva con la anterior, pudiendo aparecer ambas a la vez.
+
+En el panel derecho se encuentra el formulario de fichaje. Este formulario se precarga con la opción sugerida, es decir, si no hay fichaje para el día en curso mostrará preseleccionado *Entrada Jornada*. Si se ficha, mostrará *Salida desayuno*, a continuación *Entrada desayuno* y así sucesivamente hasta completar el flujo de un día normal, por lo que la mayoría de veces bastará con entrar a la aplicación y pulsar el botón para fichar.
+
+![](/doc/img/fichajes.png)
+
+Haciendo click sobre cualquier fichaje se abrirá la vista de detalle. La vista de detalle muestra el flujo de fichajes y una tabla que refleja el cómputo de la jornada.
+
+![](/doc/img/detalle-fichaje.png)
+
+Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje que ha hecho fallar al motor de validación. En el caso de este ejemplo, una entrada de comida no es posible si no existe una salida de comida previa.
+
+![](/doc/img/error-fichaje.png)
+
+La aplicación dispone de modo claro y oscuro intercambiables en cualquier momento
+![](/doc/img/switch-theme.gif)
+
+Vacaciones
+![](/doc/img/vacaciones.png)
+![](/doc/img/vacaciones-error.png)
 
 
 ## 7. Líneas futuras

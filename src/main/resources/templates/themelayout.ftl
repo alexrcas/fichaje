@@ -18,8 +18,21 @@
                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     <li class="nav-item">
                         <!-- parent pages-->
+
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'fichajes'>active</#if> label-1" href="/listFichajes" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-business-time"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Fichajes</span></span>
+                            </div>
+                        </a>
+                        </div>
+
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'vacaciones'>active</#if> label-1" href="/listVacaciones" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Vacaciones</span></span>
+                            </div>
+                        </a>
+                        </div>
+
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'festivos'>active</#if> label-1" href="/listFestivos" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Festivos</span></span>
                             </div>
                         </a>
                         </div>
@@ -30,17 +43,18 @@
                         </a>
                         </div>
 
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'anulaciones'>active</#if> label-1" href="/listSolicitudesAnulacion" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Sol. Anulación</span></span>
+                            </div>
+                        </a>
+                        </div>
+
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'empleados'>active</#if> label-1" href="/listEmpleados" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Empleados</span></span>
                             </div>
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'fichajes'>active</#if> label-1" href="/listFichajes" role="button" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-business-time"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Fichajes</span></span>
-                            </div>
-                        </a>
-                        </div>
                     </li>
 
 
@@ -108,11 +122,7 @@
                 </li>
 
                 <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-                    <div class="avatar avatar-l ">
-                        <img class="rounded-circle " src="../assets/img/team/40x40/57.webp" alt="" />
-
-                    </div>
-                </a>
+                </a>arodriguez
                     <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarDropdownUser">
                         <div class="card position-relative border-0">
                             <div class="card-body p-0">

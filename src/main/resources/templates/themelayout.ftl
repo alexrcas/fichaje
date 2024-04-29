@@ -145,6 +145,15 @@
       </script>
 
     <div class="content">
+
+            <#if error??>
+                <div class="alert alert-soft-danger d-flex align-items-center" role="alert">
+                    <span class="fas fa-times-circle text-danger fs-3 me-3"></span>
+                    <p class="mb-0 flex-1">Se ha producido un error: ${error}</p>
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </#if>
+
             <#nested>
     </div>
     <script>

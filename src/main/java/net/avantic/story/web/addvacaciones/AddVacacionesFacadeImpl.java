@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
@@ -35,7 +36,8 @@ public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
 
     @Transactional
     @Override
-    public void addVacaciones(AddVacacionesCommand command) {
+    public void addVacaciones(AddVacacionesCommand command) throws Exception {
+
         assertCommand(command);
 
         Empleado empleado = empleadoRepository.getReferenceById(command.getIdEmpleado());
@@ -54,26 +56,54 @@ public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
         }
     }
 
-    private void assertCommand(AddVacacionesCommand command) {
-        //todo arodriguez: assert que no haya festivos u otras vacaciones de por medio
+    private void assertCommand(AddVacacionesCommand command) throws Exception {
+        //todo arodriguez: assert:
+        // Entre las dos fechas no hay ningún día de vacaciones
+
         if (command.getFechaInicio() == null) {
-            throw new RuntimeException("");
+            throw new Exception("No se ha especificado una fecha de inicio");
         }
 
         if (command.getFechaFin() == null) {
-            throw new RuntimeException("");
+            throw new Exception("No se ha especificado una fecha de regreso");
         }
 
+
         if (command.getIdEmpleado() == null) {
-            throw new RuntimeException("");
+            throw new Exception("No se ha especificado un empleado");
         }
 
         if (command.getFechaFin().isEqual(command.getFechaInicio())) {
-            throw new RuntimeException("");
+            throw new Exception("Las fechas de inicio y regreso no pueden coincidir");
         }
 
         if (command.getFechaFin().isBefore(command.getFechaInicio())) {
-            throw new RuntimeException("");
+            throw new Exception("La fecha de regreso no puede ser anterior a la fecha de inicio");
+        }
+
+        if (command.getFechaInicio().isBefore(LocalDate.now())) {
+            throw new Exception("La fecha de inicio no puede ser anterior a hoy");
+        }
+
+        Dia diaInicio = diaService.getByFecha(command.getFechaInicio());
+        if (diaInicio.isFinSemana() || diaInicio.isFestivo()) {
+            throw new Exception("El día de inicio no puede ser un festivo o fin de semana");
+        }
+
+        Dia diaRegreso = diaService.getByFecha(command.getFechaFin());
+
+        if (diaRegreso.isFinSemana() || diaInicio.isFestivo()) {
+            throw new Exception("El día de regreso no puede ser un festivo o fin de semana");
+        }
+
+        Empleado empleado = empleadoRepository.getReferenceById(command.getIdEmpleado());
+        for (LocalDate fecha = command.getFechaInicio(); fecha.isBefore(command.getFechaFin()); fecha = fecha.plusDays(1)) {
+            Dia dia = diaService.getByFecha(fecha);
+            Optional<DiaLibre> diaLibre = diaLibreRepository.findByDiaAndEmpleado(dia, empleado);
+            if (diaLibre.isPresent()) {
+                throw new RuntimeException("Las vacaciones introducidas se solapan con otras vacaciones existentes del mismo empleado");
+            }
         }
     }
+
 }

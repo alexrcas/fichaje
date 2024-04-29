@@ -2,5 +2,5 @@ package net.avantic.story.web.addvacaciones;
 
 public interface AddVacacionesFacade {
 
-    void addVacaciones(AddVacacionesCommand command);
+    void addVacaciones(AddVacacionesCommand command) throws Exception;
 }

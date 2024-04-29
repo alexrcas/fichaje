@@ -100,7 +100,7 @@
     </div>
 
     <div class="col-5 d-flex align-items-center flex-column">
-
+        <h4 class="d-flex justify-content-center mb-3">Fichar</h4>
         <form id="fichar-form" action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
             <div class="w-50 ps-2 d-flex text-center flex-column">
                 <div class="mb-3">
@@ -119,7 +119,7 @@
                     <label for="datetimepicker">Fecha (solo en caso de extemporáneo)</label>
                 </div>
                 <div class="text-center mb-0">
-                    <button id="fichar-btn" type="submit" class="btn btn-primary">Fichar</button>
+                    <button id="fichar-btn" type="submit" class="btn btn-outline-primary">Fichar</button>
                 </div>
 
             </div>

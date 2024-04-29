@@ -170,9 +170,11 @@ En el panel derecho se encuentra el formulario de fichaje. Este formulario se pr
 
 ![](/doc/img/fichajes.png)
 
-Haciendo click sobre cualquier fichaje se abrirá la vista de detalle. La vista de detalle muestra el flujo de fichajes y una tabla que refleja el cómputo de la jornada.
+Haciendo click sobre cualquier fichaje se abrirá la vista de detalle. La vista de detalle muestra el flujo de fichajes y una tabla que refleja el cómputo de la jornada. Haciendo click sobre un fichaje un empleado puede solicitar su anulación. Los fichajes anulados seguirán en su lugar original pero se mostrarán tachados o en gris.
 
 ![](/doc/img/detalle-fichaje.png)
+
+![](/doc/img/ausencia-justificada.png)
 
 Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje que ha hecho fallar al motor de validación. En el caso de este ejemplo, una entrada de comida no es posible si no existe una salida de comida previa.
 
@@ -181,8 +183,12 @@ Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje q
 La aplicación dispone de modo claro y oscuro intercambiables en cualquier momento
 ![](/doc/img/switch-theme.gif)
 
-Vacaciones
+Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares y siempre funcionan de la misma manera por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas.
+
 ![](/doc/img/vacaciones.png)
+
+Dado que la aplicación es muy pequeña en cuanto a casos de uso para el usuario y los formularios apenas tienen uno o dos campos, por ahora no se utilizan modales sino que dichos formularios están embebidos en las propias vistas. Los errores devueltos por el servidor siempre se muestran de la misma forma: en la parte superior del contenedor.
+
 ![](/doc/img/vacaciones-error.png)
 
 

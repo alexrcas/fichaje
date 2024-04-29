@@ -8,7 +8,7 @@
     <div class="col-7">
 
 
-        <div id="tableExample3" data-list='{"valueNames":["empleado","inicio","regreso"]}'>
+        <div id="tableExample3" data-list='{"valueNames":["empleado","inicio","regreso", "numeroDias"]}'>
             <div class="search-box mb-3 mx-auto">
                 <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search form-control-sm" type="search" placeholder="Buscar" aria-label="Search" />
                     <span class="fas fa-search search-box-icon"></span>
@@ -21,6 +21,7 @@
                         <th class="sort border-top ps-3" data-sort="empleado">Empleado</th>
                         <th class="sort border-top" data-sort="inicio">Primer día de ausencia</th>
                         <th class="sort border-top" data-sort="regreso">Día de incorporación</th>
+                        <th class="sort border-top" data-sort="numeroDias">Días</th>
                         <th class="sort text-end align-middle pe-0 border-top" scope="col"></th>
                     </tr>
                     </thead>
@@ -30,6 +31,7 @@
                         <td class="align-middle ps-3 empleado">${v.empleado.email}</td>
                         <td class="align-middle inicio"><@localdatemacro v.primerDia.fecha /></td>
                         <td class="align-middle regreso"><@localdatemacro v.diaRegreso.fecha /></td>
+                        <td class="align-middle numeroDias">${v.numeroDias}</td>
                         <td class="align-middle white-space-nowrap text-end pe-0">
                             <div class="font-sans-serif btn-reveal-trigger position-static"><button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>
                                 <div class="dropdown-menu dropdown-menu-end py-2">

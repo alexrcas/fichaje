@@ -24,6 +24,12 @@
                         </a>
                         </div>
 
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'ausencias'>active</#if> label-1" href="/listAusenciasJustificadas" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Ausencias Just.</span></span>
+                            </div>
+                        </a>
+                        </div>
+
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'empleados'>active</#if> label-1" href="/listEmpleados" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Empleados</span></span>
                             </div>

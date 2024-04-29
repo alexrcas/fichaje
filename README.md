@@ -183,7 +183,7 @@ Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje q
 La aplicación dispone de modo claro y oscuro intercambiables en cualquier momento
 ![](/doc/img/switch-theme.gif)
 
-Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares y siempre funcionan de la misma manera por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas.
+Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares y siempre funcionan de la misma manera por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas. En principio estas vistas solo serán visibles para la administración, aunque puede que no sea el caso para la de vacaciones (ver apartado 7. Líneas futuras)
 
 ![](/doc/img/vacaciones.png)
 

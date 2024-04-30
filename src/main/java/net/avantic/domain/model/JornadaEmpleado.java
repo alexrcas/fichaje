@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(indexes = @Index(columnList = "dia, empleado"))
 public class JornadaEmpleado implements Serializable {
 
     private Long id;

@@ -3,6 +3,7 @@ package net.avantic.domain.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(indexes = @Index(columnList = "jornadaEmpleado"))
 public class AusenciaJustificada {
 
     private Long id;

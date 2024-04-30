@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(indexes = {@Index(columnList = "fecha"), @Index(columnList = "semana")})
 public class Dia implements Serializable {
 
     private Long id;

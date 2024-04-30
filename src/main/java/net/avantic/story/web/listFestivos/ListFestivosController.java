@@ -19,7 +19,7 @@ public class ListFestivosController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("vacaciones", facade.listVacaciones());
+        model.addAttribute("festivos", facade.listFestivos());
         return "listFestivos";
     }
 

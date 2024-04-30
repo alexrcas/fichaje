@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(indexes = @Index(columnList = "jornadaEmpleado"))
 public abstract class Fichaje implements Serializable {
 
     private Long id;

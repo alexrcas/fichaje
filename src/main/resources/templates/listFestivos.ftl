@@ -8,7 +8,7 @@
     <div class="col-7">
 
 
-        <div id="tableExample3" data-list='{"valueNames":["empleado","inicio","regreso", "numeroDias"]}'>
+        <div id="tableExample3" data-list='{"valueNames":["fecha","motivo"]}'>
             <div class="search-box mb-3 mx-auto">
                 <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search form-control-sm" type="search" placeholder="Buscar" aria-label="Search" />
                     <span class="fas fa-search search-box-icon"></span>
@@ -24,10 +24,10 @@
                     </tr>
                     </thead>
                     <tbody class="list">
-                    <#list vacaciones as v>
+                    <#list festivos as festivo>
                     <tr>
-                        <td class="align-middle inicio"><@localdatemacro v.primerDia.fecha /></td>
-                        <td class="align-middle numeroDias">Revisión médica</td>
+                        <td class="align-middle fecha"><@localdatemacro festivo.dia.fecha /></td>
+                        <td class="align-middle motivo">${festivo.motivo}</td>
                         <td class="align-middle white-space-nowrap text-end pe-0">
                             <div class="font-sans-serif btn-reveal-trigger position-static"><button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>
                                 <div class="dropdown-menu dropdown-menu-end py-2">

@@ -3,6 +3,7 @@ package net.avantic.domain.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(indexes = {@Index(columnList = "vacaciones"), @Index(columnList = "dia, empleado")})
 public class DiaLibre {
 
     private Long id;

@@ -2,6 +2,7 @@ package net.avantic.story.web.listempleados;
 
 import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.model.dto.EmpleadoDto;
+import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class ListEmpleadosFacadeImpl implements ListEmpleadosFacade {
     @Override
     public List<EmpleadoDto> listEmpleados() {
         return empleadoRepository.findAll().stream()
-                .map(e -> new EmpleadoDto(e.getId(), e.getEmail()))
+                .map(EmpleadoDtoFactory::newDto)
                 .collect(Collectors.toList());
     }
 }

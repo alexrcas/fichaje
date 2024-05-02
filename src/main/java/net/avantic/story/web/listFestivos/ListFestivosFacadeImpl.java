@@ -13,26 +13,14 @@ import java.util.List;
 @Component
 public class ListFestivosFacadeImpl implements ListFestivosFacade {
 
-    private final EmpleadoRepository empleadoRepository;
-    private final DiaService diaService;
     private final FechaService fechaService;
-    private final VacacionesRepository vacacionesRepository;
-    private final DiaLibreRepository diaLibreRepository;
     private final FestivoRepository festivoRepository;
     private final DiaRepository diaRepository;
 
-    public ListFestivosFacadeImpl(EmpleadoRepository empleadoRepository,
-                                  DiaService diaService,
-                                  FechaService fechaService,
-                                  VacacionesRepository vacacionesRepository,
-                                  DiaLibreRepository diaLibreRepository,
+    public ListFestivosFacadeImpl(FechaService fechaService,
                                   FestivoRepository festivoRepository,
                                   DiaRepository diaRepository) {
-        this.empleadoRepository = empleadoRepository;
-        this.diaService = diaService;
         this.fechaService = fechaService;
-        this.vacacionesRepository = vacacionesRepository;
-        this.diaLibreRepository = diaLibreRepository;
         this.festivoRepository = festivoRepository;
         this.diaRepository = diaRepository;
     }

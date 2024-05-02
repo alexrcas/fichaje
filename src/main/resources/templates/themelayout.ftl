@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'vacaciones'>active</#if> label-1" href="/listVacaciones" role="button" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Vacaciones</span></span>
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-plane"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Vacaciones</span></span>
                             </div>
                         </a>
                         </div>
@@ -38,13 +38,13 @@
                         </div>
 
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'ausencias'>active</#if> label-1" href="/listAusenciasJustificadas" role="button" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Ausencias Just.</span></span>
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user-clock"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Ausencias Just.</span></span>
                             </div>
                         </a>
                         </div>
 
                         <div class="nav-item-wrapper"><a class="nav-link <#if active == 'anulaciones'>active</#if> label-1" href="/listSolicitudesAnulacion" role="button" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Sol. Anulación</span></span>
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-eraser"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Sol. Anulación</span></span>
                             </div>
                         </a>
                         </div>

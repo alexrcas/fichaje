@@ -12,12 +12,16 @@ public class Empleado implements Serializable {
 
     private Long id;
     private String email;
+    private String nombre;
+    private String apellidos;
 
     public Empleado() {
     }
 
-    public Empleado(String email) {
+    public Empleado(String email, String nombre, String apellidos) {
         this.email = email;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
     }
 
     @Id
@@ -36,5 +40,21 @@ public class Empleado implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 }

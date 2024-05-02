@@ -6,8 +6,8 @@ import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.Semana;
 import net.avantic.domain.model.dto.DiaCalendarioDto;
-import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.JornadaDto;
+import net.avantic.domain.model.dto.SemanaJornadaDto;
 import net.avantic.domain.service.FechaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,18 +25,30 @@ public class SemanaJornadaDtoFactory {
     private final EmpleadoRepository empleadoRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
+    private final DiaCalendarioDtoFactory diaCalendarioDtoFactory;
 
     @Autowired
     public SemanaJornadaDtoFactory(DiaRepository diaRepository,
                                    DiaLibreRepository diaLibreRepository,
                                    EmpleadoRepository empleadoRepository,
                                    JornadaEmpleadoRepository jornadaEmpleadoRepository,
-                                   AusenciaJustificadaRepository ausenciaJustificadaRepository) {
+                                   AusenciaJustificadaRepository ausenciaJustificadaRepository,
+                                   DiaCalendarioDtoFactory diaCalendarioDtoFactory) {
         this.diaRepository = diaRepository;
         this.diaLibreRepository = diaLibreRepository;
         this.empleadoRepository = empleadoRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
+        this.diaCalendarioDtoFactory = diaCalendarioDtoFactory;
+    }
+
+    public SemanaJornadaDto newDto(Semana semana, Empleado empleado) {
+
+        List<DiaCalendarioDto> diasCalendario = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
+                .map(d -> diaCalendarioDtoFactory.newDto(d, empleado))
+                .toList();
+
+        return new SemanaJornadaDto(diasCalendario, isSemanaActual(diasCalendario), calcularTiempoSemana(diasCalendario), calcularHorasSemana(semana));
     }
 
     public static boolean isSemanaActual(List<DiaCalendarioDto> diasCalendario) {

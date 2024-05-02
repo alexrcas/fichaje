@@ -56,23 +56,11 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Override
     @Transactional
     public List<SemanaJornadaDto> listJornadas() {
+        //todo arodriguez: parametrizar empleado
         Empleado empleado = empleadoRepository.findAll().get(0);
-        //todo arodriguez: trasladar a factoría
-        List<SemanaJornadaDto> semanasJornadasDtoList = new ArrayList<>();
-        List<Semana> semanas = semanaRepository.findAllByFechaBetween(fechaService.getStartOfYear(), fechaService.getEndOfYear());
-        for (Semana semana : semanas) {
-
-            List<DiaCalendarioDto> diasCalendario = diaRepository.findAllBySemanaAndNotFinSemanaOrderById(semana).stream()
-                    .map(d -> diaCalendarioDtoFactory.newDto(d, empleado))
-                    .toList();
-
-            semanasJornadasDtoList.add(
-                    new SemanaJornadaDto(diasCalendario, SemanaJornadaDtoFactory.isSemanaActual(diasCalendario),
-                    SemanaJornadaDtoFactory.calcularTiempoSemana(diasCalendario), semanaJornadaDtoFactory.calcularHorasSemana(semana))
-            );
-        }
-
-         return semanasJornadasDtoList;
+        return semanaRepository.findAllByFechaBetween(fechaService.getStartOfYear(), fechaService.getEndOfYear()).stream()
+                .map(s -> semanaJornadaDtoFactory.newDto(s, empleado))
+                .toList();
     }
 
     @Override

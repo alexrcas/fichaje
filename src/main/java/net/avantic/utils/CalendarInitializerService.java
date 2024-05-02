@@ -75,10 +75,10 @@ public class CalendarInitializerService {
             }
         }
 
-        Empleado empleado = new Empleado("arodriguez");
+        Empleado empleado = new Empleado("arodriguez", "Alexis", "Rodríguez Casañas");
         empleadoRepository.save(empleado);
 
-        Empleado empleado2 = new Empleado("tutu");
+        Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto");
         empleadoRepository.save(empleado2);
 
 

@@ -19,7 +19,7 @@ public class ListAusenciasJustificadasController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("vacaciones", facade.listVacaciones());
+        model.addAttribute("ausencias", facade.listAusencias());
         return "listAusenciasJustificadas";
     }
 

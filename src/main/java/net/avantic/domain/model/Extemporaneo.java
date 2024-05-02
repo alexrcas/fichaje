@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(indexes = @Index(columnList = "fichaje"))
+@Table(indexes = @Index(columnList = "idFichaje"))
 public class Extemporaneo {
 
     private Long id;

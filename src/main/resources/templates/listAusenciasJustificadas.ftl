@@ -26,12 +26,12 @@
                     </tr>
                     </thead>
                     <tbody class="list">
-                    <#list vacaciones as v>
+                    <#list ausencias as ausencia>
                     <tr>
-                        <td class="align-middle ps-3 empleado">${v.empleado.email}</td>
-                        <td class="align-middle inicio"><@localdatemacro v.primerDia.fecha /></td>
-                        <td class="align-middle regreso">2</td>
-                        <td class="align-middle numeroDias">Revisión médica</td>
+                        <td class="align-middle ps-3 empleado">${ausencia.empleado.email}</td>
+                        <td class="align-middle inicio"><@localdatemacro ausencia.fecha /></td>
+                        <td class="align-middle regreso">${ausencia.horas}</td>
+                        <td class="align-middle numeroDias">${ausencia.motivo}</td>
                         <td class="align-middle white-space-nowrap text-end pe-0">
                             <div class="font-sans-serif btn-reveal-trigger position-static"><button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>
                                 <div class="dropdown-menu dropdown-menu-end py-2">
@@ -54,7 +54,7 @@
 
     <div class="col-5">
         <h4 class="d-flex justify-content-center mb-3">Añadir Ausencia</h4>
-        <form id="fichar-form" action="/web/addVacaciones" method="post" class="w-100 d-flex justify-content-center">
+        <form id="fichar-form" action="/web/addAusenciaJustificada" method="post" class="w-100 d-flex justify-content-center">
             <div class="ps-2 d-flex text-center flex-column w-75">
                 <div class="mb-3">
                     <div class="form-floating">
@@ -71,12 +71,12 @@
                 </div>
 
                 <div class="text-center mb-3 form-floating">
-                    <input name="numeroHoras" class="form-control" type="number" placeholder="0.0">
+                    <input name="horas" class="form-control" type="number" placeholder="0.0">
                     <label for="datetimepicker">Horas</label>
                 </div>
 
                 <div class="text-center mb-3 form-floating">
-                    <input name="motivo" class="form-control" id="motivo" type="text">
+                    <input name="motivo" class="form-control" id="motivo" type="text" placeholder="Motivo">
                     <label for="motivo">Motivo</label>
                 </div>
 

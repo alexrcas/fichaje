@@ -57,8 +57,6 @@ public class AddVacacionesFacadeImpl implements AddVacacionesFacade {
     }
 
     private void assertCommand(AddVacacionesCommand command) throws Exception {
-        //todo arodriguez: assert:
-        // Entre las dos fechas no hay ningún día de vacaciones
 
         if (command.getFechaInicio() == null) {
             throw new Exception("No se ha especificado una fecha de inicio");

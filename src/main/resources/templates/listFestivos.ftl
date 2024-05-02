@@ -1,5 +1,5 @@
 <#import "themelayout.ftl" as base>
-<@base.themelayout active="ausencias">
+<@base.themelayout active="festivos">
 <#include "localdatemacro.ftl">
 
 
@@ -50,7 +50,7 @@
 
     <div class="col-5">
         <h4 class="d-flex justify-content-center mb-3">Añadir Festivo</h4>
-        <form id="fichar-form" action="/web/addVacaciones" method="post" class="w-100 d-flex justify-content-center">
+        <form id="fichar-form" action="/web/addFestivo" method="post" class="w-100 d-flex justify-content-center">
             <div class="ps-2 d-flex text-center flex-column w-75">
 
                 <div class="text-center mb-3 form-floating">
@@ -58,13 +58,13 @@
                     <label for="datetimepicker">Fecha</label>
                 </div>
 
-                <div class="text-center mb-3 form-floating">
-                    <input name="motivo" class="form-control" id="motivo" type="text">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="motivo" placeholder="Motivo" />
                     <label for="motivo">Motivo</label>
                 </div>
 
                 <div class="text-center mb-0">
-                    <button id="fichar-btn" type="submit" class="btn btn-outline-primary">Aceptar</button>
+                    <button id="fichar-btn" type="submit" class="btn btn-outline-primary">Añadir</button>
                 </div>
 
             </div>

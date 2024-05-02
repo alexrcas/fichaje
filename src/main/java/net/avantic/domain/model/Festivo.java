@@ -3,7 +3,7 @@ package net.avantic.domain.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(indexes = @Index(columnList = "dia"))
+@Table(indexes = @Index(columnList = "idDia"))
 public class Festivo {
 
     private Long id;

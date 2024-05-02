@@ -10,6 +10,7 @@ import net.avantic.domain.model.Vacaciones;
 import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.EmpleadoDto;
 import net.avantic.domain.model.dto.VacacionesDto;
+import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
 import org.springframework.stereotype.Component;
@@ -57,7 +58,7 @@ public class ListSolicitudesAnulacionFacadeImpl implements ListSolicitudesAnulac
             DiaDto diaRegresoDto = new DiaDto(diaRegreso.getId(), diaRegreso.getFecha(), diaRegreso.getDiaSemana());
 
             Empleado empleado = diasLibres.get(0).getEmpleado();
-            EmpleadoDto empleadoDto = new EmpleadoDto(empleado.getId(), empleado.getEmail());
+            EmpleadoDto empleadoDto = EmpleadoDtoFactory.newDto(empleado);
 
             vacacionesDtos.add(new VacacionesDto(diaInicioDto, diaRegresoDto, diasLibres.size(), empleadoDto));
         }

@@ -14,14 +14,20 @@ public class Empleado implements Serializable {
     private String email;
     private String nombre;
     private String apellidos;
+    private String password;
+    private int failedAttemps;
+    private boolean isAccountLocked;
 
     public Empleado() {
     }
 
-    public Empleado(String email, String nombre, String apellidos) {
+    public Empleado(String email, String nombre, String apellidos, String password, boolean isAccountLocked) {
         this.email = email;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.password = password;
+        this.isAccountLocked = isAccountLocked;
+        this.failedAttemps = 0;
     }
 
     @Id
@@ -56,5 +62,29 @@ public class Empleado implements Serializable {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAccountLocked() {
+        return isAccountLocked;
+    }
+
+    public void setAccountLocked(boolean accountLocked) {
+        isAccountLocked = accountLocked;
+    }
+
+    public int getFailedAttemps() {
+        return failedAttemps;
+    }
+
+    public void setFailedAttemps(int failedAttemps) {
+        this.failedAttemps = failedAttemps;
     }
 }

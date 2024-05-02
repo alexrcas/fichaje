@@ -27,6 +27,7 @@ public class CalendarInitializerService {
     private final VacacionesRepository vacacionesRepository;
     private final DiaLibreRepository diaLibreRepository;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
     public CalendarInitializerService(DiaRepository diaRepository,
@@ -38,7 +39,8 @@ public class CalendarInitializerService {
                                       DiaService diaService,
                                       VacacionesRepository vacacionesRepository,
                                       DiaLibreRepository diaLibreRepository,
-                                      AusenciaJustificadaRepository ausenciaJustificadaRepository) {
+                                      AusenciaJustificadaRepository ausenciaJustificadaRepository,
+                                      RoleRepository roleRepository) {
         this.diaRepository = diaRepository;
         this.fichajeRepository = fichajeRepository;
         this.empleadoRepository = empleadoRepository;
@@ -49,6 +51,7 @@ public class CalendarInitializerService {
         this.vacacionesRepository = vacacionesRepository;
         this.diaLibreRepository = diaLibreRepository;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -75,10 +78,13 @@ public class CalendarInitializerService {
             }
         }
 
-        Empleado empleado = new Empleado("arodriguez", "Alexis", "Rodríguez Casañas");
+        Empleado empleado = new Empleado("arodriguez", "Alexis", "Rodríguez Casañas", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
         empleadoRepository.save(empleado);
 
-        Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto");
+        Role role = new Role("ADMIN", empleado);
+        roleRepository.save(role);
+
+        Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
         empleadoRepository.save(empleado2);
 
 

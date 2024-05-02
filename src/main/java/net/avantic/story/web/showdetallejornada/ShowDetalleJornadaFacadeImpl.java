@@ -41,7 +41,7 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
 
     @Override
     public List<FichajeDto> listFichajesJornada(Long id) {
-        JornadaEmpleado jornada = jornadaEmpleadoRepository.getById(id);
+        JornadaEmpleado jornada = jornadaEmpleadoRepository.get(id);
 
         return fichajeService.listFichajesOrdenJornada(jornada).stream()
                 .map(fichajeDtoFactory::newDto)
@@ -50,25 +50,25 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
 
     @Override
     public ResultadoValidacionJornadaDto listValidacionesJornada(Long idJornada) {
-        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.get(idJornada);
         return validarJornadaService.validar(jornadaEmpleado);
     }
 
     @Override
     public DiaDto getFechaJornada(Long idJornada) {
-        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.get(idJornada);
         return new DiaDto(jornadaEmpleado.getDia().getId(), jornadaEmpleado.getDia().getFecha(), jornadaEmpleado.getDia().getDiaSemana());
     }
 
     @Override
     public ComputoDto getComputo(Long idJornada) {
-        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.get(idJornada);
         return computoDtoFactory.newDto(jornadaEmpleado);
     }
 
     @Override
     public List<AusenciaJustificadaDto> listAusenciasJustificadas(Long idJornada) {
-        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.getById(idJornada);
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.get(idJornada);
         return ausenciaJustificadaRepository.findAllByJornadaEmpleado(jornadaEmpleado).stream()
                 .map(ausencia -> new AusenciaJustificadaDto(ausencia.getHoras(), ausencia.getMotivo()))
                 .toList();

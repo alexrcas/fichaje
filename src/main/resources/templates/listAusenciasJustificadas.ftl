@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="text-center mb-3 form-floating">
-                    <input name="horas" class="form-control" type="number" placeholder="0.0">
+                    <input name="horas" class="form-control" type="number" placeholder="0.0" step="0.1">
                     <label for="datetimepicker">Horas</label>
                 </div>
 

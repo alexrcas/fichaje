@@ -9,7 +9,7 @@
 
 
         <div id="tableExample3" data-list='{"valueNames":["fecha","motivo"]}'>
-            <div class="search-box mb-3 mx-auto">
+            <div class="search-box mb-3 mx-auto ms-0">
                 <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search form-control-sm" type="search" placeholder="Buscar" aria-label="Search" />
                     <span class="fas fa-search search-box-icon"></span>
                 </form>
@@ -18,8 +18,8 @@
                 <table class="table table-striped table-sm fs--1 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort border-top" data-sort="inicio">Fecha</th>
-                        <th class="sort border-top" data-sort="numeroDias">Motivo</th>
+                        <th class="sort border-top" data-sort="fecha">Fecha</th>
+                        <th class="sort border-top" data-sort="motivo">Motivo</th>
                         <th class="sort text-end align-middle pe-0 border-top" scope="col"></th>
                     </tr>
                     </thead>

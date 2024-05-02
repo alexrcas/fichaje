@@ -25,31 +25,31 @@
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'vacaciones'>active</#if> label-1" href="/listVacaciones" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'vacaciones'>active</#if> label-1" href="/admin/listVacaciones" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-plane"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Vacaciones</span></span>
                             </div>
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'festivos'>active</#if> label-1" href="/listFestivos" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'festivos'>active</#if> label-1" href="/admin/listFestivos" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Festivos</span></span>
                             </div>
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'ausencias'>active</#if> label-1" href="/listAusenciasJustificadas" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'ausencias'>active</#if> label-1" href="/admin/listAusenciasJustificadas" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user-clock"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Ausencias Just.</span></span>
                             </div>
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'anulaciones'>active</#if> label-1" href="/listSolicitudesAnulacion" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'anulaciones'>active</#if> label-1" href="/admin/listSolicitudesAnulacion" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-eraser"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Sol. Anulación</span></span>
                             </div>
                         </a>
                         </div>
 
-                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'empleados'>active</#if> label-1" href="/listEmpleados" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="nav-item-wrapper"><a class="nav-link <#if active == 'empleados'>active</#if> label-1" href="/admin/listEmpleados" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Empleados</span></span>
                             </div>
                         </a>

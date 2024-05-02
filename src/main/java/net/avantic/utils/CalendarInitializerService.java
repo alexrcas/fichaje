@@ -81,12 +81,14 @@ public class CalendarInitializerService {
         Empleado empleado = new Empleado("arodriguez", "Alexis", "Rodríguez Casañas", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
         empleadoRepository.save(empleado);
 
-        Role role = new Role("ADMIN", empleado);
+        Role role = new Role("ROLE_ADMIN", empleado);
         roleRepository.save(role);
 
         Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
         empleadoRepository.save(empleado2);
 
+        Role role2 = new Role("ROLE_USER", empleado2);
+        roleRepository.save(role2);
 
         diaRepository.findAll().stream()
                 .filter(d -> d.getFecha().isBefore(LocalDate.now()))

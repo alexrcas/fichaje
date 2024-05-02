@@ -22,7 +22,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="addVacaciones-form" action="/web/addVacaciones" method="post">
+                <form id="addVacaciones-form" action="/web/admin/addVacaciones" method="post">
                     <select id="idEmpleado" name="idEmpleado" class="form-select mb-3" aria-label="Default select example">
                         <option selected="">Seleccionar empleado</option>
                         <option value="1">One</option>

@@ -54,7 +54,7 @@
 
     <div class="col-5">
         <h4 class="d-flex justify-content-center mb-3">Añadir vacaciones</h4>
-        <form id="fichar-form" action="/web/addVacaciones" method="post" class="w-100 d-flex justify-content-center">
+        <form id="fichar-form" action="/web/admin/addVacaciones" method="post" class="w-100 d-flex justify-content-center">
             <div class="ps-2 d-flex text-center flex-column w-75">
                 <div class="mb-3">
                     <div class="form-floating">

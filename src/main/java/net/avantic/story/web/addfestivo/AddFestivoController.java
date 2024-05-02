@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/web/addFestivo")
+@RequestMapping("/web/admin/addFestivo")
 public class AddFestivoController {
 
     private final AddFestivoFacade facade;
@@ -26,6 +26,6 @@ public class AddFestivoController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("/listFestivos");
+        return new RedirectView("/admin/listFestivos");
     }
 }

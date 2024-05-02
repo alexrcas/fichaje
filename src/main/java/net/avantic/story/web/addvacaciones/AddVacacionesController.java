@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/web/addVacaciones")
+@RequestMapping("/web/admin/addVacaciones")
 public class AddVacacionesController {
 
     private final AddVacacionesFacade facade;
@@ -27,6 +27,6 @@ public class AddVacacionesController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("/listVacaciones");
+        return new RedirectView("/admin/listVacaciones");
     }
 }

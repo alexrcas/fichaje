@@ -34,6 +34,10 @@ public class WebSecurityConfig {
                         )
                         .permitAll()
                         .requestMatchers(
+                                AntPathRequestMatcher.antMatcher("/admin/**")
+                        )
+                        .hasRole("ADMIN")
+                        .requestMatchers(
                                 AntPathRequestMatcher.antMatcher("/**")
                         )
                         .authenticated()

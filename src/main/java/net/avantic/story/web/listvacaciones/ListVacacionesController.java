@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/listVacaciones")
+@RequestMapping("/admin/listVacaciones")
 public class ListVacacionesController {
 
     private final ListVacacionesFacade facade;

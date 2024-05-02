@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/web/addAusenciaJustificada")
+@RequestMapping("/web/admin/addAusenciaJustificada")
 public class AddAusenciaJustificadaController {
 
     private final AddAusenciaJustificadaFacade facade;
@@ -26,6 +26,6 @@ public class AddAusenciaJustificadaController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("/listAusenciasJustificadas");
+        return new RedirectView("/admin/listAusenciasJustificadas");
     }
 }

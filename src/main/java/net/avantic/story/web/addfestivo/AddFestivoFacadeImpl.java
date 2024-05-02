@@ -17,23 +17,15 @@ import java.util.Optional;
 @Component
 public class AddFestivoFacadeImpl implements AddFestivoFacade {
 
-    private final EmpleadoRepository empleadoRepository;
-    private final DiaLibreRepository diaLibreRepository;
-    private final VacacionesRepository vacacionesRepository;
+
     private final DiaRepository diaRepository;
     private final DiaService diaService;
     private final FestivoRepository festivoRepository;
 
     @Autowired
-    public AddFestivoFacadeImpl(EmpleadoRepository empleadoRepository,
-                                DiaLibreRepository diaLibreRepository,
-                                VacacionesRepository vacacionesRepository,
-                                DiaRepository diaRepository,
+    public AddFestivoFacadeImpl(DiaRepository diaRepository,
                                 DiaService diaService,
                                 FestivoRepository festivoRepository) {
-        this.empleadoRepository = empleadoRepository;
-        this.diaLibreRepository = diaLibreRepository;
-        this.vacacionesRepository = vacacionesRepository;
         this.diaRepository = diaRepository;
         this.diaService = diaService;
         this.festivoRepository = festivoRepository;

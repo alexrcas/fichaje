@@ -16,28 +16,19 @@ public class AddAusenciaJustificadaFacadeImpl implements AddAusenciaJustificadaF
 
     private final EmpleadoRepository empleadoRepository;
     private final DiaLibreRepository diaLibreRepository;
-    private final VacacionesRepository vacacionesRepository;
-    private final DiaRepository diaRepository;
     private final DiaService diaService;
-    private final FestivoRepository festivoRepository;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
 
     @Autowired
     public AddAusenciaJustificadaFacadeImpl(EmpleadoRepository empleadoRepository,
                                             DiaLibreRepository diaLibreRepository,
-                                            VacacionesRepository vacacionesRepository,
-                                            DiaRepository diaRepository,
                                             DiaService diaService,
-                                            FestivoRepository festivoRepository,
                                             AusenciaJustificadaRepository ausenciaJustificadaRepository,
                                             JornadaEmpleadoRepository jornadaEmpleadoRepository) {
         this.empleadoRepository = empleadoRepository;
         this.diaLibreRepository = diaLibreRepository;
-        this.vacacionesRepository = vacacionesRepository;
-        this.diaRepository = diaRepository;
         this.diaService = diaService;
-        this.festivoRepository = festivoRepository;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
     }

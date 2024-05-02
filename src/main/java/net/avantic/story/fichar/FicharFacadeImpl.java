@@ -7,6 +7,7 @@ import net.avantic.domain.model.EnumTipoFichaje;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.EmpleadoService;
 import net.avantic.domain.service.FichajeService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +19,17 @@ public class FicharFacadeImpl implements FicharFacade {
     private final EmpleadoService empleadoService;
     private final DiaService diaService;
     private final FichajeService fichajeService;
+    private final SecurityUtilsService securityUtilsService;
 
     @Autowired
     public FicharFacadeImpl(EmpleadoService empleadoService,
                             DiaService diaService,
-                            FichajeService fichajeService) {
+                            FichajeService fichajeService,
+                            SecurityUtilsService securityUtilsService) {
         this.empleadoService = empleadoService;
         this.diaService = diaService;
         this.fichajeService = fichajeService;
+        this.securityUtilsService = securityUtilsService;
     }
 
     @Override
@@ -35,4 +39,6 @@ public class FicharFacadeImpl implements FicharFacade {
         Dia dia = diaService.getByFecha(LocalDate.now());
         fichajeService.fichar(empleado, dia, tipoFichaje);
     }
+
+
 }

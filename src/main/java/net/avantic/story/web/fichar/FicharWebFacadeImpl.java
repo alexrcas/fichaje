@@ -7,6 +7,7 @@ import net.avantic.domain.model.Empleado;
 import net.avantic.domain.model.EnumTipoFichaje;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FichajeService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,13 +20,17 @@ public class FicharWebFacadeImpl implements FicharWebFacade {
     private final EmpleadoRepository empleadoRepository;
     private final FichajeService fichajeService;
     private final DiaService diaService;
+    private final SecurityUtilsService securityUtilsService;
 
     @Autowired
-    public FicharWebFacadeImpl(EmpleadoRepository empleadoRepository, FichajeService fichajeService,
-                               DiaService diaService) {
+    public FicharWebFacadeImpl(EmpleadoRepository empleadoRepository,
+                               FichajeService fichajeService,
+                               DiaService diaService,
+                               SecurityUtilsService securityUtilsService) {
         this.empleadoRepository = empleadoRepository;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
+        this.securityUtilsService = securityUtilsService;
     }
 
     @Transactional
@@ -40,7 +45,7 @@ public class FicharWebFacadeImpl implements FicharWebFacade {
     }
 
     private void ficharTiempoReal(EnumTipoFichaje tipoFichaje) {
-        Empleado empleado = empleadoRepository.getReferenceById(1L);
+        Empleado empleado = securityUtilsService.getAuthenticatedUser();
         Dia dia = diaService.getByFecha(LocalDate.now());
         fichajeService.fichar(empleado, dia, tipoFichaje);
     }

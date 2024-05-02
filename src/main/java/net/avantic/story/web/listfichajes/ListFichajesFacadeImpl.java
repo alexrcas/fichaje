@@ -20,7 +20,6 @@ import java.util.Optional;
 @Component
 public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
-    private final EmpleadoRepository empleadoRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final FichajeService fichajeService;
     private final DiaService diaService;
@@ -29,15 +28,13 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     private final SemanaJornadaDtoFactory semanaJornadaDtoFactory;
     private final SecurityUtilsService securityUtilsService;
 
-    public ListFichajesFacadeImpl(EmpleadoRepository empleadoRepository,
-                                  JornadaEmpleadoRepository jornadaEmpleadoRepository,
+    public ListFichajesFacadeImpl(JornadaEmpleadoRepository jornadaEmpleadoRepository,
                                   FichajeService fichajeService,
                                   DiaService diaService,
                                   SemanaRepository semanaRepository,
                                   FechaService fechaService,
                                   SemanaJornadaDtoFactory semanaJornadaDtoFactory,
                                   SecurityUtilsService securityUtilsService) {
-        this.empleadoRepository = empleadoRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
@@ -66,7 +63,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
     public EnumTipoFichaje getOpcionSugerida() {
         Dia dia = diaService.getByFecha(LocalDate.now());
-        Empleado empleado = empleadoRepository.getReferenceById(1L);
+        Empleado empleado = securityUtilsService.getAuthenticatedUser();
         Optional<JornadaEmpleado> jornadaEmpleado = jornadaEmpleadoRepository.findByDiaAndEmpleado(dia, empleado);
         if (jornadaEmpleado.isEmpty()) {
             return EnumTipoFichaje.ENTRADA_JORNADA;

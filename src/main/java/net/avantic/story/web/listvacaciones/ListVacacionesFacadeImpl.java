@@ -19,18 +19,15 @@ import java.util.List;
 @Component
 public class ListVacacionesFacadeImpl implements ListVacacionesFacade {
 
-    private final EmpleadoRepository empleadoRepository;
     private final DiaService diaService;
     private final FechaService fechaService;
     private final VacacionesRepository vacacionesRepository;
     private final DiaLibreRepository diaLibreRepository;
 
-    public ListVacacionesFacadeImpl(EmpleadoRepository empleadoRepository,
-                                    DiaService diaService,
+    public ListVacacionesFacadeImpl(DiaService diaService,
                                     FechaService fechaService,
                                     VacacionesRepository vacacionesRepository,
                                     DiaLibreRepository diaLibreRepository) {
-        this.empleadoRepository = empleadoRepository;
         this.diaService = diaService;
         this.fechaService = fechaService;
         this.vacacionesRepository = vacacionesRepository;

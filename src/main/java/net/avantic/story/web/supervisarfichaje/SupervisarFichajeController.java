@@ -21,7 +21,7 @@ public class SupervisarFichajeController {
     @GetMapping
     public String list(Model model, @RequestParam("idEmpleado") Long idEmpleado) {
         model.addAttribute("username", facade.getAuthenticatedUsername());
-
+        model.addAttribute("empleados", facade.listEmpleados());
         model.addAttribute("semanasJornadas", facade.listJornadas(idEmpleado));
 
         return "supervisarFichaje";

@@ -1,6 +1,7 @@
 package net.avantic.story.web.supervisarfichaje;
 
 import net.avantic.domain.model.EnumTipoFichaje;
+import net.avantic.domain.model.dto.EmpleadoDto;
 import net.avantic.domain.model.dto.SemanaJornadaDto;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface SupervisarFichajeFacade {
     boolean isAdmin();
 
     String getAuthenticatedUsername();
+
+    List<EmpleadoDto> listEmpleados();
 }

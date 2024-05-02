@@ -16,4 +16,6 @@ public interface ListFichajesFacade {
     boolean isAdmin();
 
     String getAuthenticatedUsername();
+
+    List<EmpleadoDto> listEmpleados();
 }

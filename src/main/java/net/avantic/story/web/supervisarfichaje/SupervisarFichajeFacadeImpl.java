@@ -5,7 +5,9 @@ import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.dao.JornadaEmpleadoRepository;
 import net.avantic.domain.dao.SemanaRepository;
 import net.avantic.domain.model.*;
+import net.avantic.domain.model.dto.EmpleadoDto;
 import net.avantic.domain.model.dto.SemanaJornadaDto;
+import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
@@ -61,6 +63,13 @@ public class SupervisarFichajeFacadeImpl implements SupervisarFichajeFacade {
     @Override
     public String getAuthenticatedUsername() {
         return securityUtilsService.getAuthenticatedUser().getEmail();
+    }
+
+    @Override
+    public List<EmpleadoDto> listEmpleados() {
+        return empleadoRepository.findAll().stream()
+                .map(EmpleadoDtoFactory::newDto)
+                .toList();
     }
 
 

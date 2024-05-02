@@ -25,6 +25,7 @@ public class ListFichajesController {
         model.addAttribute("opcionSugerida", facade.getOpcionSugerida());
 
         if (facade.isAdmin()) {
+            model.addAttribute("empleados", facade.listEmpleados());
             return "listFichajesAdmin";
         }
 

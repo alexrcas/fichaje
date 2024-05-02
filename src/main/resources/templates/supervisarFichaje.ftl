@@ -2,9 +2,28 @@
 <@base.themelayout active="fichajes">
 <#include "localdatemacro.ftl">
 
-<div class="row">
 
-    <h4 class="mb-4">Modo supervisión</h4>
+<div class="row mb-3">
+
+    <div class="d-flex w-100">
+        <div class="form-floating">
+            <select class="form-select" style="width: 25vw" id="empleado-select" aria-label="Floating label select example">
+                <option value="" selected></option>
+                <#list empleados as empleado>
+                <option value="${empleado.id}">${empleado.email}</option>
+            </#list>
+            </select>
+            <label for="empleado-select">Seleccione Empleado</label>
+        </div>
+
+        <button class="btn btn-outline-primary ms-2" id="ir-button" disabled>Ver</button>
+
+    </div>
+
+</div>
+
+
+<div class="row">
 
     <div style="max-height:80vh" class="col-7 h-100 overflow-auto">
 
@@ -138,7 +157,24 @@
         offcanvas.show();
     }
 
-    document.getElementById('currentWeek').scrollIntoView(true);
+    const el = document.getElementById('currentWeek');
+    if (el) {
+        el.scrollIntoView(true) ;
+    }
+
+
+        document.getElementById('empleado-select').addEventListener('change', e => {
+        if (e.target.value) {
+            document.getElementById('ir-button').disabled = false;
+        } else {
+            document.getElementById('ir-button').disabled = true;
+        }
+    })
+
+    document.getElementById('ir-button').addEventListener('click', () => {
+        const idEmpleado = document.getElementById('empleado-select').value;
+        window.location.href = '/admin/supervisarFichaje?idEmpleado=' + idEmpleado;
+    });
 
 </script>
 

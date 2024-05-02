@@ -2,6 +2,26 @@
 <@base.themelayout active="fichajes">
 <#include "localdatemacro.ftl">
 
+
+<div class="row mb-3">
+
+    <div class="d-flex w-100">
+        <div class="form-floating">
+            <select class="form-select" style="width: 25vw" id="empleado-select" aria-label="Floating label select example">
+            <option value="" selected></option>
+            <#list empleados as empleado>
+                <option value="${empleado.id}">${empleado.email}</option>
+            </#list>
+            </select>
+            <label for="empleado-select">Seleccione Empleado</label>
+        </div>
+
+        <button class="btn btn-outline-primary ms-2" id="ir-button" disabled>Ver</button>
+
+    </div>
+
+</div>
+
 <div class="row">
 
     <div style="max-height:80vh" class="col-7 h-100 overflow-auto">
@@ -102,7 +122,7 @@
     <div class="col-5 d-flex align-items-center flex-column">
         <h4 class="d-flex justify-content-center mb-3">Fichar</h4>
         <form id="fichar-form" action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
-            <div class="w-50 ps-2 d-flex text-center flex-column">
+            <div class="w-75 ps-2 d-flex text-center flex-column">
                 <div class="mb-3">
                     <div class="form-floating">
                         <select name="fichaje" class="form-select" id="floatingSelect" aria-label="Floating label select example">
@@ -114,7 +134,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mb-3 form-floating">
+                <div class="text-center mb-3 form-floating ">
                     <input name="fecha" class="form-control datetimepicker flatpickr-input" id="datetimepicker" type="text" placeholder="DD/MM/YYYY HH:mm" data-options="{&quot;enableTime&quot;:true,&quot;dateFormat&quot;:&quot;d/m/y H:i&quot;,&quot;disableMobile&quot;:true}" readonly="readonly">
                     <label for="datetimepicker">Fecha (solo en caso de extemporáneo)</label>
                 </div>
@@ -155,7 +175,23 @@
         document.getElementById('fichar-form').submit();
     })
 
-    document.getElementById('currentWeek').scrollIntoView(true);
+    const el = document.getElementById('currentWeek');
+    if (el) {
+        el.scrollIntoView(true) ;
+    }
+
+    document.getElementById('empleado-select').addEventListener('change', e => {
+        if (e.target.value) {
+            document.getElementById('ir-button').disabled = false;
+        } else {
+            document.getElementById('ir-button').disabled = true;
+        }
+    })
+
+    document.getElementById('ir-button').addEventListener('click', () => {
+        const idEmpleado = document.getElementById('empleado-select').value;
+        window.location.href = '/admin/supervisarFichaje?idEmpleado=' + idEmpleado;
+    });
 
 </script>
 

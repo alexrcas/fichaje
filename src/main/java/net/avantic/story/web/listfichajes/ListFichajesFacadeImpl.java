@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import net.avantic.domain.dao.*;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.*;
-import net.avantic.domain.model.dto.factory.DiaCalendarioDtoFactory;
+import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
@@ -27,6 +27,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     private final FechaService fechaService;
     private final SemanaJornadaDtoFactory semanaJornadaDtoFactory;
     private final SecurityUtilsService securityUtilsService;
+    private final EmpleadoRepository empleadoRepository;
 
     public ListFichajesFacadeImpl(JornadaEmpleadoRepository jornadaEmpleadoRepository,
                                   FichajeService fichajeService,
@@ -34,7 +35,8 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
                                   SemanaRepository semanaRepository,
                                   FechaService fechaService,
                                   SemanaJornadaDtoFactory semanaJornadaDtoFactory,
-                                  SecurityUtilsService securityUtilsService) {
+                                  SecurityUtilsService securityUtilsService,
+                                  EmpleadoRepository empleadoRepository) {
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
@@ -42,6 +44,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         this.fechaService = fechaService;
         this.semanaJornadaDtoFactory = semanaJornadaDtoFactory;
         this.securityUtilsService = securityUtilsService;
+        this.empleadoRepository = empleadoRepository;
     }
 
 
@@ -82,6 +85,13 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Override
     public String getAuthenticatedUsername() {
         return securityUtilsService.getAuthenticatedUser().getEmail();
+    }
+
+    @Override
+    public List<EmpleadoDto> listEmpleados() {
+        return empleadoRepository.findAll().stream()
+                .map(EmpleadoDtoFactory::newDto)
+                .toList();
     }
 
 

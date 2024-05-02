@@ -4,8 +4,8 @@ import net.avantic.domain.dao.*;
 import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.dto.DiaDto;
 import net.avantic.domain.model.dto.FestivoDto;
-import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,13 +16,16 @@ public class ListFestivosFacadeImpl implements ListFestivosFacade {
     private final FechaService fechaService;
     private final FestivoRepository festivoRepository;
     private final DiaRepository diaRepository;
+    private final SecurityUtilsService securityUtilsService;
 
     public ListFestivosFacadeImpl(FechaService fechaService,
                                   FestivoRepository festivoRepository,
-                                  DiaRepository diaRepository) {
+                                  DiaRepository diaRepository,
+                                  SecurityUtilsService securityUtilsService) {
         this.fechaService = fechaService;
         this.festivoRepository = festivoRepository;
         this.diaRepository = diaRepository;
+        this.securityUtilsService = securityUtilsService;
     }
 
 
@@ -37,6 +40,11 @@ public class ListFestivosFacadeImpl implements ListFestivosFacade {
                     return new FestivoDto(dia.getId(), diaDto, motivo);
                 })
                 .toList();
+    }
+
+    @Override
+    public String getAuthenticatedUsername() {
+        return securityUtilsService.getAuthenticatedUser().getEmail();
     }
 
 

@@ -19,6 +19,7 @@ public class ListVacacionesController {
 
     @GetMapping
     public String list(Model model) {
+        model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("vacaciones", facade.listVacaciones());
         return "listVacaciones";
     }

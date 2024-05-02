@@ -79,5 +79,10 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
                 .anyMatch("ROLE_ADMIN"::equals);
     }
 
+    @Override
+    public String getAuthenticatedUsername() {
+        return securityUtilsService.getAuthenticatedUser().getEmail();
+    }
+
 
 }

@@ -35,7 +35,6 @@
                     </div>
                     <button class="btn btn-primary w-100 mb-3" type="submit">Sign In</button>
                 </form>
-                <div class="text-center"><a class="fs--1 fw-bold" href="../../../pages/authentication/simple/sign-up.html">Create an account</a></div>
             </div>
         </div>
     </div>

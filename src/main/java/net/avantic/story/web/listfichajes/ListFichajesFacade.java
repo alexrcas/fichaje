@@ -15,4 +15,5 @@ public interface ListFichajesFacade {
 
     boolean isAdmin();
 
+    String getAuthenticatedUsername();
 }

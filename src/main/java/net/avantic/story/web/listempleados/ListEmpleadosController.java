@@ -19,6 +19,7 @@ public class ListEmpleadosController {
 
     @GetMapping
     public String list(Model model) {
+        model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("empleados", facade.listEmpleados());
         return "listEmpleados";
     }

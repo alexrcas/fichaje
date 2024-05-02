@@ -11,6 +11,7 @@ import net.avantic.domain.model.dto.VacacionesDto;
 import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,15 +24,18 @@ public class ListVacacionesFacadeImpl implements ListVacacionesFacade {
     private final FechaService fechaService;
     private final VacacionesRepository vacacionesRepository;
     private final DiaLibreRepository diaLibreRepository;
+    private final SecurityUtilsService securityUtilsService;
 
     public ListVacacionesFacadeImpl(DiaService diaService,
                                     FechaService fechaService,
                                     VacacionesRepository vacacionesRepository,
-                                    DiaLibreRepository diaLibreRepository) {
+                                    DiaLibreRepository diaLibreRepository,
+                                    SecurityUtilsService securityUtilsService) {
         this.diaService = diaService;
         this.fechaService = fechaService;
         this.vacacionesRepository = vacacionesRepository;
         this.diaLibreRepository = diaLibreRepository;
+        this.securityUtilsService = securityUtilsService;
     }
 
 
@@ -58,6 +62,11 @@ public class ListVacacionesFacadeImpl implements ListVacacionesFacade {
         }
 
         return vacacionesDtos;
+    }
+
+    @Override
+    public String getAuthenticatedUsername() {
+        return securityUtilsService.getAuthenticatedUser().getEmail();
     }
 
 

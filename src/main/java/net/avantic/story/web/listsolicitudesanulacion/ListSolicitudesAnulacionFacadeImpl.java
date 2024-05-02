@@ -1,7 +1,6 @@
 package net.avantic.story.web.listsolicitudesanulacion;
 
 import net.avantic.domain.dao.DiaLibreRepository;
-import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.dao.VacacionesRepository;
 import net.avantic.domain.model.Dia;
 import net.avantic.domain.model.DiaLibre;
@@ -13,6 +12,7 @@ import net.avantic.domain.model.dto.VacacionesDto;
 import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,22 +21,22 @@ import java.util.List;
 @Component
 public class ListSolicitudesAnulacionFacadeImpl implements ListSolicitudesAnulacionFacade {
 
-    private final EmpleadoRepository empleadoRepository;
     private final DiaService diaService;
     private final FechaService fechaService;
     private final VacacionesRepository vacacionesRepository;
     private final DiaLibreRepository diaLibreRepository;
+    private final SecurityUtilsService securityUtilsService;
 
-    public ListSolicitudesAnulacionFacadeImpl(EmpleadoRepository empleadoRepository,
-                                              DiaService diaService,
+    public ListSolicitudesAnulacionFacadeImpl(DiaService diaService,
                                               FechaService fechaService,
                                               VacacionesRepository vacacionesRepository,
-                                              DiaLibreRepository diaLibreRepository) {
-        this.empleadoRepository = empleadoRepository;
+                                              DiaLibreRepository diaLibreRepository,
+                                              SecurityUtilsService securityUtilsService) {
         this.diaService = diaService;
         this.fechaService = fechaService;
         this.vacacionesRepository = vacacionesRepository;
         this.diaLibreRepository = diaLibreRepository;
+        this.securityUtilsService = securityUtilsService;
     }
 
 
@@ -64,6 +64,11 @@ public class ListSolicitudesAnulacionFacadeImpl implements ListSolicitudesAnulac
         }
 
         return vacacionesDtos;
+    }
+
+    @Override
+    public String getAuthenticatedUsername() {
+        return securityUtilsService.getAuthenticatedUser().getEmail();
     }
 
 

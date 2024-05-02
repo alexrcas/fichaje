@@ -19,6 +19,7 @@ public class ListFestivosController {
 
     @GetMapping
     public String list(Model model) {
+        model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("festivos", facade.listFestivos());
         return "listFestivos";
     }

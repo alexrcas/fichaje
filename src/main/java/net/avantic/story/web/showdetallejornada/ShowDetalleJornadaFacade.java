@@ -15,4 +15,6 @@ public interface ShowDetalleJornadaFacade {
     ComputoDto getComputo(Long idJornada);
 
     List<AusenciaJustificadaDto> listAusenciasJustificadas(Long idJornada);
+
+    String getUsernameEmpleadoFichaje(Long idJornada);
 }

@@ -19,6 +19,7 @@ public class ListAusenciasJustificadasController {
 
     @GetMapping
     public String list(Model model) {
+        model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("ausencias", facade.listAusencias());
         return "listAusenciasJustificadas";
     }

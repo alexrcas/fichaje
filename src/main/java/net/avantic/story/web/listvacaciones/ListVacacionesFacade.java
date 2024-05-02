@@ -10,4 +10,5 @@ public interface ListVacacionesFacade {
 
     List<VacacionesDto> listVacaciones();
 
+    String getAuthenticatedUsername();
 }

@@ -19,7 +19,7 @@ public class ListFichajesController {
 
     @GetMapping
     public String list(Model model) {
-
+        model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("semanasJornadas", facade.listJornadas());
         model.addAttribute("opciones", facade.listOpciones());
         model.addAttribute("opcionSugerida", facade.getOpcionSugerida());

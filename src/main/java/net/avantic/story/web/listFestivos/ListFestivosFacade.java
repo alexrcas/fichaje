@@ -9,4 +9,5 @@ public interface ListFestivosFacade {
 
     List<FestivoDto> listFestivos();
 
+    String getAuthenticatedUsername();
 }

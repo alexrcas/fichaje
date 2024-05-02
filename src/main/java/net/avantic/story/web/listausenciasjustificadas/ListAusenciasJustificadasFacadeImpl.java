@@ -3,8 +3,7 @@ package net.avantic.story.web.listausenciasjustificadas;
 import net.avantic.domain.dao.*;
 import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.EmpleadoDtoFactory;
-import net.avantic.domain.service.DiaService;
-import net.avantic.domain.service.FechaService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,13 +14,16 @@ public class ListAusenciasJustificadasFacadeImpl implements ListAusenciasJustifi
     private final EmpleadoRepository empleadoRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
+    private final SecurityUtilsService securityUtilsService;
 
     public ListAusenciasJustificadasFacadeImpl(EmpleadoRepository empleadoRepository,
                                                JornadaEmpleadoRepository jornadaEmpleadoRepository,
-                                               AusenciaJustificadaRepository ausenciaJustificadaRepository) {
+                                               AusenciaJustificadaRepository ausenciaJustificadaRepository,
+                                               SecurityUtilsService securityUtilsService) {
         this.empleadoRepository = empleadoRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
+        this.securityUtilsService = securityUtilsService;
     }
 
 
@@ -39,6 +41,11 @@ public class ListAusenciasJustificadasFacadeImpl implements ListAusenciasJustifi
                     .flatMap(List::stream)
                     .toList();
 
+    }
+
+    @Override
+    public String getAuthenticatedUsername() {
+        return securityUtilsService.getAuthenticatedUser().getEmail();
     }
 
 

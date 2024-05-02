@@ -10,4 +10,5 @@ public interface ListAusenciasJustificadasFacade {
 
     List<LineaAusenciaJustificadaDto> listAusencias();
 
+    String getAuthenticatedUsername();
 }

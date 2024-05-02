@@ -8,4 +8,5 @@ public interface ListSolicitudesAnulacionFacade {
 
     List<VacacionesDto> listVacaciones();
 
+    String getAuthenticatedUsername();
 }

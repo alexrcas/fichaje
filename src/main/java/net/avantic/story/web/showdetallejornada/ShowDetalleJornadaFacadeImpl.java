@@ -7,6 +7,7 @@ import net.avantic.domain.model.dto.*;
 import net.avantic.domain.model.dto.factory.ComputoDtoFactory;
 import net.avantic.domain.model.dto.factory.FichajeDtoFactory;
 import net.avantic.domain.service.FichajeService;
+import net.avantic.domain.service.SecurityUtilsService;
 import net.avantic.domain.service.ValidarJornadaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
     private final FichajeDtoFactory fichajeDtoFactory;
     private final ComputoDtoFactory computoDtoFactory;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
+    private final SecurityUtilsService securityUtilsService;
 
     @Autowired
     public ShowDetalleJornadaFacadeImpl(JornadaEmpleadoRepository jornadaEmpleadoRepository,
@@ -30,13 +32,15 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
                                         FichajeService fichajeService,
                                         FichajeDtoFactory fichajeDtoFactory,
                                         ComputoDtoFactory computoDtoFactory,
-                                        AusenciaJustificadaRepository ausenciaJustificadaRepository) {
+                                        AusenciaJustificadaRepository ausenciaJustificadaRepository,
+                                        SecurityUtilsService securityUtilsService) {
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.validarJornadaService = validarJornadaService;
         this.fichajeService = fichajeService;
         this.fichajeDtoFactory = fichajeDtoFactory;
         this.computoDtoFactory = computoDtoFactory;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
+        this.securityUtilsService = securityUtilsService;
     }
 
     @Override
@@ -72,6 +76,12 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
         return ausenciaJustificadaRepository.findAllByJornadaEmpleado(jornadaEmpleado).stream()
                 .map(ausencia -> new AusenciaJustificadaDto(ausencia.getHoras(), ausencia.getMotivo()))
                 .toList();
+    }
+
+    @Override
+    public String getUsernameEmpleadoFichaje(Long idJornada) {
+        JornadaEmpleado jornadaEmpleado = jornadaEmpleadoRepository.get(idJornada);
+        return jornadaEmpleado.getEmpleado().getEmail();
     }
 
 }

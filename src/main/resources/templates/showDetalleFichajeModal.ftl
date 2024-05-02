@@ -3,7 +3,7 @@
 <div class="container">
 
     <h3>${dia.getFechaFormateada()}</h3>
-    <h5 class="mt-2">arodriguez</h5>
+    <h5 class="mt-2">${username}</h5>
 
     <#if !validacion.valid>
     <div class="alert alert-outline-warning d-flex align-items-center p-3 mt-3" role="alert">

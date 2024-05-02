@@ -13,4 +13,6 @@ public interface ListFichajesFacade {
 
     EnumTipoFichaje getOpcionSugerida();
 
+    boolean isAdmin();
+
 }

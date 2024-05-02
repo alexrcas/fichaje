@@ -1,4 +1,4 @@
-<#import "themelayout.ftl" as base>
+<#import "themelayoutAdmin.ftl" as base>
 <@base.themelayout active="ausencias">
 <#include "localdatemacro.ftl">
 

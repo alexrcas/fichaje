@@ -9,10 +9,10 @@ import net.avantic.domain.model.dto.factory.SemanaJornadaDtoFactory;
 import net.avantic.domain.service.DiaService;
 import net.avantic.domain.service.FechaService;
 import net.avantic.domain.service.FichajeService;
+import net.avantic.domain.service.SecurityUtilsService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,33 +21,30 @@ import java.util.Optional;
 public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
     private final EmpleadoRepository empleadoRepository;
-    private final DiaRepository diaRepository;
     private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final FichajeService fichajeService;
     private final DiaService diaService;
     private final SemanaRepository semanaRepository;
     private final FechaService fechaService;
     private final SemanaJornadaDtoFactory semanaJornadaDtoFactory;
-    private final DiaCalendarioDtoFactory diaCalendarioDtoFactory;
+    private final SecurityUtilsService securityUtilsService;
 
     public ListFichajesFacadeImpl(EmpleadoRepository empleadoRepository,
-                                  DiaRepository diaRepository,
                                   JornadaEmpleadoRepository jornadaEmpleadoRepository,
                                   FichajeService fichajeService,
                                   DiaService diaService,
                                   SemanaRepository semanaRepository,
                                   FechaService fechaService,
                                   SemanaJornadaDtoFactory semanaJornadaDtoFactory,
-                                  DiaCalendarioDtoFactory diaCalendarioDtoFactory) {
+                                  SecurityUtilsService securityUtilsService) {
         this.empleadoRepository = empleadoRepository;
-        this.diaRepository = diaRepository;
         this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
         this.semanaRepository = semanaRepository;
         this.fechaService = fechaService;
         this.semanaJornadaDtoFactory = semanaJornadaDtoFactory;
-        this.diaCalendarioDtoFactory = diaCalendarioDtoFactory;
+        this.securityUtilsService = securityUtilsService;
     }
 
 
@@ -56,8 +53,7 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
     @Override
     @Transactional
     public List<SemanaJornadaDto> listJornadas() {
-        //todo arodriguez: parametrizar empleado
-        Empleado empleado = empleadoRepository.findAll().get(0);
+        Empleado empleado = securityUtilsService.getAuthenticatedUser();
         return semanaRepository.findAllByFechaBetween(fechaService.getStartOfYear(), fechaService.getEndOfYear()).stream()
                 .map(s -> semanaJornadaDtoFactory.newDto(s, empleado))
                 .toList();
@@ -77,6 +73,13 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
         }
 
         return fichajeService.getFichajeSugerido(jornadaEmpleado.get());
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return securityUtilsService.listAuthenticatedUserRoles().stream()
+                .map(Role::getName)
+                .anyMatch("ROLE_ADMIN"::equals);
     }
 
 

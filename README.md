@@ -57,9 +57,16 @@ Para aliviar la carga de la tarea de validación, la jornada contará con un fla
 ## 4. Seguridad
 
 ### 4.1. Seguridad a nivel de usuario y contraseña (oAuth)
-### 4.2. Seguridad a nivel de rol, acceso y ejecución (anotaciones en fachada y securización de rutas)
+La aplicación está protegida con acceso mediante usuario y contraseña. Para mayor comodidad la autenticación será relegada a la cuenta de Google, por lo que los usuarios simplemente accederán con dicha cuenta. Únicamente los usuarios autenticados pueden acceder o consumir los servicios de la aplicación. Esto conforma la primera barrera de seguridad.
+
+### 4.2. Seguridad a nivel de rol y securización de rutas
+La aplicación contempla dos roles: usuario y administrador. Las rutas están protegidas y filtradas teniendo en cuenta estos roles, por lo que no se trata únicamente de no mostrar al usuario aquello que no puede hacer: aunque conociese la ruta e intentase hacerlo obtendría un error de autorización.
+
 ### 4.3. Seguridad a nivel de entidad (entidad securizada)
+Los usuarios, obviamente, deben tener permiso para consultar las jornadas, pero esto significa que si un usuario trampea el código del cliente cambiando el id de la jornada a consultar podría obtener información de la jornada de otro empleado. Por ello, se contempla una capa de seguridad a nivel de entidad o repositorio. Al obtener una jornada en base de datos, se comprueba que el usuario que la consulta sea el usuario de dicha jornada, devolviendo un error en caso contrario. Esto no se aplica si se posee el rol de administrador, que podrá consultar la jornada de cualquier usuario.
+
 ### 4.4. Comprobación de comando en el back-end (y en el front pero solo como azúcar de usabilidad)
+Todas las comprobaciones de formularios o cualquier tipo de acción se realizan siempre en el back-end, aunque es posible que para mejorar la usabilidad existan algunas comprobaciones en el front-end que en la mayoría de los casos serán suficientes. No obstante, estas son solo un añadido para mejorar la usabilidad, existiendo siempre la validación en el back-end.
 
 
 ## 5. Otros aspectos

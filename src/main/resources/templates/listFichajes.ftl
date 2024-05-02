@@ -102,7 +102,7 @@
     <div class="col-5 d-flex align-items-center flex-column">
         <h4 class="d-flex justify-content-center mb-3">Fichar</h4>
         <form id="fichar-form" action="/web/fichar" method="post" class="w-100 d-flex justify-content-center">
-            <div class="w-50 ps-2 d-flex text-center flex-column">
+            <div class="w-75 ps-2 d-flex text-center flex-column">
                 <div class="mb-3">
                     <div class="form-floating">
                         <select name="fichaje" class="form-select" id="floatingSelect" aria-label="Floating label select example">

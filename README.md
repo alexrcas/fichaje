@@ -170,7 +170,7 @@ Las dos últimas columnas de la tabla muestran el total de horas trabajadas y el
 Al visualizar su tabla, el empleado podrá encontrar algunas etiquetas sobre determinados días:
 * **VAC**: indica vacaciones.
 * **FEST**: indica día festivo.
-* **JUST**: indica que se han justificado horas de ausencia ese día. De hecho, se puede observar en la imagen como esa semana el objetivo de horas es de 37 y no de 40.
+* **JUST**: indica que se han justificado horas de ausencia ese día. De hecho, se puede observar en la imagen como junto con el día festivo (8 horas) resta un número determinado de horas al cómputo semanal.
 * **ERR**: indica un error en el fichaje. Esta etiqueta no es exclusiva con la anterior, pudiendo aparecer ambas a la vez.
 
 En el panel derecho se encuentra el formulario de fichaje. Este formulario se precarga con la opción sugerida, es decir, si no hay fichaje para el día en curso mostrará preseleccionado *Entrada Jornada*. Si se ficha, mostrará *Salida desayuno*, a continuación *Entrada desayuno* y así sucesivamente hasta completar el flujo de un día normal, por lo que la mayoría de veces bastará con entrar a la aplicación y pulsar el botón para fichar.

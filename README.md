@@ -163,30 +163,29 @@ Creada la máquina, puede utilizarse con normalidad como en el primer ejemplo.
 
 *Nota*: las siguientes capturas se han tomado durante un desarrollo en constante evolución y generando diferentes escenarios de prueba. La consistencia entre las mismas así como el realismo de los datos mostrados puede ser inexacto. El aspecto final de la aplicación real podría llegar a diferir ligeramente de las mismas.
 
-La pantalla de inicio es el punto de entrada de la aplicación. Muestra los fichajes y la posibilidad de fichar de una manera concisa y directa. Muestra el día actual y la semana en curso. Cuando carga, la tabla hace scroll automáticamente hasta la semana en curso.
+La pantalla de fichajes es el punto de entrada de la aplicación. Muestra los fichajes y la posibilidad de fichar de una manera concisa y directa. Señala el día y la semana en curso. Cuando carga, la tabla hace scroll automáticamente hasta la semana en curso.
 
 Las dos últimas columnas de la tabla muestran el total de horas trabajadas y el objetivo de horas semanal. La primera columna aparecerá en rojo o verde en función de si se cumple con las horas objetivo de la jornada, tanto con un límite superior como inferior.
 
 Al visualizar su tabla, el empleado podrá encontrar algunas etiquetas sobre determinados días:
 * **VAC**: indica vacaciones.
 * **FEST**: indica día festivo.
-* **JUST**: indica que se han justificado horas de ausencia ese día. De hecho, se puede observar en la imagen como junto con el día festivo (8 horas) resta un número determinado de horas al cómputo semanal.
+* **JUST**: indica que se han justificado horas de ausencia ese día. Junto con el día festivo o las vacaciones, afecta al objetivo de horas semanales.
 * **ERR**: indica un error en el fichaje. Esta etiqueta no es exclusiva con la anterior, pudiendo aparecer ambas a la vez.
 
 En el panel derecho se encuentra el formulario de fichaje. Este formulario se precarga con la opción sugerida, es decir, si no hay fichaje para el día en curso mostrará preseleccionado *Entrada Jornada*. Si se ficha, mostrará *Salida desayuno*, a continuación *Entrada desayuno* y así sucesivamente hasta completar el flujo de un día normal, por lo que la mayoría de veces bastará con entrar a la aplicación y pulsar el botón para fichar.
 
 ![](/doc/img/fichajes.png)
 
-La imagen anterior ha sido obtenida entrando con la cuenta de administrador de la aplicación y es ligeramente diferente a lo que verá el resto de usuarios. Los usuarios normales no verán la columna izquierda, con diversas herramientas de administración y tampoco verán el selector situado sobre la tabla, que permite visualizar el fichaje de cualquier empleado elegido. En este caso, se muestra un usuario de pruebas que no tiene fichajes.
+La imagen anterior ha sido obtenida con la cuenta de administrador de la aplicación y es ligeramente diferente a lo que verá el resto de usuarios. Los usuarios normales no verán la columna izquierda, con diversas herramientas de administración y tampoco verán el selector situado sobre la tabla, que permite visualizar el fichaje de cualquier empleado. En este caso, se selecciona un usuario de pruebas que no tiene fichajes.
 
 ![](/doc/img/fichaje-ajeno.png)
 
-En cualquier caso, haciendo click sobre un fichaje se abrirá la vista de detalle. La vista de detalle muestra el flujo de fichajes y una tabla que refleja el cómputo de la jornada. Haciendo click sobre un fichaje un empleado puede solicitar su anulación. Los fichajes anulados seguirán en su lugar original pero se mostrarán tachados o en gris.
+En cualquier caso, haciendo click sobre un fichaje se abrirá la vista de detalle. La vista de detalle muestra el flujo de fichajes y una tabla que refleja el detalle del cómputo. Haciendo click sobre un fichaje un empleado puede solicitar su anulación. Los fichajes anulados seguirán en su lugar original pero se mostrarán tachados o en gris.
 
 ![](/doc/img/detalle-fichaje.png)
 
 ![](/doc/img/detalle-ausencia.png)
-
 
 Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje que ha hecho fallar al motor de validación. En el caso de este ejemplo, una entrada de comida no es posible si no existe una salida de comida previa.
 
@@ -195,13 +194,13 @@ Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje q
 La aplicación dispone de modo claro y oscuro intercambiables en cualquier momento
 ![](/doc/img/switch-theme.gif)
 
-Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares e intuitivas y siempre funcionan de la misma manera, por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas. Nótese que en el caso de las vacaciones la aplicación tiene en cuenta fines de semana y festivos y únicamente bastará con señalar la fecha de inicio y la de regreso, contando esta los días laborables en los que se gastan las vacaciones.
+Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares e intuitivas y siempre funcionan de la misma manera, por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas. Nótese que en el caso de las vacaciones la aplicación tiene en cuenta fines de semana y festivos y únicamente bastará con señalar la fecha de inicio y la de regreso, contando esta los días laborables en los que se gastan las vacaciones. Esto podría ser útil de cara a una posible línea futura (ver sección *7. Líneas futuras*)
 
 ![](/doc/img/vacaciones.png)
 
 ![](/doc/img/ausencia-justificada.png)
 
-Dado que la aplicación es muy pequeña en cuanto a casos de uso para el usuario y los formularios apenas tienen uno o dos campos, por ahora no se utilizan modales sino que dichos formularios están embebidos en las propias vistas. Los errores devueltos por el servidor siempre se muestran de la misma forma: en la parte superior del contenedor.
+Dado que la aplicación es muy pequeña en cuanto a casos de uso y los formularios apenas tienen uno o dos campos, por ahora no se utilizan modales sino que dichos formularios están embebidos en las propias vistas. Los errores devueltos por el servidor siempre se muestran de la misma forma: en la parte superior del contenedor.
 
 ![](/doc/img/vacaciones-error.png)
 

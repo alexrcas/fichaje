@@ -30,7 +30,7 @@ public class Festivo {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idDia")
+    @JoinColumn(name = "idDia", nullable = false)
     public Dia getDia() {
         return dia;
     }
@@ -39,6 +39,7 @@ public class Festivo {
         this.dia = dia;
     }
 
+    @Column(nullable = false, length = 255)
     public String getMotivo() {
         return motivo;
     }

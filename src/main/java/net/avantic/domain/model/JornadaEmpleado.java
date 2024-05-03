@@ -35,7 +35,7 @@ public class JornadaEmpleado implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idEmpleado")
+    @JoinColumn(name = "idEmpleado", nullable = false)
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -45,7 +45,7 @@ public class JornadaEmpleado implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idDia")
+    @JoinColumn(name = "idDia", nullable = false)
     public Dia getDia() {
         return dia;
     }
@@ -54,6 +54,7 @@ public class JornadaEmpleado implements Serializable {
         this.dia = dia;
     }
 
+    @Column(nullable = false)
     public boolean isValidada() {
         return validada;
     }

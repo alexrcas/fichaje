@@ -31,7 +31,7 @@ public class Extemporaneo {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idFichaje")
+    @JoinColumn(name = "idFichaje", nullable = false)
     public Fichaje getFichaje() {
         return fichaje;
     }
@@ -40,6 +40,7 @@ public class Extemporaneo {
         this.fichaje = fichaje;
     }
 
+    @Column(nullable = false)
     public LocalDateTime getHora() {
         return hora;
     }

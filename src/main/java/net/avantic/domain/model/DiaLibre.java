@@ -31,7 +31,7 @@ public class DiaLibre {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idEmpleado")
+    @JoinColumn(name = "idEmpleado", nullable = false)
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -41,7 +41,7 @@ public class DiaLibre {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idDia")
+    @JoinColumn(name = "idDia", nullable = false)
     public Dia getDia() {
         return dia;
     }
@@ -51,7 +51,7 @@ public class DiaLibre {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idVacaciones")
+    @JoinColumn(name = "idVacaciones", nullable = false)
     public Vacaciones getVacaciones() {
         return vacaciones;
     }

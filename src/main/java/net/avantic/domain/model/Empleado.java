@@ -1,9 +1,6 @@
 package net.avantic.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -40,6 +37,7 @@ public class Empleado implements Serializable {
         this.id = id;
     }
 
+    @Column(nullable = false, length = 64)
     public String getEmail() {
         return email;
     }
@@ -48,6 +46,7 @@ public class Empleado implements Serializable {
         this.email = email;
     }
 
+    @Column(nullable = false, length = 128)
     public String getNombre() {
         return nombre;
     }
@@ -56,6 +55,7 @@ public class Empleado implements Serializable {
         this.nombre = nombre;
     }
 
+    @Column(nullable = false, length = 255)
     public String getApellidos() {
         return apellidos;
     }
@@ -64,6 +64,7 @@ public class Empleado implements Serializable {
         this.apellidos = apellidos;
     }
 
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -72,6 +73,7 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
+    @Column(nullable = false)
     public boolean isAccountLocked() {
         return isAccountLocked;
     }
@@ -80,6 +82,7 @@ public class Empleado implements Serializable {
         isAccountLocked = accountLocked;
     }
 
+    @Column(nullable = false)
     public int getFailedAttemps() {
         return failedAttemps;
     }

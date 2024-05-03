@@ -31,7 +31,7 @@ public class AusenciaJustificada {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idJornadaEmpleado")
+    @JoinColumn(name = "idJornadaEmpleado", nullable = false)
     public JornadaEmpleado getJornadaEmpleado() {
         return jornadaEmpleado;
     }
@@ -40,6 +40,7 @@ public class AusenciaJustificada {
         this.jornadaEmpleado = jornadaEmpleado;
     }
 
+    @Column(nullable = false)
     public double getHoras() {
         return horas;
     }
@@ -48,6 +49,7 @@ public class AusenciaJustificada {
         this.horas = horas;
     }
 
+    @Column(nullable = false, length = 255)
     public String getMotivo() {
         return motivo;
     }

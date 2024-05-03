@@ -14,7 +14,7 @@ public enum EnumTipoFichaje {
     ENTRADA_OTROS("Entrada Otros"),
     SALIDA_OTROS("Salida Otros");
 
-    private String name;
+    private final String name;
 
     EnumTipoFichaje(String name) {
         this.name = name;

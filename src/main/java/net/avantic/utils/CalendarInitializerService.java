@@ -6,12 +6,15 @@ import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.EnumDiaSemana;
 import net.avantic.domain.service.DiaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Component
@@ -58,25 +61,25 @@ public class CalendarInitializerService {
     @PostConstruct
     public void init() {
 
-        //todo arodriguez: comprobar si la base de datos tiene valores y si no popularla
-
         LocalDate today = LocalDate.now();
         int year = today.getYear();
-        LocalDate startDate = LocalDate.of(year -1, 12, 29);
-        LocalDate endDate = LocalDate.of(year + 1 , 1, 20);
 
-        Semana semana = new Semana(startDate);
-        semanaRepository.save(semana);
+        Optional<Dia> dia = diaRepository.findByFecha(today);
+        if (dia.isEmpty()) {
 
-        for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
-            Dia dia = new Dia(date, getDiaSemana(date), esFinSemana(date), false, semana);
-            diaRepository.save(dia);
-
-            if (dia.getDiaSemana().equals(EnumDiaSemana.DOMINGO)) {
-                semana = new Semana(date);
-                semanaRepository.save(semana);
+            //popular calendario
+            LocalDate startDate = LocalDate.of(year -1, 12, 24);
+            Optional<Dia> startDay = diaRepository.findByFecha(startDate);
+            if (startDay.isEmpty()) {
+                //Si el año pasado tampoco tengo registros es la primera vez que se arranca la app
+                populateCalendar(startDate);
+            } else {
+                //Si no, ya se había arrancado pero se ha quedado sin registros
+                populateCalendar(LocalDate.of(year, 1, 8));
             }
+
         }
+
 
         Empleado empleado = new Empleado("arodriguez", "Alexis", "Rodríguez Casañas", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
         empleadoRepository.save(empleado);
@@ -93,53 +96,28 @@ public class CalendarInitializerService {
         diaRepository.findAll().stream()
                 .filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .filter(d -> !d.isFinSemana())
-                .map(dia -> new JornadaEmpleado(empleado, dia))
+                .map(d -> new JornadaEmpleado(empleado, d))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);
 
-
-        //crear vacaciones
-        Vacaciones vacaciones = new Vacaciones(LocalDate.of(2024, 4, 17), LocalDate.of(2024, 4, 22));
-        vacacionesRepository.save(vacaciones);
-
-        List<Dia> dias = List.of(
-                diaService.getByFecha(LocalDate.of(2024, 4, 17)),
-                diaService.getByFecha(LocalDate.of(2024, 4, 18)),
-                diaService.getByFecha(LocalDate.of(2024, 4, 19))
-        );
-
-        dias.stream()
-                .map(d -> new DiaLibre(empleado, d, vacaciones))
-                .forEach(diaLibreRepository::save);
-
-
-        Vacaciones vacaciones2 = new Vacaciones(LocalDate.of(2024, 4, 8), LocalDate.of(2024, 4, 11));
-        vacacionesRepository.save(vacaciones2);
-
-        List<Dia> dias2 = List.of(
-                diaService.getByFecha(LocalDate.of(2024, 4, 8)),
-                diaService.getByFecha(LocalDate.of(2024, 4, 9)),
-                diaService.getByFecha(LocalDate.of(2024, 4, 10))
-        );
-
-        dias2.stream()
-                .map(d -> new DiaLibre(empleado, d, vacaciones2))
-                .forEach(diaLibreRepository::save);
-
-
-        Vacaciones vacaciones3 = new Vacaciones(LocalDate.of(2024, 4, 8), LocalDate.of(2024, 4, 11));
-        vacacionesRepository.save(vacaciones3);
-        dias2.stream()
-                .map(d -> new DiaLibre(empleado2, d, vacaciones3))
-                .forEach(diaLibreRepository::save);
-
-
-        //Crear una ausencia justificada
-        Dia diaAusencia = diaService.getByFecha(LocalDate.of(2024, 4, 24));
-        JornadaEmpleado jornadaAusencia = jornadaEmpleadoRepository.findByDiaAndEmpleado(diaAusencia, empleado).get();
-        AusenciaJustificada ausencia = new AusenciaJustificada(jornadaAusencia, 3, "Revisión médica");
-        ausenciaJustificadaRepository.save(ausencia);
     }
+
+    private void populateCalendar(LocalDate startDate) {
+        LocalDate endDate = LocalDate.of(startDate.getYear() + 6, 1, 7);
+        Semana semana = new Semana(startDate);
+        semanaRepository.save(semana);
+
+        for (LocalDate date = startDate; date.isBefore(endDate.plusDays(1)); date = date.plusDays(1)) {
+            Dia dia = new Dia(date, getDiaSemana(date), esFinSemana(date), false, semana);
+            diaRepository.save(dia);
+
+            if (dia.getDiaSemana().equals(EnumDiaSemana.DOMINGO)) {
+                semana = new Semana(date);
+                semanaRepository.save(semana);
+            }
+        }
+    }
+
 
     private void crearFichajes(JornadaEmpleado jornadaEmpleado) {
         Random random = new Random();

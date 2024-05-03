@@ -30,6 +30,7 @@ public class Vacaciones {
         this.id = id;
     }
 
+    @Column(nullable = false)
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
@@ -38,6 +39,7 @@ public class Vacaciones {
         this.fechaInicio = fechaInicio;
     }
 
+    @Column(nullable = false)
     public LocalDate getFechaRegreso() {
         return fechaRegreso;
     }

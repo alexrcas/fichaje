@@ -42,7 +42,6 @@ public class ListSolicitudesAnulacionFacadeImpl implements ListSolicitudesAnulac
 
     @Override
     public List<VacacionesDto> listVacaciones() {
-        //todo arodriguez: parametrizar empleado
 
         List<Vacaciones> vacaciones = vacacionesRepository
                 .findAllByFechaInicioBetweenOrderByFechaInicioAsc(fechaService.getStartOfYear(), fechaService.getEndOfYear());

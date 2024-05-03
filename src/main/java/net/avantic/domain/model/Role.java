@@ -27,6 +27,7 @@ public class Role {
         this.id = id;
     }
 
+    @Column(nullable = false, length = 64)
     public String getName() {
         return name;
     }
@@ -36,7 +37,7 @@ public class Role {
     }
 
     @ManyToOne
-    @JoinColumn(name = "idEmpleado")
+    @JoinColumn(name = "idEmpleado", nullable = false)
     public Empleado getEmpleado() {
         return empleado;
     }

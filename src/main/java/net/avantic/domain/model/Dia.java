@@ -40,6 +40,7 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
+    @Column(nullable = false)
     public LocalDate getFecha() {
         return fecha;
     }
@@ -57,6 +58,7 @@ public class Dia implements Serializable {
         this.diaSemana = diaSemana;
     }
 
+    @Column(nullable = false)
     public boolean isFinSemana() {
         return finSemana;
     }
@@ -65,6 +67,7 @@ public class Dia implements Serializable {
         this.finSemana = finSemana;
     }
 
+    @Column(nullable = false)
     public boolean isFestivo() {
         return festivo;
     }
@@ -74,7 +77,7 @@ public class Dia implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idSemana")
+    @JoinColumn(name = "idSemana", nullable = false)
     public Semana getSemana() {
         return semana;
     }

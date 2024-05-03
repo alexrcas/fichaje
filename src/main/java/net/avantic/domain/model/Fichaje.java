@@ -38,7 +38,7 @@ public abstract class Fichaje implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idJornadaEmpleado")
+    @JoinColumn(name = "idJornadaEmpleado", nullable = false)
     public JornadaEmpleado getJornadaEmpleado() {
         return jornadaEmpleado;
     }
@@ -47,6 +47,7 @@ public abstract class Fichaje implements Serializable {
         this.jornadaEmpleado = jornadaEmpleado;
     }
 
+    @Column(nullable = false)
     public LocalDateTime getCreated() {
         return created;
     }

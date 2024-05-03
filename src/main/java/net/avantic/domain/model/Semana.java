@@ -1,9 +1,6 @@
 package net.avantic.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -30,6 +27,7 @@ public class Semana {
         this.id = id;
     }
 
+    @Column(nullable = false)
     public LocalDate getFecha() {
         return fecha;
     }

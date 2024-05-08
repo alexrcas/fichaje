@@ -1,7 +1,7 @@
 ## To Do
 
 * Hacer que se popule el selector de empleado en la vista de supervisar fichaje.
-* Hacer pruebas con todas las vistas y casos de uso.
+* Hacer pruebas con todas las vistas y casos de uso. (revisar vacaciones de segundo empleado)
 * ~~Añadir @NotNull a todas las columnas y @Length a las de tipo String.~~
 * Poner límite superior a todos los DAO que listen por fecha (hasta final del año presente).
 * ~~Crear estrategia para popular calendario la primera vez.~~

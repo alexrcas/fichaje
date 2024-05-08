@@ -39,7 +39,19 @@ La aplicación mostrará de manera rápida y sencilla una cuadrícula semanal co
 Posiblemente se cree una vista de incidencias que muestre un listado solo con las jornadas que tienen fichajes incorrectos. Esta vista podría tener valor sobre todo para el administrador, evitándole tener que revisar la cuadrícula de cada empleado. No obstante, el objetivo de la aplicación es que el fichaje no necesite supervisión, mostrando de forma muy concisa y directa el estado del fichaje a cada empleado. Es posible que se implante algún sistema de notificaciones push en la app móvil o de envío de correos electrónicos una vez a la semana recordando a los empleados los fichajes erróneos o el olvido de estos.
 
 ### 2.1. Aspectos legales
-Garantizar la no alteración del fichaje. Sello digital? Blockchain?
+
+"La Inspección de Trabajo insiste en que el registro *debe hacerse mediante un sistema de registro objetivo, que garantice la fiabilidad, veracidad y la **no alteración a posteriori de los datos**. Los datos del registro de jornada deben estar a disposición de la Inspección de Trabajo y Seguridad Social, pero también de los trabajadores y sus representantes legales.*"
+
+Para cumplir con lo anterior, se propone el diseño descrito a continuación:
+
+1. Se creará en base de datos una tabla de informe. Esta tabla no tiene un diseño habitual o correcto desde el punto de vista del software pero su objetivo no es ser utilizada por la aplicación sino ser legible para el humano. La tabla resume la jornada de un empleado en un solo registro, y hace esto para cada día y cada empleado. Un campo *ID Informe* agrupa todos los registros. En este ejemplo se propone agrupar mensualmente.
+
+2. A principios de cada mes, una tarea automatizada genera el informe del mes anterior. En la imagen de ejemplo, a principios de junio se generaría el informe con los fichajes de mayo, ampliando así la tabla con la información en verde.
+
+3. Una vez generada esta información, se obtienen todos los registros bajo el mismo *ID Informe* y todos sus campos, generando un hash como resultado. Este hash es a continuación firmado con sello digital en el servidor. El hash garantiza la no alteración de los datos y la firma del mismo da fe de su no alteración desde que este fue calculado.
+
+
+![](/doc/img/firma-fichaje.png)
 
 ## 3. Modelado del problema
 
@@ -193,6 +205,7 @@ Si se hace click sobre un fichaje erróneo la aplicación mostrará el fichaje q
 ![](/doc/img/error-fichaje.png)
 
 La aplicación dispone de modo claro y oscuro intercambiables en cualquier momento
+
 ![](/doc/img/switch-theme.gif)
 
 Las vistas de vacaciones, días festivos y ausencias justificadas son muy similares e intuitivas y siempre funcionan de la misma manera, por lo que no se mostarán todas. Listan entradas existentes y al mismo tiempo permiten la creación de nuevas. Nótese que en el caso de las vacaciones la aplicación tiene en cuenta fines de semana y festivos y únicamente bastará con señalar la fecha de inicio y la de regreso, contando esta los días laborables en los que se gastan las vacaciones.

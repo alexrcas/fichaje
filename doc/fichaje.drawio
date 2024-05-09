@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-05-03T19:53:39.202Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="3F9djtQ9QQJmT0u6enpw" version="21.6.8" type="device" pages="4">
+<mxfile host="Electron" modified="2024-05-08T17:48:43.245Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="Afp3PNq-hpP2hKkGzD17" version="21.6.8" type="device" pages="4">
   <diagram name="Modelo" id="42HeADnUIl8FtZrvWOiq">
     <mxGraphModel dx="1109" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -115,7 +115,7 @@
         <mxCell id="vOHUF0AnTz5Pqv7x2HtX-2" style="edgeStyle=orthogonalEdgeStyle;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;curved=1;" parent="1" source="vOHUF0AnTz5Pqv7x2HtX-1" target="sVE60yhzcHbqc0wqwfBx-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vOHUF0AnTz5Pqv7x2HtX-1" value="Festivo" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=17;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="vOHUF0AnTz5Pqv7x2HtX-1" value="Motivo&lt;br&gt;Festivo" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=17;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="690" y="280" width="90" height="90" as="geometry" />
         </mxCell>
       </root>

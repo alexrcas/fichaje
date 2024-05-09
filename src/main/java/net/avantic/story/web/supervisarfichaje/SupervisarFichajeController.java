@@ -22,6 +22,7 @@ public class SupervisarFichajeController {
     public String list(Model model, @RequestParam("idEmpleado") Long idEmpleado) {
         model.addAttribute("username", facade.getAuthenticatedUsername());
         model.addAttribute("empleados", facade.listEmpleados());
+        model.addAttribute("idEmpleado", idEmpleado);
         model.addAttribute("semanasJornadas", facade.listJornadas(idEmpleado));
 
         return "supervisarFichaje";

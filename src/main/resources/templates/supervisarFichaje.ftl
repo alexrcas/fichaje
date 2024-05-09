@@ -10,7 +10,7 @@
             <select class="form-select" style="width: 25vw" id="empleado-select" aria-label="Floating label select example">
                 <option value="" selected></option>
                 <#list empleados as empleado>
-                <option value="${empleado.id}">${empleado.email}</option>
+                <option value="${empleado.id}" <#if empleado.id == idEmpleado>selected</#if>>${empleado.email}</option>
             </#list>
             </select>
             <label for="empleado-select">Seleccione Empleado</label>

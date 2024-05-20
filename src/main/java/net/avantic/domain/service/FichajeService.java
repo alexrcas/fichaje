@@ -15,6 +15,8 @@ public interface FichajeService {
 
     void ficharExtemporaneo(Empleado empleado, Dia dia, EnumTipoFichaje tipoFichaje, LocalDateTime hora);
 
+    List<FichajeOrdenJornadaSpecification> listFichajesOrdenJornadaNotAnulados(JornadaEmpleado jornadaEmpleado);
+
     List<FichajeOrdenJornadaSpecification> listFichajesOrdenJornada(JornadaEmpleado jornadaEmpleado);
 
     EnumTipoFichaje getFichajeSugerido(JornadaEmpleado jornadaEmpleado);

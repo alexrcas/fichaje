@@ -19,9 +19,9 @@
         <div class="timeline-item cursor-pointer dropdown">
             <!-- Menú dropdown -->
             <div class="dropdown-menu dropdown-menu-start mt-r-5" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" onclick="solicitarAnulacion(${fichaje.id})">Solicitar anulación</a>
+                <a class="dropdown-item" onclick="anularFichaje(${fichaje.id})">Anular</a>
             </div>
-            <div class="row g-3" id="dropdownMenuLink" <#if !fichaje.pendienteAnulacion>data-bs-toggle="dropdown"</#if>>
+            <div class="row g-3" id="dropdownMenuLink" <#if !fichaje.anulado>data-bs-toggle="dropdown"</#if> >
                 <div class="col-auto">
                     <div class="timeline-item-bar position-relative">
                         <div class="icon-item icon-item-md rounded-7 border border-translucent">
@@ -54,7 +54,6 @@
                                 <#if fichaje.id == validacion.idEstado>
                                 <span class="fas fa-warning text-warning text-opacity-75 fs-2 ps-4"></span>
                                 </#if>
-
                             </h5>
                         </div>
                         <p class="text-body-quaternary fs-9 mb-0 text-nowrap timeline-time"><svg class="svg-inline--fa fa-clock me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"></path></svg><!-- <span class="fa-regular fa-clock me-1"></span> Font Awesome fontawesome.com -->
@@ -121,9 +120,9 @@
 
 <script>
 
-    const solicitarAnulacion = async (id) =>  {
+    const anularFichaje = async (id) =>  {
 
-        const response = await fetch('/web/solicitarAnulacion?idFichaje=' + id, {
+        const response = await fetch('/web/admin/anular?idFichaje=' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

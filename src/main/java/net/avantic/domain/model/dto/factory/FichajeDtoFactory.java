@@ -1,20 +1,46 @@
 package net.avantic.domain.model.dto.factory;
 
-import net.avantic.domain.dao.ExtemporaneoRepository;
+import net.avantic.domain.dao.AnulacionFichajeRepository;
+import net.avantic.domain.dao.SolicitudAnulacionRepository;
 import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.FichajeDto;
 import net.avantic.domain.model.dto.FichajeOrdenJornadaSpecification;
 import net.avantic.utils.FichajeVisitor;
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Component
 public class FichajeDtoFactory {
 
+    private final SolicitudAnulacionRepository solicitudAnulacionRepository;
+    private final AnulacionFichajeRepository anulacionFichajeRepository;
+
+    @Autowired
+    public FichajeDtoFactory(SolicitudAnulacionRepository solicitudAnulacionRepository,
+                             AnulacionFichajeRepository anulacionFichajeRepository) {
+        this.solicitudAnulacionRepository = solicitudAnulacionRepository;
+        this.anulacionFichajeRepository = anulacionFichajeRepository;
+    }
+
     public FichajeDto newDto(FichajeOrdenJornadaSpecification specification) {
+
         TipoFichajeVisitor visitor = new TipoFichajeVisitor();
-        return new FichajeDto(specification.getFichaje().getId(), specification.getFichaje().getCreated(), specification.isExtemporaneo(),
-                specification.getHoraFichaje(), visitor.getTipoFichaje(specification.getFichaje()));
+
+        Fichaje fichaje = specification.getFichaje();
+        boolean pendienteAnulacion = !solicitudAnulacionRepository.findAllByFichaje(fichaje).isEmpty();
+
+        boolean anulado = solicitudAnulacionRepository.findAllByFichaje(fichaje).stream()
+                .map(anulacionFichajeRepository::findAllBySolicitudAnulacion)
+                .flatMap(Collection::stream)
+                .toList()
+                .size() > 0;
+
+        return new FichajeDto(fichaje.getId(), fichaje.getCreated(), specification.isExtemporaneo(),
+                specification.getHoraFichaje(), visitor.getTipoFichaje(specification.getFichaje()), pendienteAnulacion, anulado);
     }
 }
 

@@ -89,7 +89,10 @@ public class ListFichajesFacadeImpl implements ListFichajesFacade {
 
     @Override
     public List<EmpleadoDto> listEmpleados() {
+        Empleado empleadoAutenticado = securityUtilsService.getAuthenticatedUser();
+
         return empleadoRepository.findAll().stream()
+                .filter(e -> !empleadoAutenticado.getEmail().equals(e.getEmail()))
                 .map(EmpleadoDtoFactory::newDto)
                 .toList();
     }

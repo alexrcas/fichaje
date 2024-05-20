@@ -7,16 +7,13 @@ import net.avantic.domain.model.*;
 import net.avantic.domain.model.dto.FichajeOrdenJornadaSpecification;
 import net.avantic.domain.service.FichajeService;
 import net.avantic.domain.service.JornadaService;
-import net.avantic.story.web.listfichajes.ListFichajesFacadeImpl;
 import net.avantic.utils.FichajeVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,12 +54,25 @@ public class FichajeServiceImpl implements FichajeService {
                 .orElseGet(() -> jornadaService.createJornadaEmpleado(dia, empleado));
 
         Fichaje fichaje = createFichaje(jornadaEmpleado, tipoFichaje);
+        fichajeRepository.save(fichaje);
         Extemporaneo extemporaneo = new Extemporaneo(fichaje, hora);
         extemporaneoRepository.save(extemporaneo);
 
         jornadaEmpleado.setValidada(false);
         jornadaEmpleadoRepository.save(jornadaEmpleado);
         fichajeRepository.save(fichaje);
+    }
+
+    @Override
+    public List<FichajeOrdenJornadaSpecification> listFichajesOrdenJornadaNotAnulados(JornadaEmpleado jornadaEmpleado) {
+        return fichajeRepository.findAllByJornadaEmpleadoNotAnulado(jornadaEmpleado).stream()
+                .map(
+                        f -> extemporaneoRepository.findByFichaje(f)
+                                .map(e -> new FichajeOrdenJornadaSpecification(f, true, e.getHora()))
+                                .orElse(new FichajeOrdenJornadaSpecification(f, false, f.getCreated()))
+                )
+                .sorted(Comparator.comparing(FichajeOrdenJornadaSpecification::getHoraFichaje))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -77,9 +87,14 @@ public class FichajeServiceImpl implements FichajeService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public EnumTipoFichaje getFichajeSugerido(JornadaEmpleado jornadaEmpleado) {
-        List<FichajeOrdenJornadaSpecification> fichajes = listFichajesOrdenJornada(jornadaEmpleado);
+        List<FichajeOrdenJornadaSpecification> fichajes = listFichajesOrdenJornadaNotAnulados(jornadaEmpleado);
+        if (fichajes.isEmpty()) {
+            return EnumTipoFichaje.ENTRADA_JORNADA;
+        }
+
         Fichaje ultimoFichaje = fichajes.get(fichajes.size() -1).getFichaje();
         SugerirFichajeVisitor visitor = new SugerirFichajeVisitor(ultimoFichaje);
         return visitor.getTipoFichaje();

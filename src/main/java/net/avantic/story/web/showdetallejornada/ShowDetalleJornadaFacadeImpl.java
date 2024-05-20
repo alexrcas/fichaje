@@ -84,4 +84,11 @@ public class ShowDetalleJornadaFacadeImpl implements ShowDetalleJornadaFacade {
         return jornadaEmpleado.getEmpleado().getEmail();
     }
 
+    @Override
+    public boolean isAdmin() {
+        return securityUtilsService.listAuthenticatedUserRoles().stream()
+                .map(Role::getName)
+                .anyMatch("ROLE_ADMIN"::equals);
+    }
+
 }

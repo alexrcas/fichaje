@@ -51,7 +51,7 @@ public class FicharWebFacadeImpl implements FicharWebFacade {
     }
 
     private void ficharExtemporaneo(EnumTipoFichaje tipoFichaje, LocalDateTime fecha) {
-        Empleado empleado = empleadoRepository.getReferenceById(1L);
+        Empleado empleado = securityUtilsService.getAuthenticatedUser();
         Dia dia = diaService.getByFecha(fecha.toLocalDate());
         fichajeService.ficharExtemporaneo(empleado, dia, tipoFichaje, fecha);
     }

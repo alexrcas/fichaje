@@ -8,7 +8,6 @@ import net.avantic.utils.FichajeVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component
@@ -24,7 +23,7 @@ public class ComputoDtoFactory {
 
     public ComputoDto newDto(JornadaEmpleado jornadaEmpleado) {
         CalcularJornadaVisitor visitor = new CalcularJornadaVisitor();
-        fichajeService.listFichajesOrdenJornada(jornadaEmpleado).stream()
+        fichajeService.listFichajesOrdenJornadaNotAnulados(jornadaEmpleado).stream()
                 .forEach(visitor::popular);
 
         return visitor.getComputoDto();

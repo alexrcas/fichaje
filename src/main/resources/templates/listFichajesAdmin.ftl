@@ -165,6 +165,12 @@
         const html = await response.text();
         document.getElementById('offcanvas-body').innerHTML = html;
 
+        const script = document.createElement('script');
+        const offcanvasContent = document.querySelector('.modal-content');
+        if (offcanvasContent.querySelector('script') == null) { return }
+        script.innerHTML = offcanvasContent.querySelector('script').innerText;
+        document.body.appendChild(script)
+
         const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvas'));
         offcanvas.show();
     }

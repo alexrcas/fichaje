@@ -1,8 +1,12 @@
-package net.avantic.domain.dao;
+package net.avantic.domain.dao.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import net.avantic.domain.dao.CustomFichajeRepository;
+import net.avantic.domain.dao.CustomJornadaEmpleadoRepository;
+import net.avantic.domain.dao.FichajeRepository;
 import net.avantic.domain.model.Empleado;
+import net.avantic.domain.model.Fichaje;
 import net.avantic.domain.model.JornadaEmpleado;
 import net.avantic.domain.model.Role;
 import net.avantic.domain.service.SecurityUtilsService;
@@ -10,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomJornadaEmpleadoRepositoryImpl implements CustomJornadaEmpleadoRepository {
+public class CustomFichajeRepositoryImpl implements CustomFichajeRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -18,26 +22,26 @@ public class CustomJornadaEmpleadoRepositoryImpl implements CustomJornadaEmplead
     private final SecurityUtilsService securityUtilsService;
 
     @Autowired
-    public CustomJornadaEmpleadoRepositoryImpl(SecurityUtilsService securityUtilsService) {
+    public CustomFichajeRepositoryImpl(SecurityUtilsService securityUtilsService) {
         this.securityUtilsService = securityUtilsService;
     }
 
 
     @Override
-    public JornadaEmpleado get(Long id) {
+    public Fichaje get(Long id) {
         Empleado empleadoAutenticado = securityUtilsService.getAuthenticatedUser();
 
-        JornadaEmpleado jornadaEmpleado = entityManager.find(JornadaEmpleado.class, id);
+        Fichaje fichaje = entityManager.find(Fichaje.class, id);
 
-        if (jornadaEmpleado.getEmpleado().getEmail().equals(empleadoAutenticado.getEmail())) {
-            return jornadaEmpleado;
+        if (fichaje.getJornadaEmpleado().getEmpleado().getEmail().equals(empleadoAutenticado.getEmail())) {
+            return fichaje;
         }
 
         if (authenticatedUserIsAdmin()) {
-            return jornadaEmpleado;
+            return fichaje;
         }
 
-        throw new RuntimeException("El usuario no tiene permiso para ver la jornada con id " + jornadaEmpleado.getId());
+        throw new RuntimeException("El usuario no tiene permiso para ver el fichaje con id " + fichaje.getId());
     }
 
     private boolean authenticatedUserIsAdmin() {

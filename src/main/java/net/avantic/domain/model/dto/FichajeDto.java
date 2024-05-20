@@ -12,13 +12,19 @@ public class FichajeDto {
     private final boolean extemporaneo;
     private final LocalDateTime horaFichaje;
     private final EnumTipoFichaje tipoFichaje;
+    private final boolean pendienteAnulacion;
+    private final boolean anulado;
 
-    public FichajeDto(Long id, LocalDateTime created, boolean extemporaneo, LocalDateTime horaFichaje, EnumTipoFichaje tipoFichaje) {
+    public FichajeDto(Long id, LocalDateTime created, boolean extemporaneo,
+                      LocalDateTime horaFichaje, EnumTipoFichaje tipoFichaje,
+                      boolean pendienteAnulacion, boolean anulado) {
         this.id = id;
         this.created = created;
         this.extemporaneo = extemporaneo;
         this.horaFichaje = horaFichaje;
         this.tipoFichaje = tipoFichaje;
+        this.pendienteAnulacion = pendienteAnulacion;
+        this.anulado = anulado;
     }
 
     public Long getId() {
@@ -51,5 +57,11 @@ public class FichajeDto {
         return tipoFichaje;
     }
 
+    public boolean isPendienteAnulacion() {
+        return pendienteAnulacion;
+    }
 
+    public boolean isAnulado() {
+        return anulado;
+    }
 }

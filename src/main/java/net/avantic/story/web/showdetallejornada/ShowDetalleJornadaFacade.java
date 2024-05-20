@@ -17,4 +17,6 @@ public interface ShowDetalleJornadaFacade {
     List<AusenciaJustificadaDto> listAusenciasJustificadas(Long idJornada);
 
     String getUsernameEmpleadoFichaje(Long idJornada);
+
+    boolean isAdmin();
 }

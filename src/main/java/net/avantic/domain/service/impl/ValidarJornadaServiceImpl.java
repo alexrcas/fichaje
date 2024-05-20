@@ -33,10 +33,13 @@ public class ValidarJornadaServiceImpl implements ValidarJornadaService {
             return new ResultadoValidacionJornadaDto(true, "", -1L);
         }
 
-        List<Fichaje> fichajes = fichajeService.listFichajesOrdenJornada(jornadaEmpleado).stream()
+        List<Fichaje> fichajes = fichajeService.listFichajesOrdenJornadaNotAnulados(jornadaEmpleado).stream()
                 .map(FichajeOrdenJornadaSpecification::getFichaje)
                 .toList();
 
+        if (fichajes.isEmpty()) {
+            return new ResultadoValidacionJornadaDto(true, "", -1L);
+        }
 
         ValidadorStateMachine validadorStateMachine = new ValidadorStateMachine();
 

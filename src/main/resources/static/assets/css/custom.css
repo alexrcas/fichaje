@@ -33,3 +33,7 @@
 .tabla-fichajes td {
   width: 5em !important;
 }
+
+.mt-r-5 {
+  margin-top:-5em !important
+}

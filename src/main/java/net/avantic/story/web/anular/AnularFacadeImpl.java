@@ -14,35 +14,38 @@ import net.avantic.domain.service.FichajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class AnularFacadeImpl implements AnularFacade {
 
     private final SolicitudAnulacionRepository solicitudAnulacionRepository;
     private final AnulacionFichajeRepository anulacionFichajeRepository;
     private final FichajeRepository fichajeRepository;
-    private final JornadaEmpleadoRepository jornadaEmpleadoRepository;
     private final FichajeService fichajeService;
 
     @Autowired
     public AnularFacadeImpl(SolicitudAnulacionRepository solicitudAnulacionRepository,
                             AnulacionFichajeRepository anulacionFichajeRepository,
                             FichajeRepository fichajeRepository,
-                            JornadaEmpleadoRepository jornadaEmpleadoRepository,
                             FichajeService fichajeService) {
 
         this.solicitudAnulacionRepository = solicitudAnulacionRepository;
         this.anulacionFichajeRepository = anulacionFichajeRepository;
         this.fichajeRepository = fichajeRepository;
-        this.jornadaEmpleadoRepository = jornadaEmpleadoRepository;
         this.fichajeService = fichajeService;
     }
 
     @Transactional
     @Override
     public void anular(AnularCommand command) {
+        //todo arodriguez: probar
         Fichaje fichaje = fichajeRepository.get(command.getIdFichaje());
 
-        SolicitudAnulacion solicitudAnulacion = new SolicitudAnulacion(fichaje);
+        SolicitudAnulacion solicitudAnulacion = solicitudAnulacionRepository.findAllByFichaje(fichaje).stream()
+                .findFirst()
+                .orElse(new SolicitudAnulacion(fichaje));
+
         solicitudAnulacionRepository.save(solicitudAnulacion);
 
         AnulacionFichaje anulacionFichaje = new AnulacionFichaje(solicitudAnulacion);

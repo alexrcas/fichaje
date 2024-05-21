@@ -17,17 +17,14 @@ import java.time.LocalDateTime;
 @Component
 public class FicharWebFacadeImpl implements FicharWebFacade {
 
-    private final EmpleadoRepository empleadoRepository;
     private final FichajeService fichajeService;
     private final DiaService diaService;
     private final SecurityUtilsService securityUtilsService;
 
     @Autowired
-    public FicharWebFacadeImpl(EmpleadoRepository empleadoRepository,
-                               FichajeService fichajeService,
+    public FicharWebFacadeImpl(FichajeService fichajeService,
                                DiaService diaService,
                                SecurityUtilsService securityUtilsService) {
-        this.empleadoRepository = empleadoRepository;
         this.fichajeService = fichajeService;
         this.diaService = diaService;
         this.securityUtilsService = securityUtilsService;

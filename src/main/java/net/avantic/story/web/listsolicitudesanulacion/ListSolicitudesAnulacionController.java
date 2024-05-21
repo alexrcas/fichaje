@@ -20,7 +20,7 @@ public class ListSolicitudesAnulacionController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("username", facade.getAuthenticatedUsername());
-        model.addAttribute("vacaciones", facade.listVacaciones());
+        model.addAttribute("solicitudesAnulacion", facade.listSolicitudesAnulacion());
         return "listSolicitudesAnulacion";
     }
 

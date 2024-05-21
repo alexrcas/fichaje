@@ -19,17 +19,14 @@ public class FicharFacadeImpl implements FicharFacade {
     private final EmpleadoService empleadoService;
     private final DiaService diaService;
     private final FichajeService fichajeService;
-    private final SecurityUtilsService securityUtilsService;
 
     @Autowired
     public FicharFacadeImpl(EmpleadoService empleadoService,
                             DiaService diaService,
-                            FichajeService fichajeService,
-                            SecurityUtilsService securityUtilsService) {
+                            FichajeService fichajeService) {
         this.empleadoService = empleadoService;
         this.diaService = diaService;
         this.fichajeService = fichajeService;
-        this.securityUtilsService = securityUtilsService;
     }
 
     @Override

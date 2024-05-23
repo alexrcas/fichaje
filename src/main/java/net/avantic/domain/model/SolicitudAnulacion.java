@@ -2,18 +2,24 @@ package net.avantic.domain.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(indexes = {@Index(columnList = "idFichaje")})
 public class SolicitudAnulacion {
 
     private Long id;
 
+    private LocalDateTime created;
+
     private Fichaje fichaje;
 
     public SolicitudAnulacion() {
+        this.created = LocalDateTime.now();
     }
 
     public SolicitudAnulacion(Fichaje fichaje) {
+        this.created = LocalDateTime.now();
         this.fichaje = fichaje;
     }
 
@@ -25,6 +31,14 @@ public class SolicitudAnulacion {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

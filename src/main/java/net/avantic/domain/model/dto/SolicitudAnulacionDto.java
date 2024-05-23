@@ -1,28 +1,28 @@
 package net.avantic.domain.model.dto;
 
-import net.avantic.domain.model.EnumTipoFichaje;
+import java.time.LocalDateTime;
 
 public class SolicitudAnulacionDto {
 
+    private final LocalDateTime created;
     private final String usuario;
-    private final Long id;
-    private final EnumTipoFichaje tipoFichaje;
+    private final FichajeDto fichaje;
 
-    public SolicitudAnulacionDto(String usuario, Long id, EnumTipoFichaje tipoFichaje) {
+    public SolicitudAnulacionDto(LocalDateTime created, String usuario, FichajeDto fichaje) {
+        this.created = created;
         this.usuario = usuario;
-        this.id = id;
-        this.tipoFichaje = tipoFichaje;
+        this.fichaje = fichaje;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     public String getUsuario() {
         return usuario;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public EnumTipoFichaje getTipoFichaje() {
-        return tipoFichaje;
+    public FichajeDto getFichaje() {
+        return fichaje;
     }
 }

@@ -13,15 +13,8 @@ public interface DiaRepository extends JpaRepository<Dia, Long> {
 
     Optional<Dia> findByFecha(LocalDate fecha);
 
-
-    @Query("From Dia d WHERE d.finSemana = false")
-    List<Dia> findAllByNotFinSemanaOrderByIdAsc();
-
-    @Query("From Dia d WHERE d.finSemana = false and d.fecha >= :fecha order by id asc")
-    List<Dia> findAllByFechaGreaterThanEqualAndNotFinSemanaOrderByIdAsc(LocalDate fecha);
-
-    @Query("From Dia d WHERE d.finSemana = false and d.festivo = true and d.fecha >= :fecha order by id asc")
-    List<Dia> findAllByFechaGreaterThanEqualAndNotFinSemanaAndFestivoOrderByIdAsc(LocalDate fecha);
+    @Query("From Dia d WHERE d.finSemana = false and d.festivo = true and d.fecha >= :fechaInicio and fecha <= :fechaFin order by id asc")
+    List<Dia> findAllByFechaBetweenThanEqualAndNotFinSemanaAndFestivoOrderByIdAsc(LocalDate fechaInicio, LocalDate fechaFin);
 
     @Query("From Dia d WHERE d.semana = :semana AND d.finSemana = false order by id asc")
     List<Dia> findAllBySemanaAndNotFinSemanaOrderById(Semana semana);

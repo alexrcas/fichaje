@@ -31,7 +31,7 @@ public class ListFestivosFacadeImpl implements ListFestivosFacade {
 
     @Override
     public List<FestivoDto> listFestivos() {
-        return diaRepository.findAllByFechaGreaterThanEqualAndNotFinSemanaAndFestivoOrderByIdAsc(fechaService.getStartOfYear()).stream()
+        return diaRepository.findAllByFechaBetweenThanEqualAndNotFinSemanaAndFestivoOrderByIdAsc(fechaService.getStartOfYear(), fechaService.getEndOfYear()).stream()
                 .map(festivoRepository::findByDia)
                 .map(festivo -> {
                     String motivo = festivo.get().getMotivo();

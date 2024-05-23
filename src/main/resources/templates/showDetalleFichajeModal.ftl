@@ -52,7 +52,7 @@
                                 </#if>
 
                                 <#if fichaje.id == validacion.idEstado>
-                                <span class="fas fa-warning text-warning text-opacity-75 fs-2 ps-4"></span>
+                                <span class="fas fa-warning text-warning text-opacity-75 fs-1 ps-1"></span>
                                 </#if>
 
                             </h5>

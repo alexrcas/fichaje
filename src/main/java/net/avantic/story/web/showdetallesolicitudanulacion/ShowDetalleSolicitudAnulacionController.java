@@ -26,6 +26,7 @@ public class ShowDetalleSolicitudAnulacionController {
         model.addAttribute("dia", facade.getFechaJornada(idFichaje));
         model.addAttribute("computo", facade.getComputo(idFichaje));
         model.addAttribute("ausenciasJustificadas", facade.listAusenciasJustificadas(idFichaje));
+        model.addAttribute("idFichaje", idFichaje);
 
         return "showDetalleSolicitudAnulacionModal";
     }

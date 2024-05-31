@@ -11,22 +11,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class JornadaEmpleadoDtoFactory {
 
-    private final ValidarJornadaService validarJornadaService;
     private final ComputoDtoFactory computoDtoFactory;
     private final AusenciaJustificadaRepository ausenciaJustificadaRepository;
 
     @Autowired
-    public JornadaEmpleadoDtoFactory(ValidarJornadaService validarJornadaService,
-                                     ComputoDtoFactory computoDtoFactory,
+    public JornadaEmpleadoDtoFactory(ComputoDtoFactory computoDtoFactory,
                                      AusenciaJustificadaRepository ausenciaJustificadaRepository) {
-        this.validarJornadaService = validarJornadaService;
         this.computoDtoFactory = computoDtoFactory;
         this.ausenciaJustificadaRepository = ausenciaJustificadaRepository;
     }
 
     public JornadaDto newDto(JornadaEmpleado jornadaEmpleado) {
 
-        validarJornadaService.validar(jornadaEmpleado);
+        //validarJornadaService.validar(jornadaEmpleado);
+        //todo arodriguez: comprobar que efectivamente se puede eliminar
         boolean ausenciaJustificada = ausenciaJustificadaRepository.findAllByJornadaEmpleado(jornadaEmpleado).size() > 0;
 
         if (!jornadaEmpleado.isValidada()) {

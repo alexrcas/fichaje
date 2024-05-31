@@ -129,7 +129,6 @@
             }
         });
 
-        console.log(response);
         if (response.redirected) {
             window.location.href = response.url
         }

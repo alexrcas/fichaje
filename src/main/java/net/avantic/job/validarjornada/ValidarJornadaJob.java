@@ -21,6 +21,7 @@ public class ValidarJornadaJob {
 
     @Scheduled(fixedDelay = 3000)
     public void validar() {
+        System.out.println("Validando jornadas...");
         jornadaEmpleadoRepository.findAllByNotValid().stream()
                 .forEach(validarJornadaService::validar);
     }

@@ -24,6 +24,12 @@ public class JornadaEmpleado implements Serializable {
         this.validada = false;
     }
 
+    public JornadaEmpleado(Empleado empleado, Dia dia, boolean validada) {
+        this.empleado = empleado;
+        this.dia = dia;
+        this.validada = validada;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

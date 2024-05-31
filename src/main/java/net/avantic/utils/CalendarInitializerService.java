@@ -96,7 +96,7 @@ public class CalendarInitializerService {
         diaRepository.findAll().stream()
                 .filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .filter(d -> !d.isFinSemana())
-                .map(d -> new JornadaEmpleado(empleado, d))
+                .map(d -> new JornadaEmpleado(empleado, d, true))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);
 

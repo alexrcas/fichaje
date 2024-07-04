@@ -87,15 +87,16 @@ public class CalendarInitializerService {
         Role role = new Role("ROLE_ADMIN", empleado);
         roleRepository.save(role);
 
-        Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
-        empleadoRepository.save(empleado2);
+        //Empleado empleado2 = new Empleado("tutu", "Turing", "Turruto", "$2y$10$zKBRDvB6vZirAEkQ4Mye4uiqF64Ss7KGhwwrEIO2/UODlq9Uksdq2", false);
+        //empleadoRepository.save(empleado2);
 
-        Role role2 = new Role("ROLE_USER", empleado2);
-        roleRepository.save(role2);
+        //Role role2 = new Role("ROLE_USER", empleado2);
+        //roleRepository.save(role2);
 
         diaRepository.findAll().stream()
                 .filter(d -> d.getFecha().isBefore(LocalDate.now()))
                 .filter(d -> !d.isFinSemana())
+                .filter(d -> !d.getFecha().equals(LocalDate.of(2024, 7, 1)))
                 .map(d -> new JornadaEmpleado(empleado, d, true))
                 .map(jornadaEmpleadoRepository::save)
                 .forEach(this::crearFichajes);

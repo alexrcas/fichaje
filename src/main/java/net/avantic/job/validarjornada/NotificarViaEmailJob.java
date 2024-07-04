@@ -1,6 +1,5 @@
 package net.avantic.job.validarjornada;
 
-import jdk.jshell.spi.ExecutionControl;
 import net.avantic.domain.dao.EmpleadoRepository;
 import net.avantic.domain.dao.NotificationRepository;
 import net.avantic.domain.model.Empleado;
